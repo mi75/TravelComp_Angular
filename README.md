@@ -1,2 +1,0 @@
-# TravelComp
-TravelComp training site
