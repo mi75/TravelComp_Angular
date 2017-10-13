@@ -1,3 +1,5 @@
+
+
 body {
     margin: 0;
     padding: 0;
@@ -72,6 +74,14 @@ body {
     display: none;  
 }
 
+.main-menu a {
+    text-decoration: none;
+}
+
+.main-menu a:hover {
+    color: #006386;
+}
+
 .menu-fix {
     position: fixed;
     width: 100%;
@@ -96,16 +106,16 @@ body {
         width: 25%;  
         float: left;  
         position: relative;  
-    }  
-    .main-menu li a {  
-        text-decoration: none;
-        color: #006386;
-    }  
+    }    
     .main-menu a {  
+        text-decoration: none;
         text-align: left;  
         width: 100%;  
         text-indent: 25px;  
-    }  
+    }
+    .main-menu a:hover {
+    color: #006386;
+    }
 }
 
 @media only screen and (max-width : 500px) {  
@@ -130,10 +140,7 @@ body {
         position: absolute;  
         right: 15px;  
         top: 10px;  
-    }
-}
-
-@media only screen and (max-width : 500px) {  
+    } 
     .main-menu li {  
         display: block;  
         float: none;  
@@ -214,6 +221,16 @@ body {
     cursor: pointer;
 }
 
+
+.about-us {
+    padding: 20px;
+    text-align: center;
+}
+
+.reviews {
+    padding: 20px;
+    text-align: center;
+}
 
 .footer {
     background-color: #555;
