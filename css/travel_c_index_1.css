@@ -232,6 +232,12 @@ body {
     text-align: center;
 }
 
+.rev-nav {
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+}
+
 .footer {
     background-color: #555;
     margin: 0 auto;
