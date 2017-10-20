@@ -249,6 +249,18 @@ body {
     padding: 2px 14px;
 }
 
+@media screen and (max-width: 980px) {
+    .rev-nav .btn-outline-primary {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+.rev-nav .btn-outline-secondary {
+        font-size: 20px;
+        padding: 2px 8px;
+    }
+}
+
 .reviews .card-img-top {
     width: 60%;
 }
