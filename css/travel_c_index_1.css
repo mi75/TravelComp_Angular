@@ -271,10 +271,10 @@ body {
 
 .reviews .card-customer {
     float: right;
-    width: 35%;
+    width: 27%;
     border-radius: 50%;
     position: absolute;
-    right: 2%;
+    right: 4%;
     top: 10%;
 }
 
