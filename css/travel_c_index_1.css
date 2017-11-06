@@ -64,7 +64,7 @@ body {
     vertical-align: middle;
 }
  
-.main-menu p {
+.main-menu span {
     text-decoration: none;
     color: #006386;
 }   
@@ -124,26 +124,33 @@ body {
     .main-menu ul {  
         display: none;
     }  
-    .main-menu p#pull {
+    .main-menu #pull {
         display: block;
         height: 30px;
         background-color: white;  
-        width: 100%;  
+        width: 100%;
+        text-align: center;
     }
-    .main-menu p#pull:after {  
-        content:"";  
-        background: url('nav-icon.png') no-repeat;  
-        width: 30px;  
-        height: 30px;  
-        display: inline-block;  
-        position: absolute;  
+    .main-menu #pull:after {  
+        /*content: '▼ ';*/  
+        /*background: url('nav-icon.png') no-repeat;*/
+        margin: 0;
+        background-color: white;
+        /*width: 100%;*/  
+        height: 30px;
+        display: block;
+        z-index: 1000;
+        /*position: absolute;
         right: 15px;  
-        top: 10px;  
+        top: 10px;*/
     } 
-    .main-menu li {  
-        display: block;  
+    .main-menu li {
+        margin: 0;
+        display: block;
+        background-color: white; 
         float: none;  
-        width: 100%;  
+        width: 100%;
+        z-index: 1000;
     }  
     .main-menu li a {  
         border-bottom: 1px solid #576979;  
