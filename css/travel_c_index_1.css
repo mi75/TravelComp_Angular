@@ -35,6 +35,7 @@ body {
 
 .h-contacts {
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -399,7 +400,6 @@ body {
     background-color: #e1e1e1;
     margin: 0 auto;
     min-height: 240px;
-    
     text-align: center;
 }
 
@@ -416,9 +416,12 @@ body {
 .footer form {
     padding: 20px;
     text-align: left;
+/*    position: absolute;
+    bottom: 0;*/
 }
 
 .sign-form input {
+    max-width: 75%;
     height: 36px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -427,6 +430,7 @@ body {
 }
 
 .sign-form button {
+    max-width: 25%;
     background-color: #006386;
     border-style: none;
     font-size: 100%;
