@@ -45,28 +45,32 @@
         </div>
 
         <div class="address_banner">
-            <h2>Добро пожаловать на борт!</h2>
-            <h4>Адрес офиса:</h4>
-            <p>Киев, проспект Бажана, 24А, офис 307</p>
-            <a href="#">Посмотреть на карте<br /><br /></a>
-            <span class="adr-phone">067 445 40 33<br /></span>
-            <span class="adr-phone">063 346 95 75<br /></span>
-            <span class="adr-phone">050 346 95 75<br /><br /></span>
-            <a href="mailto:client@travel.com.ua" title="" class="mail">client@travel.com.ua</a>
+            <div class="contact_block">
+                <h2>Добро пожаловать на борт!</h2>
+                <h4>Адрес офиса:</h4>
+                <p>Киев, проспект Бажана, 24А, офис 307</p>
+                <a href="#"><span class="glyphicon glyphicon-road"></span> Посмотреть на карте<br /><br /></a>
+                <span class="adr-phone">067 445 40 33<br /></span>
+                <span class="adr-phone">063 346 95 75<br /></span>
+                <span class="adr-phone">050 346 95 75<br /><br /></span>
+                <a href="mailto:client@travel.com.ua" title="" class="mail"><span class="glyphicon glyphicon-envelope"></span> client@travel.com.ua</a>
+            </div>
         </div>
-
 
         <div class="contact_form">
             <h2>Contact our experts</h2>
-            <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong>or complete a form below:</p>
+            <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong> or complete a form below:</p>
             <form name="my" method="post" action="mailto:client@travel.com.ua">
                 <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
                 <div class="row">
-                    <div class="f-row col-md-6">
-                        <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
-                        <textarea name="message" class="field"  required"></textarea>
+                    <div class="col-sm-0 col-md-2"></div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="f-row">
+                            <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
+                            <textarea name="message" class="field" rows="13" required"></textarea>
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6 col-md-4">
                         <div class="f-row">
                             <label for="from">Your full name<span class="req">*</span>:</label><br />
                             <input type="text" name="from" class="field" required>
@@ -80,7 +84,7 @@
                             <input type="text" name="phone" class="field" required>
                         </div>
                         <div class="f-row">
-                            <label for="how">How did you hear about us?<span class="req">*</span>:</label><br />
+                            <label for="how">Select, how did you hear about us?<span class="req">*</span>:</label><br />
                             <select name="how" class="field" required>
                                 <option></option>
                                 <option value="1">от друзей</option>
@@ -90,11 +94,12 @@
                         </div>
                     </div>
                 </div>
+                <label class="checkbox"><input type="checkbox" checked> Keep me up to date with news and offers</label>
                 <div class="go">
-                    <input type="button" onclick="validate(this.form)" value="SUBMIT">
+                    <input class="go-button" type="button" onclick="validate(this.form)" value="SUBMIT">
                 </div>
             </form>
-            <label><input type="checkbox" checked>Keep me up to date with news and offers</label>
+            
 
         </div>
 

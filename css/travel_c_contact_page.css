@@ -163,18 +163,30 @@ body {
     padding: 0;
     min-height: 400px;
     width: 100%;
-    text-align: center;
     background-position: 50% 80%;
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url(../img/ship_1.jpg);
 }
 
+.contact_block {
+    float: left;
+    margin-left: 10%;
+    padding-top: 30px;
+    font-family: 'Oxygen', sans-serif;
+    color: #0000FF;
+    text-align: center;
+    /*margin-top: 20px;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 2%*/
+}
+
 .contact_form {
     margin: 0;
-    padding: 0;
+    padding: 15px 5px;
     min-height: 400px;
     width: 100%;
+    font-family: 'Oxygen', sans-serif;
     text-align: center;
 }
 
@@ -183,9 +195,8 @@ body {
 }
 
 form .f-row {
-    display: block;
-    padding: 7px 8px;
-    margin-bottom: 7px;
+    padding: 5px 8px;
+    margin-bottom: 5px;
 }
 
 form .f-row:hover {
@@ -193,10 +204,9 @@ form .f-row:hover {
 }
 
 form label {
-    display: inline-block;
     font-size: 1em;
     font-weight: bold;
-    width: 280px;
+    width: 100%;
     padding: 6px 0;
     color: #464646;
     vertical-align: top;
@@ -215,16 +225,18 @@ form .note {
 form input:focus, form textarea:focus { outline: none; }
 
 form .field {
-    display: inline-block;
     padding: 8px 9px;
-    padding-right: 30px;
-    width: 240px;
-    font-family: 'Oxygen', sans-serif;
+    width: 100%;
     font-size: 1em;
     font-weight: normal;
     color: #898989;
 }
 
+.go-button {
+    width: 180px;
+    height: 40px;
+    border-radius: 2%
+}
 
 .soci-icons {
     text-align: center;
