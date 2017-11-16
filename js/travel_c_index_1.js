@@ -55,6 +55,23 @@ function goToSlide(n) {
   slides[currentSlide].className = 'slide showing';
 }
 
+function slideNav() {
+  var parentB = document.getElementById('sl-k');
+  for (i = 0; i < slides.length; i++) {
+    var b = document.createElement('button');
+    b.className = "sl-b";
+    b.style.width = '20px';
+    b.style.borderRadius = '50%';
+    b.style.backgroundColor = 'red';
+    parentB.appendChild(b);
+    b.innerHTML = i;
+    b.onclick = function() {
+      alert(i);
+    }
+  }
+}
+window.onload = slideNav();
+
 // var next = document.getElementById('next');
 // var previous = document.getElementById('previous');
  

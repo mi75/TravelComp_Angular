@@ -164,6 +164,7 @@ body {
     min-height: 640px;
     width: 100%;
     text-align: center;
+    position: relative;
     /*background-position: 50% 50%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -228,6 +229,15 @@ body {
     cursor: pointer;
 }
 
+.slider-knobs {
+    padding: 5px;
+    background-color: rgb(254, 227, 92);
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
 
 .about-us {
     padding: 20px;
