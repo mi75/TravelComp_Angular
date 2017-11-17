@@ -231,7 +231,7 @@ body {
 
 .slider-knobs {
     padding: 5px;
-    background-color: rgb(254, 227, 92);
+    background-color: transparent;
     position: absolute;
     bottom: 50px;
     left: 50%;

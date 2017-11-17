@@ -59,14 +59,20 @@ function slideNav() {
   var parentB = document.getElementById('sl-k');
   for (i = 0; i < slides.length; i++) {
     var b = document.createElement('button');
+    b.innerHTML = '&nbsp';
     b.className = "sl-b";
-    b.style.width = '20px';
+    b.style.margin = '8px';
+    b.style.backgroundColor = 'transparent';
+    b.style.width = '11px';
+    b.style.height = '15px';
+    b.style.border = '2px solid';
+    b.style.borderColor = 'gray';
     b.style.borderRadius = '50%';
-    b.style.backgroundColor = 'red';
+    b.style.cursor = 'pointer';
+    b.style.outline = 'none';
     parentB.appendChild(b);
-    b.innerHTML = i;
     b.onclick = function() {
-      alert(i);
+      goToSlide(i);
     }
   }
 }
