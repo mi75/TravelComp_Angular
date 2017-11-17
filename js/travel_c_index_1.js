@@ -71,10 +71,17 @@ function slideNav() {
     b.style.cursor = 'pointer';
     b.style.outline = 'none';
     parentB.appendChild(b);
-    b.onclick = function() {
-      goToSlide(i);
+  }
+  var knobs = document.getElementsByClassName('sl-b');
+  for (i = 0; i < knobs.length; i++) {
+    var a = function() {
+      alert(i);
+    }
+    knobs[i].onclick = function() {
+      a();
     }
   }
+
 }
 window.onload = slideNav();
 
