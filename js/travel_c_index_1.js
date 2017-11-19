@@ -81,6 +81,7 @@ function slider(f, img, button, V, Vo) {
       for (var k=0; k<button.length; k++) {
         button[k].style.opacity = ((button[k] == this) ? '.4' : '1');
       }
+      slider(f, img, button, '4000', '1000');
     }
   }
 }
@@ -88,4 +89,4 @@ function slider(f, img, button, V, Vo) {
 var f = document.getElementById('m-sl'),
     img = f.getElementsByClassName('slide'),
     button = f.getElementsByTagName('div')[0].getElementsByTagName('button');
-slider(f, img, button, '4000', '200');  // '4000' — скорость смены картинок, '1000' — скорость прозрачности
+slider(f, img, button, '4000', '1000');  // '4000' — скорость смены картинок, '1000' — скорость прозрачности
