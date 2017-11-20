@@ -74,11 +74,11 @@ function slideNav() {
   }
   var knobs = document.getElementsByClassName('sl-b');
   for (i = 0; i < knobs.length; i++) {
-    var a = function() {
-      alert(i);
-    }
     knobs[i].onclick = function() {
-      a();
+      for (k = 0; k < knobs.length; k++) {
+        if (knobs[k] == this)
+          goToSlide(k);
+      }
     }
   }
 
