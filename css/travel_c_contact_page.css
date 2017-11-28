@@ -263,6 +263,15 @@ input[type=checkbox]:checked + .pseudocheckbox::before { content: "\2713"; }
     cursor: pointer;
 }
 
+.error input,
+    .error textarea {
+      border: 1px solid red;
+    }
+
+    .error {
+      color: red;
+    }
+
 
 .soci-icons {
     text-align: center;
