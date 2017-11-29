@@ -35,30 +35,44 @@ $(function() {
               menu.removeAttr('style');
             }
         });
-    })
+})
 
 
 function showError(container, errorMessage) {
-      container.className = 'error';
+      container.className = 'f-row error';
       var msgElem = document.createElement('span');
       msgElem.className = "error-message";
       msgElem.innerHTML = errorMessage;
       container.appendChild(msgElem);
-    }
+}
 
-    function resetError(container) {
-      container.className = '';
-      if (container.lastChild.className == "error-message") {
-        container.removeChild(container.lastChild);
-      }
-    }
+function resetError(container) {
+  container.className = 'f-row';
+  if (container.lastChild.className == "error-message") {
+    container.removeChild(container.lastChild);
+  }
+}
 
-function validate(form) {
+function countChairs(inpVal) {
+  var content = inpVal;
+  var contentwithoutspaces = content.replace(/\s+/g, '');
+  var ilength = contentwithoutspaces.length;
+  return(ilength);
+}
+
+
+
+function toValidate(form) {
       var elems = form.elements;
 
       resetError(elems.from.parentNode);
+      // var no_letters = elems.from.value.replace(/\s+[a-z]/gi, '');
+      // alert(no_letters.length);
+      if (elems.from.value.length > 80) {
+        showError(elems.from.parentNode, ' максимум 80 символов.');
+      }
       if (!elems.from.value) {
-        showError(elems.from.parentNode, ' Укажите от кого.');
+        showError(elems.from.parentNode, ' Укажите, от кого.');
       }
 
       resetError(elems.mail.parentNode);
@@ -77,8 +91,11 @@ function validate(form) {
       }
 
       resetError(elems.message.parentNode);
+      var il = countChairs(elems.message.value);
+      if (il > 1000) {
+        showError(elems.message.parentNode, ' максимум 1000 знаков.');
+      }
       if (!elems.message.value) {
         showError(elems.message.parentNode, ' Отсутствует текст.');
       }
-
-    }
+}
