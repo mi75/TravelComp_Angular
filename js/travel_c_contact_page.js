@@ -66,15 +66,15 @@ function toValidate(form) {
       var elems = form.elements;
 
       resetError(elems.from.parentNode);
-
+      var name = elems.from.value.replace(/\s+/g, '');
+      if (!name) {
+        showError(elems.from.parentNode, ' Укажите, от кого.');
+      }
       if (elems.from.value.match(/[0-9!?,.;:@\\#$\/)(%^&*]/g)) {
         showError(elems.from.parentNode, ' допустимы только буквы.');
       }
       if (elems.from.value.length > 80) {
         showError(elems.from.parentNode, ' максимум 80 символов.');
-      }
-      if (!elems.from.value) {
-        showError(elems.from.parentNode, ' Укажите, от кого.');
       }
 
       resetError(elems.mail.parentNode);
@@ -82,7 +82,7 @@ function toValidate(form) {
         showError(elems.mail.parentNode, ' Укажите адрес.');
       }
       else {
-        var adr = elems.mail.value.match(/^[A-Za-z0-9][A-Za-z0-9\._\-]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]/);
+        var adr = elems.mail.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         if (!adr) {
           showError(elems.mail.parentNode, ' некорректный адрес');
         }
@@ -95,7 +95,7 @@ function toValidate(form) {
       else {
         var simb = elems.phone.value.replace(/[0-9)( +-]/g, '');
         var d = elems.phone.value.match(/[0-9]/g);
-        if (simb || (d.length!==12 && d.length!==10)) {
+        if (simb || (d.length!==12 && d.length!==10) || (d[0]!=='0' && String(d.slice(0,3)) !== '3,8,0')) {
           showError(elems.phone.parentNode, ' некорректный номер');
         }
       }
@@ -106,11 +106,14 @@ function toValidate(form) {
       }
 
       resetError(elems.message.parentNode);
-      var il = countChairs(elems.message.value);
-      if (il > 1000) {
-        showError(elems.message.parentNode, ' максимум 1000 знаков.');
-      }
-      if (!elems.message.value) {
+      var content = elems.message.value.replace(/\s+/g, '');
+      if (!content) {
         showError(elems.message.parentNode, ' Отсутствует текст.');
+      }
+      else {
+        var il = countChairs(elems.message.value);
+        if (il > 1000) {
+          showError(elems.message.parentNode, ' максимум 1000 знаков.');
+        }
       }
 }
