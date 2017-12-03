@@ -53,28 +53,25 @@ function resetError(elem) {
   }
 }
 
-function countChairs(inpVal) {
-  var content = inpVal;
-  var contentwithoutspaces = content.replace(/\s+/g, '');
-  var ilength = contentwithoutspaces.length;
-  return(ilength);
-}
+function toValidate() {
 
-
-function toValidate(form) {
+      var form = document.getElementById("contact-form");
       var elems = form.elements;
 
       resetError(elems.from);
-      var name = elems.from.value.replace(/\s+/g, '');
-      if (!name) {
-        showError(elems.from, ' Укажите, от кого.');
+      if (!validator.validate(elems.from.value, validator.rules.notEmpty)) {
+          showError(elems.from, ' Укажите, от кого.');
       }
-      if (elems.from.value.match(/[0-9!?,.;:@\\#$\/)(%^&*]/g)) {
+      else {
+        if (!validator.validate(elems.from.value, validator.rules.clientName)) {
+        resetError(elems.from);
         showError(elems.from, ' допустимы только буквы.');
+        }
       }
-      if (elems.from.value.length > 80) {
-        showError(elems.from, ' максимум 80 символов.');
+      if (!validator.validate(elems.from.value, validator.rules.charsCount, 80)) {
+          showError(elems.from, ' максимум 80 символов.');
       }
+
 
       resetError(elems.mail);
       if (!elems.mail.value) {
@@ -86,19 +83,15 @@ function toValidate(form) {
             showError(elems.mail, ' некорректный адрес');
           }
       }
+
       resetError(elems.phone);
-      if (!elems.phone.value) {
-        showError(elems.phone, ' Укажите телефон.');
-      }
+      if (!validator.validate(elems.phone.value, validator.rules.notEmpty)){
+          showError(elems.phone, ' Укажите телефон.');
+        }
       else {
         if (!validator.validate(elems.phone.value, validator.rules.phone)){
           showError(elems.phone, ' некорректный номер');
         }
-        // var simb = elems.phone.value.replace(/[0-9)( +-]/g, '');
-        // var d = elems.phone.value.match(/[0-9]/g);
-        // if (simb || (d.length!==12 && d.length!==10) || (d[0]!=='0' && String(d.slice(0,3)) !== '3,8,0')) {
-        //   showError(elems.phone, ' некорректный номер');
-        // }
       }
 
       resetError(elems.how);
@@ -107,14 +100,14 @@ function toValidate(form) {
       }
 
       resetError(elems.message);
-      var content = elems.message.value.replace(/\s+/g, '');
-      if (!content) {
-        showError(elems.message, ' Отсутствует текст.');
+      if (!validator.validate(elems.message.value, validator.rules.notEmpty)) {
+          showError(elems.message, ' Отсутствует текст.');
       }
       else {
-        var il = countChairs(elems.message.value);
-        if (il > 1000) {
-          showError(elems.message, ' максимум 1000 знаков.');
+        if (!validator.validate(elems.message.value, validator.rules.charsCount, 1000)) {
+          showError(elems.message, ' максимум 1000 символов.');
         }
       }
+
+      return false;
 }

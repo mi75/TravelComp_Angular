@@ -60,32 +60,32 @@
         <div class="contact_form">
             <h2>Contact our experts</h2>
             <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong> or complete a form below:</p>
-            <form name="my" method="post" action="mailto:client@travel.com.ua">
+            <form id="contact-form" name="my" method="post" action="/api/contacts" onsubmit="return toValidate();">
                 <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
                 <div class="row">
                     <div class="col-sm-0 col-md-2"></div>
                     <div class="col-sm-6 col-md-4">
                         <div class="f-row">
                             <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
-                            <textarea name="message" class="field" rows="13" required"></textarea>
+                            <textarea name="message" class="field" rows="13"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="f-row">
                             <label for="from">Your full name<span class="req">*</span>:</label><br />
-                            <input type="text" name="from" class="field" required>
+                            <input type="text" name="from" class="field">
                         </div>
                         <div class="f-row">
                             <label for="mail">Your Email address<span class="req">*</span>:</label><br />
-                            <input type="email" name="mail" class="field" required>
+                            <input type="text" name="mail" class="field">
                         </div>
                         <div class="f-row">
                             <label for="phone">Your telephone number<span class="req">*</span>:</label><br />
-                            <input type="text" name="phone" class="field" required>
+                            <input type="text" name="phone" class="field">
                         </div>
                         <div class="f-row">
                             <label for="how">Select, how did you hear about us?<span class="req">*</span>:</label><br />
-                            <select name="how" class="field" required>
+                            <select name="how" class="field">
                                 <option></option>
                                 <option value="1">от друзей</option>
                                 <option value="2">через поиск туров</option>
@@ -99,7 +99,7 @@
                     <span class="pseudocheckbox">Keep me up to date with news and offers</span>
                 </label>
                 <div class="go">
-                    <input class="go-button" type="button" onclick="toValidate(this.form)" value="SUBMIT">
+                    <input class="go-button" type="submit" value="SUBMIT">
                 </div>
             </form>
         </div>

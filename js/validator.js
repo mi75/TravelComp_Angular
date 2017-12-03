@@ -1,16 +1,42 @@
 var validator = {
 	rules: {
-		phone : 0,
-		email: 1,
-		notEmpty: 2,
-		charsCount: 3,
+		notEmpty: 0,
+		clientName: 1,
+		email: 2,
+		phone : 3,
+		charsCount: 4,
 	},
 	validate: function(stringToValidate, rule, additionalParameter){
+		if (rule == this.rules.notEmpty){
+			return this.validateNotEmpty(stringToValidate);
+		}
+		if (rule == this.rules.clientName){
+			return this.validateName(stringToValidate);
+		}
 		if (rule == this.rules.phone){
 			return this.validatePhone(stringToValidate);
 		}
+		if (rule == this.rules.charsCount){
+			return this.validateCharsCount(stringToValidate, additionalParameter);
+		}
+	},
+
+	validateNotEmpty: function(stringToValidate){
+		if (!stringToValidate.replace(/\s+/g, '')) {
+          return false;
+        }
+        return true;
+	},
+
+	validateName: function(stringToValidate){
+		if (stringToValidate.match(/[0-9!?,.;:@\\#$\/)(%^&*]/g)) {
+          return false;
+        }
+        return true;
 	},
 	
+
+
 	validatePhone: function(stringToValidate){
 		var simb = stringToValidate.replace(/[0-9)( +-]/g, '');
         var d = stringToValidate.match(/[0-9]/g);
@@ -25,10 +51,12 @@ var validator = {
 		return (adressArray != null && adressArray.length > 0);
 	},
 
+	
+
 	validateCharsCount: function(stringToValidate, numberOfChars){
-		var contentwithoutspaces = stringToValidate.replace(/\s+/g, '');
-		var ilength = contentwithoutspaces.length;
-		return(ilength <= numberOfChars);
+		var contentWithoutSpaces = stringToValidate.replace(/\s+/g, '');
+		var nettoLength = contentWithoutSpaces.length;
+		return(nettoLength <= numberOfChars);
 	}
 	
 }
