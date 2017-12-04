@@ -13,6 +13,9 @@ var validator = {
 		if (rule == this.rules.clientName){
 			return this.validateName(stringToValidate);
 		}
+		if (rule == this.rules.email){
+			return this.validateEmail(stringToValidate);
+		}
 		if (rule == this.rules.phone){
 			return this.validatePhone(stringToValidate);
 		}
@@ -35,7 +38,10 @@ var validator = {
         return true;
 	},
 	
-
+	validateEmail: function(stringToValidate){
+		var adressArray = stringToValidate.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+		return (adressArray != null && adressArray.length > 0);
+	},
 
 	validatePhone: function(stringToValidate){
 		var simb = stringToValidate.replace(/[0-9)( +-]/g, '');
@@ -45,13 +51,6 @@ var validator = {
         }
         return true;
 	},
-
-	validateEmail: function(stringToValidate){
-		var adressArray = stringToValidate.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-		return (adressArray != null && adressArray.length > 0);
-	},
-
-	
 
 	validateCharsCount: function(stringToValidate, numberOfChars){
 		var contentWithoutSpaces = stringToValidate.replace(/\s+/g, '');

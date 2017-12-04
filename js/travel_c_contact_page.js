@@ -78,10 +78,9 @@ function toValidate() {
         showError(elems.mail, ' Укажите адрес.');
       }
       else {
-          var adr = elems.mail.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-          if (!adr) {
-            showError(elems.mail, ' некорректный адрес');
-          }
+        if (!validator.validate(elems.mail.value, validator.rules.email)){
+          showError(elems.mail, ' некорректный адрес');
+        }
       }
 
       resetError(elems.phone);
@@ -96,7 +95,7 @@ function toValidate() {
 
       resetError(elems.how);
       if (!elems.how.value) {
-        showError(elems.how, ' Укажите, откуда.');
+        showError(elems.how, ' Укажите источник.');
       }
 
       resetError(elems.message);
