@@ -68,13 +68,18 @@ function processGetRequest(req, res){
 	  		default :{
 	  			targetFileName = __dirname + req.url;
 	  		}
-		}
+	}
 	  		
-	  	//TODO: show 404 error if file does not exist
-
-  		fs.readFile(targetFileName, function(err, data) {
-    	res.writeHead(200, {});
-    	res.write(data);
-    	res.end();
+	if (fs.existsSync(targetFileName)) {
+	  	fs.readFile(targetFileName, function(err, data) {
+	    	res.writeHead(200, {});
+	    	res.write(data);
+	    	res.end();
 		});
+	}
+	else {
+		res.writeHead(404);
+		res.write('Not found');
+		res.end();
+	}
 }
