@@ -7,8 +7,6 @@ http.createServer(function(req, res) {
     var headers = { 'Test-Header': 'Test' };
 
     try {
-        console.log(req.method);
-        console.log(req.url);
 
         if (req.method == 'GET') {
             processGetRequest(req, res);

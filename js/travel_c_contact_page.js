@@ -55,64 +55,70 @@ function resetError(elem) {
 
 function toValidate() {
 
-    var ok = 0;
+    var er = null;
     var form = document.getElementById("contact-form");
     var elems = form.elements;
 
     resetError(elems.from);
     if (!validator.validate(elems.from.value, validator.rules.notEmpty)) {
         showError(elems.from, ' Укажите, от кого.');
-        ok++;
+        er = 1;
     } else {
         if (!validator.validate(elems.from.value, validator.rules.clientName)) {
             resetError(elems.from);
             showError(elems.from, ' допустимы только буквы.');
-            ok++;
+            er = 1;
         }
     }
     if (!validator.validate(elems.from.value, validator.rules.charsCount, 80)) {
         showError(elems.from, ' максимум 80 символов.');
-        ok++;
+        er = 1;
     }
 
 
     resetError(elems.mail);
     if (!elems.mail.value) {
         showError(elems.mail, ' Укажите адрес.');
-        ok++;
+        er = 1;
     } else {
         if (!validator.validate(elems.mail.value, validator.rules.email)) {
             showError(elems.mail, ' некорректный адрес');
-            ok++;
+            er = 1;
         }
     }
 
     resetError(elems.phone);
     if (!validator.validate(elems.phone.value, validator.rules.notEmpty)) {
         showError(elems.phone, ' Укажите телефон.');
-        ok++;
+        er = 1;
     } else {
         if (!validator.validate(elems.phone.value, validator.rules.phone)) {
             showError(elems.phone, ' некорректный номер');
-            ok++;
+            er = 1;
         }
     }
 
     resetError(elems.how);
     if (!elems.how.value) {
         showError(elems.how, ' Укажите источник.');
-        ok++;
+        er = 1;
     }
 
     resetError(elems.message);
     if (!validator.validate(elems.message.value, validator.rules.notEmpty)) {
         showError(elems.message, ' Отсутствует текст.');
-        ok++;
+        er = 1;
     } else {
         if (!validator.validate(elems.message.value, validator.rules.charsCount, 1000)) {
             showError(elems.message, ' максимум 1000 символов.');
-            ok++;
+            er = 1;
         }
     }
-    if (ok > 0) return false;
+    if (er) return false;
+}
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/contacts', false);
+xhr.send();
+if (xhr.status != 200) {
+    alert(xhr.status + ': ' + xhr.statusText);
 }
