@@ -47,11 +47,13 @@ function processGetRequest(req, res) {
         case '/':
             {
                 targetFileName = __dirname + '/index.html';
+                console.log(targetFileName);
                 break;
             }
         case '/contacts':
             {
                 targetFileName = __dirname + '/contact_page.html';
+                console.log(targetFileName);
                 break;
             }
         case '/favicon.ico':

@@ -62,7 +62,7 @@
     <div class="contact_form">
         <h2>Contact our experts</h2>
         <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong> or complete a form below:</p>
-        <form id="contact-form" name="my" method="post" action="/api/contacts" onsubmit="return toValidate();">
+        <form id="contact-form" name="mySuggestion" method="post" action="/api/contacts" onsubmit="return toValidate();">
             <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
             <div class="row">
                 <div class="col-sm-0 col-md-2"></div>
@@ -146,7 +146,7 @@
                     <p>Get copies of our latest brochure in two different ways: to your letterbox or view them instantly in your browser.</p>
                     <form class="sign-form" action="" method="get" name="interest">
                         <span>Sign up:</span><br>
-                        <input type="text" placeholder="Your email"><button type="submit" onclick="xhr()">Send</button>
+                        <input type="text" placeholder="Your email"><button type="button" onclick="sendPost()">Send</button>
                     </form>
                 </div>
                 <div class="col-sm-6 col-xs-12">

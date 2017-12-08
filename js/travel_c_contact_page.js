@@ -116,9 +116,23 @@ function toValidate() {
     }
     if (er) return false;
 }
-var xhr = new XMLHttpRequest();
-xhr.open('GET', '/contacts', false);
-xhr.send();
-if (xhr.status != 200) {
-    alert(xhr.status + ': ' + xhr.statusText);
+
+function sendGet() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/', true);
+    xhr.send();
+    if (xhr.status != 200) {
+        alert(xhr.status + ': ' + xhr.statusText);
+    }
+}
+
+function sendPost() {
+    var formData = new FormData(document.forms.mySuggestion);
+    formData.append("Asinc", "Yes");
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/contacts');
+    xhr.send(formData);
+    if (xhr.status != 200) {
+        alert(xhr.status + ': ' + xhr.statusText);
+    }
 }
