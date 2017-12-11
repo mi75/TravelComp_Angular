@@ -20,7 +20,8 @@ http.createServer(function(req, res) {
                 });
 
                 req.on('end', function() {
-                    postData = qs.parse(body);
+                    //postData = qs.parse(body);
+                    postData = JSON.parse(body);
 
                     if (req.url == '/api/contacts') {
                         console.log(postData);
