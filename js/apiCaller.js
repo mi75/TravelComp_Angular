@@ -1,13 +1,4 @@
-// function sendGet() {
-//     var xhr = new XMLHttpRequest();
-//     xhr.open('GET', '/', true);
-//     xhr.send();
-//     if (xhr.status != 200) {
-//         alert(xhr.status + ': ' + xhr.statusText);
-//     }
-// }
-
-function sendPost(upload, formData) {
+function sendPost(upload, formData, onSuccess, onFail) {
 
     var object = {};
     formData.forEach(function(value, key) {
@@ -21,7 +12,10 @@ function sendPost(upload, formData) {
 
     xhr.addEventListener("loadend", function() {
         if (xhr.status != 200) {
-            alert(xhr.status + ': ' + xhr.statusText);
+            var showBug = xhr.status + ': ' + xhr.statusText;
+            onFail(showBug);
+        } else {
+            onSuccess();
         }
     });
 }

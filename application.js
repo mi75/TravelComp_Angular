@@ -1,6 +1,5 @@
 var http = require('http');
 var fs = require('fs');
-var qs = require('querystring');
 
 //create a server object:
 http.createServer(function(req, res) {
@@ -20,7 +19,6 @@ http.createServer(function(req, res) {
                 });
 
                 req.on('end', function() {
-                    //postData = qs.parse(body);
                     postData = JSON.parse(body);
 
                     if (req.url == '/api/contacts') {
@@ -48,13 +46,11 @@ function processGetRequest(req, res) {
         case '/':
             {
                 targetFileName = __dirname + '/index.html';
-                console.log(targetFileName);
                 break;
             }
         case '/contacts':
             {
                 targetFileName = __dirname + '/contact_page.html';
-                console.log(targetFileName);
                 break;
             }
         case '/favicon.ico':

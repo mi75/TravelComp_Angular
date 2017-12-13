@@ -113,13 +113,12 @@ function toValidate() {
             er = 1;
         }
     }
-    if (er) return false;
-    sendMySuggestion();
+    if (!er) sendMySuggestion();
 }
 
 function sendMySuggestion() {
     var formData = new FormData(document.forms.mySuggestion);
     var upload = document.forms.mySuggestion.action;
-    sendPost(upload, formData);
-    document.forms.mySuggestion.reset();
+
+    sendPost(upload, formData, function() { document.forms.mySuggestion.reset(); }, function(showBug) { alert(showBug) });
 }
