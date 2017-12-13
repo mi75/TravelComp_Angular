@@ -118,7 +118,7 @@ function toValidate() {
 
 function sendMySuggestion() {
     var formData = new FormData(document.forms.mySuggestion);
-    var upload = document.forms.mySuggestion.action;
+    var uploadAddress = document.forms.mySuggestion.action;
 
-    sendPost(upload, formData, function() { document.forms.mySuggestion.reset(); }, function(showBug) { alert(showBug) });
+    sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) });
 }

@@ -7,13 +7,13 @@ function sendPost(upload, formData, onSuccess, onFail) {
     var jsd = JSON.stringify(object);
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', upload);
+    xhr.open('POST', uploadAddress);
     xhr.send(jsd);
 
     xhr.addEventListener("loadend", function() {
         if (xhr.status != 200) {
-            var showBug = xhr.status + ': ' + xhr.statusText;
-            onFail(showBug);
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            onFail(errorMessage);
         } else {
             onSuccess();
         }
