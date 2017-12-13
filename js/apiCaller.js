@@ -1,4 +1,4 @@
-function sendPost(upload, formData, onSuccess, onFail) {
+function sendPost(uploadAddress, formData, onSuccess, onFail) {
 
     var object = {};
     formData.forEach(function(value, key) {
