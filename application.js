@@ -42,15 +42,18 @@ http.createServer(function(req, res) {
 function processGetRequest(req, res) {
 
     var targetFileName;
+    var useLayout = false;
     switch (req.url) {
         case '/':
             {
                 targetFileName = __dirname + '/index.html';
+                useLayout = true;
                 break;
             }
         case '/contacts':
             {
                 targetFileName = __dirname + '/contact_page.html';
+                useLayout = true;
                 break;
             }
         case '/favicon.ico':
@@ -65,14 +68,26 @@ function processGetRequest(req, res) {
     }
 
     if (fs.existsSync(targetFileName)) {
-        fs.readFile(targetFileName, function(err, data) {
-            res.writeHead(200, {});
-            res.write(data);
-            res.end();
-        });
+
+        var data = fs.readFileSync(targetFileName);
+
+        res.writeHead(200, {});
+
+        if (useLayout) {
+            var headerFileName = __dirname + '/header.html';
+            var footerFileName = __dirname + '/footer.html';
+            var header = fs.readFileSync(headerFileName);
+            var footer = fs.readFileSync(footerFileName);
+            data = header + data + footer;
+        }
+
+        res.write(data);
+        res.end();
+
     } else {
         res.writeHead(404);
         res.write('Not found');
         res.end();
     }
+
 }
