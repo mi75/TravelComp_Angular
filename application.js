@@ -76,9 +76,17 @@ function processGetRequest(req, res) {
         if (useLayout) {
             var headerFileName = __dirname + '/header.html';
             var footerFileName = __dirname + '/footer.html';
+            var layoutFileName = __dirname + '/layout.html';
+
+            var body = data;
             var header = fs.readFileSync(headerFileName);
             var footer = fs.readFileSync(footerFileName);
-            data = header + data + footer;
+            data = fs.readFileSync(layoutFileName);
+
+            data = data.replace("@renderHeader", header);
+            data = data.replace("@renderBody", body);
+            data = data.replace("@renderFooter", footer);
+
         }
 
         res.write(data);
