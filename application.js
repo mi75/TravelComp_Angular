@@ -83,13 +83,15 @@ function processGetRequest(req, res) {
             var footer = fs.readFileSync(footerFileName);
             data = fs.readFileSync(layoutFileName);
 
-            data = data.replace("@renderHeader", header);
-            data = data.replace("@renderBody", body);
-            data = data.replace("@renderFooter", footer);
+            var textData = String(data);
+
+            textData = textData.replace("@renderHeader", header);
+            textData = textData.replace("@renderBody", body);
+            textData = textData.replace("@renderFooter", footer);
 
         }
 
-        res.write(data);
+        res.write(textData);
         res.end();
 
     } else {
