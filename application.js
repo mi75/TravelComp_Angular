@@ -73,6 +73,8 @@ function processGetRequest(req, res) {
 
         res.writeHead(200, {});
 
+        
+
         if (useLayout) {
             var headerFileName = __dirname + '/header.html';
             var footerFileName = __dirname + '/footer.html';
@@ -81,18 +83,28 @@ function processGetRequest(req, res) {
             var body = data;
             var header = fs.readFileSync(headerFileName);
             var footer = fs.readFileSync(footerFileName);
-            data = fs.readFileSync(layoutFileName);
 
-            var textData = String(data);
+            var layout =  fs.readFileSync(layoutFileName);
 
-            textData = textData.replace("@renderHeader", header);
-            textData = textData.replace("@renderBody", body);
-            textData = textData.replace("@renderFooter", footer);
+            var textData = layout.toString('UTF8');
+
+            console.log(textData);
+
+             textData = textData.replace("@renderHeader", header.toString('UTF8'));
+             textData = textData.replace("@renderBody", body.toString('UTF8'));
+             textData = textData.replace("@renderFooter", footer.toString('UTF8'));
+
+            res.write(textData);
+        	res.end();
+
+        } else {
+
+        	res.write(data);
+        	res.end();
 
         }
 
-        res.write(textData);
-        res.end();
+        
 
     } else {
         res.writeHead(404);
