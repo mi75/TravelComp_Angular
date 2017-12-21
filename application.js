@@ -73,38 +73,33 @@ function processGetRequest(req, res) {
 
         res.writeHead(200, {});
 
-        
-
         if (useLayout) {
             var headerFileName = __dirname + '/header.html';
             var footerFileName = __dirname + '/footer.html';
             var layoutFileName = __dirname + '/layout.html';
 
-            var body = data;
             var header = fs.readFileSync(headerFileName);
             var footer = fs.readFileSync(footerFileName);
+            var layout = fs.readFileSync(layoutFileName);
 
-            var layout =  fs.readFileSync(layoutFileName);
+            var textBody = data.toString('UTF8');
+            var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/gm);
+            textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/gm, '');
 
             var textData = layout.toString('UTF8');
+            textData = textData.replace("@scripts", bodyScripts);
 
-            console.log(textData);
-
-             textData = textData.replace("@renderHeader", header.toString('UTF8'));
-             textData = textData.replace("@renderBody", body.toString('UTF8'));
-             textData = textData.replace("@renderFooter", footer.toString('UTF8'));
+            textData = textData.replace("@renderHeader", header.toString('UTF8'));
+            textData = textData.replace("@renderBody", textBody);
+            textData = textData.replace("@renderFooter", footer.toString('UTF8'));
 
             res.write(textData);
-        	res.end();
+            res.end();
 
         } else {
-
-        	res.write(data);
-        	res.end();
-
+            res.write(data);
+            res.end();
         }
-
-        
 
     } else {
         res.writeHead(404);
