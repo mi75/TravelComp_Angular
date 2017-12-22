@@ -83,11 +83,11 @@ function processGetRequest(req, res) {
             var layout = fs.readFileSync(layoutFileName);
 
             var textBody = data.toString('UTF8');
-            var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/gm);
-            textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/gm, '');
+            var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/m);
+            textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/m, '');
 
             var textData = layout.toString('UTF8');
-            textData = textData.replace("@scripts", bodyScripts);
+            textData = textData.replace("@scripts", bodyScripts[1]);
 
             textData = textData.replace("@renderHeader", header.toString('UTF8'));
             textData = textData.replace("@renderBody", textBody);
