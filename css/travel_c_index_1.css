@@ -234,6 +234,17 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
+    outline: none;
+}
+
+*:focus,
+button,
+button:focus,
+button:active {
+    outline: 0;
+    outline-width: 0;
+    outline: none;
+    outline-style: none;
 }
 
 .sl-b {
@@ -245,11 +256,10 @@ body {
     border-color: gray;
     border-radius: 50%;
     cursor: pointer;
-    outline: none;
 }
 
 .clicked {
-    background-color: 'transparent';
+    background-color: transparent;
 }
 
 .about-us {

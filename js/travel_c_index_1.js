@@ -52,10 +52,9 @@ function previousSlide() {
 
 function goToSlide(n) {
     slides[currentSlide].className = 'slide';
-    knobs[currentSlide].style.backgroundColor = 'gray';
-
+    knobs[currentSlide].className = 'sl-b';
     currentSlide = (n + slides.length) % slides.length;
-    knobs[currentSlide].style.backgroundColor = 'transparent';
+    knobs[currentSlide].className = 'sl-b clicked';
     slides[currentSlide].className = 'slide showing';
 }
 
@@ -64,11 +63,14 @@ function initSlideNav() {
     for (i = 0; i < slides.length; i++) {
         var b = document.createElement('button');
         b.innerHTML = '&nbsp';
-        b.className = "sl-b";
+        if (i === 0) {
+            b.className = 'sl-b clicked';
+        } else {
+            b.className = 'sl-b';
+        }
         parentB.appendChild(b);
     }
     var knobs = document.getElementsByClassName('sl-b');
-
     for (i = 0; i < knobs.length; i++) {
         knobs[i].onclick = function() {
             for (k = 0; k < knobs.length; k++) {
@@ -80,20 +82,5 @@ function initSlideNav() {
             }
         }
     }
-
-    return knobs;
-
+    return knobs; // возвращаем коллекцию кнопок для прокрутки setInterval-ом
 }
-//window.onload = slideNav();
-
-// var next = document.getElementById('next');
-// var previous = document.getElementById('previous');
-
-// next.onclick = function() {
-//   pauseSlideshow();
-//   nextSlide();
-// }
-// previous.onclick = function() {
-//   pauseSlideshow();
-//   previousSlide();
-// }
