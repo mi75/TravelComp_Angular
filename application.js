@@ -42,15 +42,18 @@ http.createServer(function(req, res) {
 function processGetRequest(req, res) {
 
     var targetFileName;
+    var useLayout = false;
     switch (req.url) {
         case '/':
             {
                 targetFileName = __dirname + '/index.html';
+                useLayout = true;
                 break;
             }
         case '/contacts':
             {
                 targetFileName = __dirname + '/contact_page.html';
+                useLayout = true;
                 break;
             }
         case '/favicon.ico':
@@ -65,14 +68,43 @@ function processGetRequest(req, res) {
     }
 
     if (fs.existsSync(targetFileName)) {
-        fs.readFile(targetFileName, function(err, data) {
-            res.writeHead(200, {});
+
+        var data = fs.readFileSync(targetFileName);
+
+        res.writeHead(200, {});
+
+        if (useLayout) {
+            var headerFileName = __dirname + '/header.html';
+            var footerFileName = __dirname + '/footer.html';
+            var layoutFileName = __dirname + '/layout.html';
+
+            var header = fs.readFileSync(headerFileName);
+            var footer = fs.readFileSync(footerFileName);
+            var layout = fs.readFileSync(layoutFileName);
+
+            var textBody = data.toString('UTF8');
+            var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/m);
+            textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/m, '');
+
+            var textData = layout.toString('UTF8');
+            textData = textData.replace("@scripts", bodyScripts[1]);
+
+            textData = textData.replace("@renderHeader", header.toString('UTF8'));
+            textData = textData.replace("@renderBody", textBody);
+            textData = textData.replace("@renderFooter", footer.toString('UTF8'));
+
+            res.write(textData);
+            res.end();
+
+        } else {
             res.write(data);
             res.end();
-        });
+        }
+
     } else {
         res.writeHead(404);
         res.write('Not found');
         res.end();
     }
+
 }
