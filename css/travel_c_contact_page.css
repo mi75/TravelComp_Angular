@@ -1,0 +1,327 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    margin: 0;
+    background-color: #e1e1e1;
+}
+
+.h-medals {
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url(../img/Tours-2015-1.png);   
+}
+
+.h-logo {
+    height: 130px;
+    text-align: center;
+    /*background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url(../img/friends_logo.jpg);*/
+}
+
+.h-logo img {
+    max-height: 120px;
+}
+
+.h-logo a {
+    outline: none;
+}
+
+.h-contacts {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.main-menu {
+    height: 44px;
+    padding: 1px 0;
+}
+
+.main-menu ul {
+    padding: 1px 0;
+    margin: auto;
+    height: 42px;
+    background-color: white;
+}
+
+.main-menu li {
+    float: left;
+    list-style: none;
+    margin: auto;
+    padding: 6px 0;
+    box-sizing: border-box;
+    width: 14.285%;
+    height: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 500;
+    vertical-align: middle;
+}
+ 
+.main-menu span {
+    text-decoration: none;
+    color: #006386;
+}   
+
+.main-menu #pull {  
+    display: none;  
+}
+
+.main-menu a {
+    text-decoration: none;
+}
+
+.main-menu a:hover {
+    color: #006386;
+}
+
+.menu-fix {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    padding: 0;
+    margin-bottom: 0;
+    text-align: center;
+    z-index: 1000;
+}
+
+@media screen and (max-width: 960px) {  
+    .main-menu {   
+        height: 80px;  
+    }  
+    .main-menu ul {  
+        width: 100%;  
+        height: auto;
+        display: inline-block;
+        background-color: white;  
+    }  
+    .main-menu li {  
+        width: 25%;  
+        float: left;  
+        position: relative;  
+    }    
+    .main-menu a {  
+        text-decoration: none;
+        text-align: left;  
+        width: 100%;  
+        text-indent: 25px;  
+    }
+    .main-menu a:hover {
+    color: #006386;
+    }
+}
+
+@media only screen and (max-width : 500px) {  
+    .main-menu {  
+        height: 30px;  
+    }  
+    .main-menu ul {  
+        display: none;
+    }  
+    .main-menu #pull {
+        display: block;
+        height: 30px;
+        background-color: white;  
+        width: 100%;
+        text-align: center;
+    }
+    .main-menu #pull:after {  
+        /*content: '▼ ';*/  
+        /*background: url('nav-icon.png') no-repeat;*/
+        margin: 0;
+        background-color: white;
+        /*width: 100%;*/  
+        height: 30px;
+        display: block;
+        z-index: 1000;
+        /*position: absolute;
+        right: 15px;  
+        top: 10px;*/
+    } 
+    .main-menu li {
+        margin: 0;
+        display: block;
+        background-color: white; 
+        float: none;  
+        width: 100%;
+        z-index: 1000;
+    }  
+    .main-menu li a {  
+        border-bottom: 1px solid #576979;  
+    }  
+}
+
+.address_banner {
+    margin: 0;
+    padding: 0;
+    min-height: 400px;
+    width: 100%;
+    background-position: 50% 80%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../img/ship_1.jpg);
+}
+
+.contact_block {
+    float: left;
+    margin-left: 10%;
+    padding-top: 30px;
+    font-family: 'Oxygen', sans-serif;
+    color: #0000FF;
+    text-align: center;
+    /*margin-top: 20px;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 2%*/
+}
+
+.contact_form {
+    margin: 0;
+    padding: 15px 5px;
+    min-height: 400px;
+    width: 100%;
+    background: #f1f7fa;
+    font-family: 'Oxygen', sans-serif;
+    text-align: center;
+}
+
+.row {
+    width: 100%;
+}
+
+form .f-row {
+    padding: 5px 8px;
+    margin-bottom: 5px;
+}
+
+form .f-row:hover {
+    background: #f1e7fa;
+}
+
+form label {
+    font-size: 1em;
+    font-weight: bold;
+    width: 100%;
+    padding: 6px 0;
+    color: #464646;
+    vertical-align: top;
+}
+
+form .req { color: #ca5354; }
+
+form .note {
+    font-size: 0.8em;
+    line-height: 1.33em;
+    font-weight: normal;
+    padding: 2px 7px;
+    margin-bottom: 10px;
+}
+
+form input:focus, form textarea:focus { outline: none; }
+
+form .field {
+    padding: 8px 9px;
+    width: 100%;
+    font-size: 1em;
+    font-weight: normal;
+    color: #898989;
+}
+
+input[type=checkbox] { display: none; }
+
+.pseudocheckbox::before {  
+    content: "\00A0";
+    display: inline-block;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border: 2px solid #B0B0B0;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    line-height: 20px;
+    font-weight: bold;
+    color: #0000FF;
+}
+input[type=checkbox] + .pseudocheckbox { cursor: pointer; }
+input[type=checkbox]:checked + .pseudocheckbox::before { content: "\2713"; }
+
+.go-button {
+    width: 180px;
+    height: 40px;
+    border-radius: 2%;
+    cursor: pointer;
+}
+
+.error input, .error textarea, .error select {
+    border: 1px solid red;
+}
+
+.error span {
+    font-size: 0.8em;
+    color: red;
+}
+
+
+.soci-icons {
+    text-align: center;
+    display: block;
+}
+
+.footer {
+    background-color: #e1e1e1;
+    margin: 0 auto;
+    min-height: 240px;
+    text-align: center;
+}
+
+.footer h5 {
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.footer p {
+    padding: 20px;
+    text-align: left;
+}
+
+.footer form {
+    padding: 20px;
+    text-align: left;
+/*    position: absolute;
+    bottom: 0;*/
+}
+
+.sign-form input {
+    max-width: 75%;
+    height: 36px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 7px;
+    font-size: 16px;
+}
+
+.sign-form button {
+    max-width: 25%;
+    background-color: #006386;
+    border-style: none;
+    font-size: 100%;
+    color: white;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+
+
+.clear{
+    clear: both;
+}

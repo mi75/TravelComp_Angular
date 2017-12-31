@@ -33,6 +33,8 @@ body {
 }
 
 .h-contacts {
+    margin-top: auto;
+    padding-bottom: 5px;
     text-align: center;
     vertical-align: middle;
 }
