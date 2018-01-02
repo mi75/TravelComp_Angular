@@ -1,4 +1,3 @@
-
 body {
     margin: 0;
     padding: 0;
@@ -13,7 +12,7 @@ body {
     background-size: contain;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    background-image: url(../img/Tours-2015-1.png);   
+    background-image: url(../img/Tours-2015-1.png);
 }
 
 .h-logo {
@@ -40,7 +39,6 @@ body {
     vertical-align: middle;
 }
 
-
 .main-menu {
     height: 44px;
     padding: 1px 0;
@@ -66,14 +64,14 @@ body {
     font-weight: 500;
     vertical-align: middle;
 }
- 
+
 .main-menu span {
     text-decoration: none;
     color: #006386;
-}   
+}
 
-.main-menu #pull {  
-    display: none;  
+.main-menu #pull {
+    display: none;
 }
 
 .main-menu a {
@@ -94,70 +92,70 @@ body {
     z-index: 1000;
 }
 
-@media screen and (max-width: 960px) {  
-    .main-menu {   
-        height: 80px;  
-    }  
-    .main-menu ul {  
-        width: 100%;  
+@media screen and (max-width: 960px) {
+    .main-menu {
+        height: 80px;
+    }
+    .main-menu ul {
+        width: 100%;
         height: auto;
         display: inline-block;
-        background-color: white;  
-    }  
-    .main-menu li {  
-        width: 25%;  
-        float: left;  
-        position: relative;  
-    }    
-    .main-menu a {  
+        background-color: white;
+    }
+    .main-menu li {
+        width: 25%;
+        float: left;
+        position: relative;
+    }
+    .main-menu a {
         text-decoration: none;
-        text-align: left;  
-        width: 100%;  
-        text-indent: 25px;  
+        text-align: left;
+        width: 100%;
+        text-indent: 25px;
     }
     .main-menu a:hover {
-    color: #006386;
+        color: #006386;
     }
 }
 
-@media only screen and (max-width : 500px) {  
-    .main-menu {  
-        height: 30px;  
-    }  
-    .main-menu ul {  
+@media only screen and (max-width: 500px) {
+    .main-menu {
+        height: 30px;
+    }
+    .main-menu ul {
         display: none;
-    }  
+    }
     .main-menu #pull {
         display: block;
         height: 30px;
-        background-color: white;  
+        background-color: white;
         width: 100%;
         text-align: center;
     }
-    .main-menu #pull:after {  
-        /*content: '▼ ';*/  
+    .main-menu #pull:after {
+        /*content: '▼ ';*/
         /*background: url('nav-icon.png') no-repeat;*/
         margin: 0;
         background-color: white;
-        /*width: 100%;*/  
+        /*width: 100%;*/
         height: 30px;
         display: block;
         z-index: 1000;
         /*position: absolute;
         right: 15px;  
         top: 10px;*/
-    } 
+    }
     .main-menu li {
         margin: 0;
         display: block;
-        background-color: white; 
-        float: none;  
+        background-color: white;
+        float: none;
         width: 100%;
         z-index: 1000;
-    }  
-    .main-menu li a {  
-        border-bottom: 1px solid #576979;  
-    }  
+    }
+    .main-menu li a {
+        border-bottom: 1px solid #576979;
+    }
 }
 
 .main-slider {
@@ -166,6 +164,7 @@ body {
     min-height: 640px;
     width: 100%;
     text-align: center;
+    position: relative;
     /*background-position: 50% 50%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -179,7 +178,7 @@ body {
     margin: 0px;
     list-style-type: none;
 }
- 
+
 .slide {
     position: absolute;
     left: 0px;
@@ -191,13 +190,12 @@ body {
     background-position: 50% 50%;
     background-size: cover;
     background-repeat: no-repeat;
-    
     -webkit-transition: opacity 1s;
     -moz-transition: opacity 1s;
     -o-transition: opacity 1s;
     transition: opacity 1s;
 }
- 
+
 .showing {
     opacity: 1;
     z-index: 2;
@@ -230,6 +228,41 @@ body {
     cursor: pointer;
 }
 
+.slider-knobs {
+    padding: 5px;
+    background-color: transparent;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    outline: none;
+}
+
+*:focus,
+button,
+button:focus,
+button:active {
+    outline: 0;
+    outline-width: 0;
+    outline: none;
+    outline-style: none;
+}
+
+.sl-b {
+    margin: 8px;
+    background-color: gray;
+    width: 11px;
+    height: 15px;
+    border: 2px solid;
+    border-color: gray;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: transparent;
+}
 
 .about-us {
     padding: 20px;
@@ -263,8 +296,7 @@ body {
         font-size: 12px;
         padding: 8px;
     }
-
-.rev-nav .btn-outline-secondary {
+    .rev-nav .btn-outline-secondary {
         font-size: 20px;
         padding: 2px 8px;
     }
@@ -418,7 +450,7 @@ body {
 .footer form {
     padding: 20px;
     text-align: left;
-/*    position: absolute;
+    /*    position: absolute;
     bottom: 0;*/
 }
 
@@ -441,7 +473,6 @@ body {
     cursor: pointer;
 }
 
-
-.clear{
+.clear {
     clear: both;
 }
