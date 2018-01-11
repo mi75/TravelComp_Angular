@@ -4,13 +4,17 @@ var mysql = require('C:/Users/Content/AppData/Roaming/npm/node_modules/mysql');
 
 // create a MySQL DB connection:
 var connection = mysql.createConnection({
-    host: 'localhost:3306',
+    host: '127.0.0.1',
+    database: 'db_1',
     user: 'root',
-    password: 'manager',
+    password: 'manager'
 });
 
 connection.connect(function(err) {
     // connected! (unless `err` is set)
+    if (err) {
+        console.log(err);
+    }
 });
 
 //create a server object:
@@ -46,6 +50,9 @@ http.createServer(function(req, res) {
 
                         var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
                             // Neat!
+                            if (err) {
+                                console.log(err);
+                            }
                         });
                         console.log(query.sql);
 
