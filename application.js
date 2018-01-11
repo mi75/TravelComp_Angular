@@ -1,5 +1,17 @@
 var http = require('http');
 var fs = require('fs');
+var mysql = require('C:/Users/Content/AppData/Roaming/npm/node_modules/mysql');
+
+// create a MySQL DB connection:
+var connection = mysql.createConnection({
+    host: 'localhost:3306',
+    user: 'root',
+    password: 'manager',
+});
+
+connection.connect(function(err) {
+    // connected! (unless `err` is set)
+});
 
 //create a server object:
 http.createServer(function(req, res) {
@@ -23,6 +35,19 @@ http.createServer(function(req, res) {
 
                     if (req.url == '/api/contacts') {
                         console.log(postData);
+                        var contact = {
+                            message: postData.message,
+                            name: postData.from,
+                            email: postData.mail,
+                            telephone: postData.phone,
+                            howHeard: postData.how,
+                            keepMe: postData.cb
+                        };
+
+                        var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
+                            // Neat!
+                        });
+                        console.log(query.sql);
 
                         res.writeHead(301, { Location: '/contacts' });
                         res.end();
@@ -73,7 +98,7 @@ function processGetRequest(req, res) {
 
         res.writeHead(200, {});
 
-        if (useLayout) {
+        if (useLayout) { //support of partial HTML files
             var headerFileName = __dirname + '/header.html';
             var footerFileName = __dirname + '/footer.html';
             var layoutFileName = __dirname + '/layout.html';
