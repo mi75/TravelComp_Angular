@@ -45,7 +45,7 @@ http.createServer(function(req, res) {
                             email: postData.mail,
                             telephone: postData.phone,
                             howHeard: postData.how,
-                            keepMe: postData.cb
+                            keepMe: postData.cb == null ? 0 : 1
                         };
 
                         var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
