@@ -11,7 +11,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function(err) {
-    // connected! (unless `err` is set)
     if (err) {
         console.log(err);
     }
@@ -38,7 +37,7 @@ http.createServer(function(req, res) {
                     postData = JSON.parse(body);
 
                     if (req.url == '/api/contacts') {
-                        console.log(postData);
+                        // data from contacts form: console.log(postData);
                         var contact = {
                             message: postData.message,
                             name: postData.from,
@@ -49,12 +48,11 @@ http.createServer(function(req, res) {
                         };
 
                         var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
-                            // Neat!
                             if (err) {
                                 console.log(err);
                             }
                         });
-                        console.log(query.sql);
+                        // insertion's data: console.log(query.sql);
 
                         res.writeHead(301, { Location: '/contacts' });
                         res.end();
@@ -75,6 +73,7 @@ function processGetRequest(req, res) {
 
     var targetFileName;
     var useLayout = false;
+    var useAdmin = false;
     switch (req.url) {
         case '/':
             {
@@ -86,6 +85,12 @@ function processGetRequest(req, res) {
             {
                 targetFileName = __dirname + '/contact_page.html';
                 useLayout = true;
+                break;
+            }
+        case '/admin':
+            {
+                targetFileName = __dirname + '/admin.html';
+                useAdmin = true;
                 break;
             }
         case '/favicon.ico':
@@ -129,14 +134,30 @@ function processGetRequest(req, res) {
             res.end();
 
         } else {
-            res.write(data);
-            res.end();
-        }
+            if (useAdmin) {
+                var listing = connection.query('SELECT * FROM form_1', function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    } //else {
+                    //console.log(result);
+                    //return result;
+                    //}
+                    console.log(result);
+                    var list = JSON.stringify(result);
+                    var tableData = data.toString('UTF8');
+                    var tableBody = tableData.replace("@renderTab", list);
+                    res.write(tableBody);
+                    res.end();
+                });
 
+            } else {
+                res.write(data);
+                res.end();
+            }
+        }
     } else {
         res.writeHead(404);
         res.write('Not found');
         res.end();
     }
-
 }
