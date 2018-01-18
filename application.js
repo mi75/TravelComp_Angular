@@ -1,20 +1,7 @@
 var http = require('http');
 var fs = require('fs');
-var mysql = require('C:/Users/Content/AppData/Roaming/npm/node_modules/mysql');
+var dbOperations = require('./dbOperations');
 
-// create a MySQL DB connection:
-var connection = mysql.createConnection({
-    host: '127.0.0.1',
-    database: 'db_1',
-    user: 'root',
-    password: 'manager'
-});
-
-connection.connect(function(err) {
-    if (err) {
-        console.log(err);
-    }
-});
 
 //create a server object:
 http.createServer(function(req, res) {
@@ -46,14 +33,15 @@ http.createServer(function(req, res) {
                             howHeard: postData.how,
                             keepMe: postData.cb == null ? 0 : 1
                         };
-
-                        var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        });
-                        // insertion's data: console.log(query.sql);
-
+                        // dbOperations.addContact(function(contact, callback) {
+                        //     if (callback) {
+                        //         console.log(callback);
+                        //     } else {
+                        //         res.writeHead(301, { Location: '/contacts' });
+                        //         res.end();
+                        //     }
+                        // });
+                        var result = dbOperations.addContact(contact);
                         res.writeHead(301, { Location: '/contacts' });
                         res.end();
                     }
@@ -135,20 +123,15 @@ function processGetRequest(req, res) {
 
         } else {
             if (useAdmin) {
-                var listing = connection.query('SELECT * FROM form_1', function(err, result) {
-                    if (err) {
-                        console.log(err);
-                    } //else {
-                    //console.log(result);
-                    //return result;
-                    //}
-                    console.log(result);
-                    var list = JSON.stringify(result);
+                dbOperations.readTable(function(result) {
+                    var list = 'No database connection...(';
+                    if (result) list = JSON.stringify(result);
                     var tableData = data.toString('UTF8');
                     var tableBody = tableData.replace("@renderTab", list);
                     res.write(tableBody);
                     res.end();
-                });
+                })
+
 
             } else {
                 res.write(data);

@@ -37,7 +37,6 @@ $(function() {
     });
 })
 
-
 function showError(elem, errorMessage) {
     elem.parentNode.className = 'f-row error';
     var msgElem = document.createElement('span');
@@ -120,5 +119,5 @@ function sendMySuggestion() {
     var formData = new FormData(document.forms.mySuggestion);
     var uploadAddress = document.forms.mySuggestion.action;
 
-    sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) });
+    sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
 }
