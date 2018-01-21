@@ -33,29 +33,34 @@ http.createServer(function(req, res) {
                             howHeard: postData.how,
                             keepMe: postData.cb == null ? 0 : 1
                         };
-                        dbOperations.addContact(function(contact, err) {
+                        dbOperations.addContact(contact, (function(err) {
                             if (err) {
                                 console.log(err);
-                            } else {
-                                res.writeHead(301, { Location: '/contacts' });
-                                res.end();
-                            }
-                        });
+                                returnError(err, res, headers);
+                            } // else {
+                            //     res.writeHead(301, { Location: '/contacts' });
+                            //     res.end();
+                            // }
+                        }));
                         // var result = dbOperations.addContact(contact);
-                        // res.writeHead(301, { Location: '/contacts' });
-                        // res.end();
+                        res.writeHead(301, { Location: '/contacts' });
+                        res.end();
                     }
                 });
             }
         }
     } catch (err) {
-        res.writeHead(501, headers);
-        res.write('Exception occured');
-        res.end();
+        returnError('Exception occured', res, headers);
         throw err;
     }
 
 }).listen(8080);
+
+function returnError(errorMessage, response, headers) {
+    response.writeHead(500, headers);
+    response.write(errorMessage);
+    response.end();
+}
 
 function processGetRequest(req, res) {
 
