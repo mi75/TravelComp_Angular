@@ -33,17 +33,17 @@ http.createServer(function(req, res) {
                             howHeard: postData.how,
                             keepMe: postData.cb == null ? 0 : 1
                         };
-                        // dbOperations.addContact(function(contact, callback) {
-                        //     if (callback) {
-                        //         console.log(callback);
-                        //     } else {
-                        //         res.writeHead(301, { Location: '/contacts' });
-                        //         res.end();
-                        //     }
-                        // });
-                        var result = dbOperations.addContact(contact);
-                        res.writeHead(301, { Location: '/contacts' });
-                        res.end();
+                        dbOperations.addContact(function(contact, err) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.writeHead(301, { Location: '/contacts' });
+                                res.end();
+                            }
+                        });
+                        // var result = dbOperations.addContact(contact);
+                        // res.writeHead(301, { Location: '/contacts' });
+                        // res.end();
                     }
                 });
             }

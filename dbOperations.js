@@ -19,20 +19,22 @@ connection.connect(function(err) {
 
 
 module.exports = {
-    addContact: function(contact) {
-        var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
-            if (err) {
-                console.log(err);
-            }
-        });
-    },
-    // addContact: function(contact, callback) {
-    //     connection.query('INSERT INTO form_91 SET ?', contact, function(err, result) {
+    // addContact: function(contact) {
+    //     var query = connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
     //         if (err) {
-    //             callback(err);
+    //             console.log(err);
     //         }
     //     });
     // },
+    addContact: function(contact, callback) {
+        connection.query('INSERT INTO form_91 SET ?', contact, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
+            }
+        });
+    },
 
     // readTable: function() {
     //     var data = "";
