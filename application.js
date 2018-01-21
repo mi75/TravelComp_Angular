@@ -35,16 +35,15 @@ http.createServer(function(req, res) {
                         };
                         dbOperations.addContact(contact, (function(err) {
                             if (err) {
-                                console.log(err);
                                 returnError(err.sqlMessage, res, headers);
                             } else {
                                 returnSuccess('/contacts', res, headers);
                             }
                         }));
-
                     } else {
-                        returnSuccess('/contacts', res, headers);
+                        returnError('Unsupported url', res, headers);
                     }
+
                 });
             }
         }
