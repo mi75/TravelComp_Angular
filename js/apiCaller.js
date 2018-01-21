@@ -13,6 +13,7 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     xhr.addEventListener("loadend", function() {
         if (xhr.status != 200) {
             var errorMessage = xhr.status + ': ' + xhr.statusText;
+            console.error(xhr.responseText);
             onFail(errorMessage);
         } else {
             onSuccess();

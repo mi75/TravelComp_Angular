@@ -36,15 +36,14 @@ http.createServer(function(req, res) {
                         dbOperations.addContact(contact, (function(err) {
                             if (err) {
                                 console.log(err);
-                                returnError(err, res, headers);
-                            } // else {
-                            //     res.writeHead(301, { Location: '/contacts' });
-                            //     res.end();
-                            // }
+                                returnError(err.sqlMessage, res, headers);
+                            } else {
+                                returnSuccess('/contacts', res, headers);
+                            }
                         }));
-                        // var result = dbOperations.addContact(contact);
-                        res.writeHead(301, { Location: '/contacts' });
-                        res.end();
+
+                    } else {
+                        returnSuccess('/contacts', res, headers);
                     }
                 });
             }
@@ -55,6 +54,11 @@ http.createServer(function(req, res) {
     }
 
 }).listen(8080);
+
+function returnSuccess(location, response, headers) {
+    response.writeHead(301, { Location: location }, headers);
+    response.end();
+}
 
 function returnError(errorMessage, response, headers) {
     response.writeHead(500, headers);

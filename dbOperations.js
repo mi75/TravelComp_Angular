@@ -27,7 +27,7 @@ module.exports = {
     //     });
     // },
     addContact: function(contact, callback) {
-        connection.query('INSERT INTO form_91 SET ?', contact, function(err, result) {
+        connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
             if (err) {
                 callback(err);
             } else {
