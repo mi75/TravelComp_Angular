@@ -36,6 +36,7 @@ module.exports = {
         });
     },
 
+
     // readTable: function() {
     //     var data = "";
     //     connection.query('SELECT * FROM form_1', function(err, result) {
@@ -51,10 +52,9 @@ module.exports = {
     readTable: function(callback) {
         connection.query('SELECT * FROM form_1', function(err, result) {
             if (err) {
-                console.log(err);
-                callback();
+                callback(err, null);
             } else {
-                callback(result);
+                callback(null, result);
             }
         });
     }

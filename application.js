@@ -131,16 +131,18 @@ function processGetRequest(req, res) {
 
         } else {
             if (useAdmin) {
-                dbOperations.readTable(function(result) {
-                    var list = 'No database connection...(';
-                    if (result) list = JSON.stringify(result);
-                    var tableData = data.toString('UTF8');
-                    var tableBody = tableData.replace("@renderTab", list);
-                    res.write(tableBody);
-                    res.end();
+                dbOperations.readTable(function(err, result) {
+                    if (err) {
+                        returnError(err.sqlMessage, res);
+                    } else {
+                        var list = '';
+                        if (result) list = JSON.stringify(result);
+                        var tableData = data.toString('UTF8');
+                        var tableBody = tableData.replace("@renderTab", list);
+                        res.write(tableBody);
+                        res.end();
+                    }
                 })
-
-
             } else {
                 res.write(data);
                 res.end();
