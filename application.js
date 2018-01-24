@@ -86,6 +86,7 @@ function processGetRequest(req, res) {
         case '/admin':
             {
                 targetFileName = __dirname + '/admin.html';
+                useLayout = true;
                 useAdmin = true;
                 break;
             }
@@ -126,10 +127,6 @@ function processGetRequest(req, res) {
             textData = textData.replace("@renderBody", textBody);
             textData = textData.replace("@renderFooter", footer.toString('UTF8'));
 
-            res.write(textData);
-            res.end();
-
-        } else {
             if (useAdmin) {
                 dbOperations.readTable(function(err, result) {
                     if (err) {
@@ -137,17 +134,21 @@ function processGetRequest(req, res) {
                     } else {
                         var list = '';
                         if (result) list = JSON.stringify(result);
-                        var tableData = data.toString('UTF8');
-                        var tableBody = tableData.replace("@renderTab", list);
-                        res.write(tableBody);
+                        textData = textData.replace("@renderTab", list);
+                        res.write(textData);
                         res.end();
                     }
-                })
+                });
             } else {
-                res.write(data);
+                res.write(textData);
                 res.end();
             }
+
+        } else {
+            res.write(data);
+            res.end();
         }
+
     } else {
         res.writeHead(404);
         res.write('Not found');

@@ -1,23 +1,57 @@
-<!DOCTYPE html>
-<html lang="ru">
+<div>
+    <h2>Hello, admin!..</h2>
+    @renderTab
+</div>
 
-<head>
-    <link rel="icon" type="image/png" href="img/t.png">
-    <title>Administrator</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="//fonts.googleapis.com/css?family=PT+Sans:400&subset=cyrillic" rel="stylesheet" type="text/css">
+<div class="table-responsive">
+    <table class="table table-condensed table-striped table-bordered table-hover">
+        <caption>
+            Querys & suggestions
+        </caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>message</th>
+                <th>name</th>
+                <th>email</th>
+                <th>telephone</th>
+                <th>howHeard</th>
+                <th>keepMe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>message</td>
+                <td>name</td>
+                <td>email</td>
+                <td>telephone</td>
+                <td>howHeard</td>
+                <td>keepMe</td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td>message</td>
+                <td>name</td>
+                <td>email</td>
+                <td>telephone</td>
+                <td>howHeard</td>
+                <td>keepMe</td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td>message</td>
+                <td>name</td>
+                <td>email</td>
+                <td>telephone</td>
+                <td>howHeard</td>
+                <td>keepMe</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-</head>
-
-<body>
-
-    <div>
-        <h2>Hello, admin!..</h2>
-        @renderTab
-    </div>
-
-
-</body>
-
-</html>
+@scripts{
+<script src="js/apiCaller.js"></script>
+<script src="js/travel_c_administrator.js"></script>
+}
