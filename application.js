@@ -69,36 +69,40 @@ function processGetRequest(req, res) {
 
     var targetFileName;
     var useLayout = false;
-    var useAdmin = false;
-    switch (req.url) {
-        case '/':
-            {
-                targetFileName = __dirname + '/index.html';
-                useLayout = true;
-                break;
-            }
-        case '/contacts':
-            {
-                targetFileName = __dirname + '/contact_page.html';
-                useLayout = true;
-                break;
-            }
-        case '/admin':
-            {
-                targetFileName = __dirname + '/admin.html';
-                useLayout = true;
-                useAdmin = true;
-                break;
-            }
-        case '/favicon.ico':
-            {
-                targetFileName = __dirname + '/img/t.png';
-                break;
-            }
-        default:
-            {
-                targetFileName = __dirname + req.url;
-            }
+    var useApi = false;
+
+    if (req.url.indexOf('api/') != -1) {
+        useApi = true;
+    } else {
+        switch (req.url) {
+            case '/':
+                {
+                    targetFileName = __dirname + '/index.html';
+                    useLayout = true;
+                    break;
+                }
+            case '/contacts':
+                {
+                    targetFileName = __dirname + '/contact_page.html';
+                    useLayout = true;
+                    break;
+                }
+            case '/admin':
+                {
+                    targetFileName = __dirname + '/admin.html';
+                    useLayout = true;
+                    break;
+                }
+            case '/favicon.ico':
+                {
+                    targetFileName = __dirname + '/img/t.png';
+                    break;
+                }
+            default:
+                {
+                    targetFileName = __dirname + req.url;
+                }
+        }
     }
 
     if (fs.existsSync(targetFileName)) {
@@ -127,22 +131,8 @@ function processGetRequest(req, res) {
             textData = textData.replace("@renderBody", textBody);
             textData = textData.replace("@renderFooter", footer.toString('UTF8'));
 
-            if (useAdmin) {
-                dbOperations.readTable(function(err, result) {
-                    if (err) {
-                        returnError(err.sqlMessage, res);
-                    } else {
-                        var list = '';
-                        if (result) list = JSON.stringify(result);
-                        textData = textData.replace("@renderTab", list);
-                        res.write(textData);
-                        res.end();
-                    }
-                });
-            } else {
-                res.write(textData);
-                res.end();
-            }
+            res.write(textData);
+            res.end();
 
         } else {
             res.write(data);
@@ -150,8 +140,21 @@ function processGetRequest(req, res) {
         }
 
     } else {
-        res.writeHead(404);
-        res.write('Not found');
-        res.end();
+        if (useApi) {
+            dbOperations.readTable(function(err, result) {
+                if (err) {
+                    returnError(err.sqlMessage, res);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.write(list);
+                    res.end();
+                }
+            });
+        } else {
+            res.writeHead(404);
+            res.write('Not found');
+            res.end();
+        }
     }
 }

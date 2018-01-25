@@ -37,4 +37,8 @@ $(function() {
     });
 })
 
-window.onload = resiveData(function(adminData) { console.log(adminData) }, function(errorMessage) { alert(errorMessage) });
+var dataAddress = 'api/admin';
+window.onload = sendGet(dataAddress, function(adminData) {
+    var tt = document.getElementById('dbtab');
+    tt.innerHTML = adminData;
+}, function(errorMessage) { alert(errorMessage) });

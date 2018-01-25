@@ -21,11 +21,11 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     });
 }
 
-function resiveData(onSuccess, onFail) {
+function sendGet(dataAddress, onSuccess, onFail) {
 
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/admin');
+    xhr.open('GET', dataAddress);
     xhr.send();
 
     xhr.onreadystatechange = function() {
