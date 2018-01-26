@@ -71,7 +71,7 @@ function processGetRequest(req, res) {
     var useLayout = false;
     var useApi = false;
 
-    if (req.url.indexOf('api/') != -1) {
+    if (req.url.includes('api/')) {
         useApi = true;
     } else {
         switch (req.url) {
@@ -105,52 +105,52 @@ function processGetRequest(req, res) {
         }
     }
 
-    if (fs.existsSync(targetFileName)) {
-
-        var data = fs.readFileSync(targetFileName);
-
-        res.writeHead(200, {});
-
-        if (useLayout) { //support of partial HTML files
-            var headerFileName = __dirname + '/header.html';
-            var footerFileName = __dirname + '/footer.html';
-            var layoutFileName = __dirname + '/layout.html';
-
-            var header = fs.readFileSync(headerFileName);
-            var footer = fs.readFileSync(footerFileName);
-            var layout = fs.readFileSync(layoutFileName);
-
-            var textBody = data.toString('UTF8');
-            var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/m);
-            textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/m, '');
-
-            var textData = layout.toString('UTF8');
-            textData = textData.replace("@scripts", bodyScripts[1]);
-
-            textData = textData.replace("@renderHeader", header.toString('UTF8'));
-            textData = textData.replace("@renderBody", textBody);
-            textData = textData.replace("@renderFooter", footer.toString('UTF8'));
-
-            res.write(textData);
-            res.end();
-
-        } else {
-            res.write(data);
-            res.end();
-        }
-
+    if (useApi) {
+        dbOperations.readTable(function(err, result) {
+            if (err) {
+                returnError(err.sqlMessage, res);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.write(list);
+                res.end();
+            }
+        });
     } else {
-        if (useApi) {
-            dbOperations.readTable(function(err, result) {
-                if (err) {
-                    returnError(err.sqlMessage, res);
-                } else {
-                    var list = '';
-                    if (result) list = JSON.stringify(result);
-                    res.write(list);
-                    res.end();
-                }
-            });
+        if (fs.existsSync(targetFileName)) {
+
+            var data = fs.readFileSync(targetFileName);
+
+            res.writeHead(200, {});
+
+            if (useLayout) { //support of partial HTML files
+                var headerFileName = __dirname + '/header.html';
+                var footerFileName = __dirname + '/footer.html';
+                var layoutFileName = __dirname + '/layout.html';
+
+                var header = fs.readFileSync(headerFileName);
+                var footer = fs.readFileSync(footerFileName);
+                var layout = fs.readFileSync(layoutFileName);
+
+                var textBody = data.toString('UTF8');
+                var bodyScripts = textBody.match(/@scripts.*\{([\s\S]*?)\}/m);
+                textBody = textBody.replace(/@scripts.*\{([\s\S]*?)\}/m, '');
+
+                var textData = layout.toString('UTF8');
+                textData = textData.replace("@scripts", bodyScripts[1]);
+
+                textData = textData.replace("@renderHeader", header.toString('UTF8'));
+                textData = textData.replace("@renderBody", textBody);
+                textData = textData.replace("@renderFooter", footer.toString('UTF8'));
+
+                res.write(textData);
+                res.end();
+
+            } else {
+                res.write(data);
+                res.end();
+            }
+
         } else {
             res.writeHead(404);
             res.write('Not found');
