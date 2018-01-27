@@ -38,21 +38,15 @@ $(function() {
 })
 
 var dataAddress = 'api/admin';
-// window.onload = sendGet(dataAddress, function(adminData) {
-//     var tt = document.getElementById('dbtab');
-//     tt.innerHTML = adminData;
-// }, function(errorMessage) { alert(errorMessage) });
-var dataContent;
 window.onload = sendGet(dataAddress, function(adminData) {
-    dataContent = adminData;
-    insTab();
+    insertToContactsTable(adminData);
 }, function(errorMessage) { alert(errorMessage) });
 
-function insTab() {
+function insertToContactsTable(dataContent) {
     var adminTable = document.getElementById('dbtab');
     var tableContents = '';
-    var dc = JSON.parse(dataContent);
-    dc.forEach(function(item) {
+    var datArray = JSON.parse(dataContent);
+    datArray.forEach(function(item, i) {
         var template = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
         var contact = {
             id: item.idform_1,
@@ -63,7 +57,7 @@ function insTab() {
             howHeard: item.howHeard,
             keepMe: item.keepMe
         };
-        template = template.replace('{0}', contact.id);
+        template = template.replace('{0}', i + 1);
         template = template.replace('{1}', contact.name);
         template = template.replace('{2}', contact.email);
         template = template.replace('{3}', contact.telephone);
@@ -72,6 +66,5 @@ function insTab() {
         template = template.replace('{6}', contact.message);
         tableContents = tableContents + template;
     });
-
     adminTable.innerHTML = tableContents;
 }
