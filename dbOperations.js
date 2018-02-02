@@ -1,6 +1,6 @@
 var http = require('http');
 var fs = require('fs');
-var mysql = require('C:/Users/Content/AppData/Roaming/npm/node_modules/mysql');
+var mysql = require('mysql');
 
 // create a MySQL DB connection:
 var connection = mysql.createConnection({
