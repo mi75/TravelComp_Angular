@@ -3,8 +3,8 @@ function init() {
         var mmenu;
         var pmenu;
         var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-            headHeight = document.getElementById('hh').offsetHeight,
-            mmenu = document.getElementById("mm");
+            headHeight = document.getElementById('header').offsetHeight,
+            mmenu = document.getElementById("main-menu");
         pmenu = document.getElementById("pull");
         if (distanceY > headHeight) {
             mmenu.classList.add("menu-fix");
@@ -36,7 +36,6 @@ $(function() {
         }
     });
 })
-
 
 function showError(elem, errorMessage) {
     elem.parentNode.className = 'f-row error';
@@ -120,5 +119,5 @@ function sendMySuggestion() {
     var formData = new FormData(document.forms.mySuggestion);
     var uploadAddress = document.forms.mySuggestion.action;
 
-    sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) });
+    sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
 }

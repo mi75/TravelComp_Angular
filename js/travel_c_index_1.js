@@ -3,8 +3,8 @@ function init() {
         var mmenu;
         var pmenu;
         var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-            headHeight = document.getElementById('hh').offsetHeight,
-            mmenu = document.getElementById("mm");
+            headHeight = document.getElementById('header').offsetHeight,
+            mmenu = document.getElementById("main-menu");
         pmenu = document.getElementById("pull");
         if (distanceY > headHeight) {
             mmenu.classList.add("menu-fix");
@@ -21,8 +21,8 @@ window.onload = init();
 
 $(function() {
     var pull = $('#pull');
-    menu = $('.main-menu ul');
-    menuHeight = menu.height();
+    var menu = $('.main-menu ul');
+    var menuHeight = menu.height();
 
     $(pull).on('click', function(e) {
         e.preventDefault();

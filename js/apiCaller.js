@@ -13,9 +13,31 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     xhr.addEventListener("loadend", function() {
         if (xhr.status != 200) {
             var errorMessage = xhr.status + ': ' + xhr.statusText;
+            console.error(xhr.responseText);
             onFail(errorMessage);
         } else {
             onSuccess();
         }
     });
+}
+
+function sendGet(dataAddress, onSuccess, onFail) {
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', dataAddress);
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4) return;
+
+        if (xhr.status != 200) {
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            console.error(xhr.responseText);
+            onFail(errorMessage);
+        } else {
+            var adminData = xhr.responseText;
+            onSuccess(adminData);
+        }
+    }
 }
