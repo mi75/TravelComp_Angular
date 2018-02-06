@@ -1,23 +1,37 @@
-function init() {
-    window.addEventListener('scroll', function(e) {
-        var mmenu;
-        var pmenu;
-        var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-            headHeight = document.getElementById('header').offsetHeight,
-            mmenu = document.getElementById("main-menu");
-        pmenu = document.getElementById("pull");
-        if (distanceY > headHeight) {
-            mmenu.classList.add("menu-fix");
-            pmenu.classList.add("menu-fix");
+// function init() {
+//     window.addEventListener('scroll', function(e) {
+//         var mmenu;
+//         var pmenu;
+//         var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+//             headHeight = document.getElementById('header').offsetHeight,
+//             mmenu = document.getElementById("main-menu");
+//         pmenu = document.getElementById("pull");
+//         if (distanceY > headHeight) {
+//             mmenu.classList.add("menu-fix");
+//             pmenu.classList.add("menu-fix");
+//         } else {
+//             if (mmenu.classList.contains("menu-fix") || pmenu.classList.contains("menu-fix")) {
+//                 mmenu.classList.remove("menu-fix");
+//                 pmenu.classList.remove("menu-fix");
+//             }
+//         }
+//     });
+// }
+// window.onload = init();
+
+$(window).ready(function() {
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > $("#header").outerHeight()) {
+            $("#main-menu").addClass("menu-fix");
+            $("#pull").addClass("menu-fix");
         } else {
-            if (mmenu.classList.contains("menu-fix") || pmenu.classList.contains("menu-fix")) {
-                mmenu.classList.remove("menu-fix");
-                pmenu.classList.remove("menu-fix");
+            if ($("#main-menu").hasClass("menu-fix") || $("#pull").hasClass("menu-fix")) {
+                $("#main-menu").removeClass("menu-fix");
+                $("#pull").removeClass("menu-fix");
             }
         }
     });
-}
-window.onload = init();
+});
 
 $(function() {
     var pull = $('#pull');
@@ -120,4 +134,11 @@ function sendMySuggestion() {
     var uploadAddress = document.forms.mySuggestion.action;
 
     sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
+
+    // var uploadAddress = document.forms.mySuggestion.action;
+    // $.post(uploadAddress, $("#contact-form").serialize(),
+    //     function(data) {
+    //         document.forms.mySuggestion.reset();
+    //     });
+
 }

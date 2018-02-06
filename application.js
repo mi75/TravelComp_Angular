@@ -79,7 +79,6 @@ function processGetRequest(req, res) {
                 {
                     targetFileName = __dirname + '/index.html';
                     useLayout = true;
-                    console.log(req.url); // git test
                     break;
                 }
             case '/contacts':
