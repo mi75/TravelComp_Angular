@@ -65,28 +65,30 @@ $(document).ready(function() {
 // });
 
 function insertToContactsTable(dataContent) {
-    var adminTable = document.getElementById('dbtab');
-    var tableContents = '';
+    // var adminTable = document.getElementById('dbtab');
+    // var tableContents = '';
     var datArray = JSON.parse(dataContent);
-    datArray.forEach(function(item, i) {
-        var template = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
-        var contact = {
-            id: item.idform_1,
-            message: item.message,
-            name: item.name,
-            email: item.email,
-            telephone: item.telephone,
-            howHeard: item.howHeard,
-            keepMe: item.keepMe
-        };
-        template = template.replace('{0}', i + 1);
-        template = template.replace('{1}', contact.name);
-        template = template.replace('{2}', contact.email);
-        template = template.replace('{3}', contact.telephone);
-        template = template.replace('{4}', contact.howHeard);
-        template = template.replace('{5}', contact.keepMe);
-        template = template.replace('{6}', contact.message);
-        tableContents = tableContents + template;
+    // datArray.forEach(function(item, i) {
+    $(datArray).each(function(i, item) {
+        $('#dbtab').append('<tr><td>' + (i + 1) + '</td><td>' + item['name'] + '</td><td>' + item['email'] + '</td><td>' + item['telephone'] + '</td><td>' + item['howHeard'] + '</td><td>' + item['keepMe'] + '</td><td>' + item['message'] + '</td></tr>');
+        // var template = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+        // var contact = {
+        //     id: item.idform_1,
+        //     message: item.message,
+        //     name: item.name,
+        //     email: item.email,
+        //     telephone: item.telephone,
+        //     howHeard: item.howHeard,
+        //     keepMe: item.keepMe
+        // };
+        // template = template.replace('{0}', i + 1);
+        // template = template.replace('{1}', contact.name);
+        // template = template.replace('{2}', contact.email);
+        // template = template.replace('{3}', contact.telephone);
+        // template = template.replace('{4}', contact.howHeard);
+        // template = template.replace('{5}', contact.keepMe);
+        // template = template.replace('{6}', contact.message);
+        // tableContents = tableContents + template;
     });
-    adminTable.innerHTML = tableContents;
+    // adminTable.innerHTML = tableContents;
 }

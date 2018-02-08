@@ -52,11 +52,15 @@ $(function() {
 })
 
 function showError(elem, errorMessage) {
-    elem.parentNode.className = 'f-row error';
-    var msgElem = document.createElement('span');
-    msgElem.className = "error-message";
-    msgElem.innerHTML = errorMessage;
-    elem.parentNode.appendChild(msgElem);
+    // elem.parentNode.className = 'f-row error';
+    // var msgElem = document.createElement('span');
+    // msgElem.className = "error-message";
+    // msgElem.innerHTML = errorMessage;
+    // elem.parentNode.appendChild(msgElem);
+
+    var errField = $(elem).parent().addClass("f-row error");
+    var msgElem = $('<span></span>').addClass("error-message").text(errorMessage);
+    $(errField).append(msgElem);
 }
 
 function resetError(elem) {
@@ -78,7 +82,6 @@ function toValidate() {
         er = 1;
     } else {
         if (!validator.validate(elems.from.value, validator.rules.clientName)) {
-            resetError(elems.from);
             showError(elems.from, ' допустимы только буквы.');
             er = 1;
         }
