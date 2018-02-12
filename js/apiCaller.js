@@ -6,22 +6,8 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     });
     var jsd = JSON.stringify(object);
 
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('POST', uploadAddress);
-    // xhr.send(jsd);
-
-    // xhr.addEventListener("loadend", function() {
-    //     if (xhr.status != 200) {
-    //         var errorMessage = xhr.status + ': ' + xhr.statusText;
-    //         console.error(xhr.responseText);
-    //         onFail(errorMessage);
-    //     } else {
-    //         onSuccess();
-    //     }
-    // });
-
     var jqxhr = $.post(uploadAddress, jsd, "json");
-    jqxhr.done(function(data) {
+    jqxhr.done(function() {
         onSuccess();
     });
     jqxhr.fail(function(data, textStatus, errorThrown) {
@@ -31,23 +17,6 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
 }
 
 function sendGet(dataAddress, onSuccess, onFail) {
-
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('GET', dataAddress);
-    // xhr.send();
-
-    // xhr.onreadystatechange = function() {
-    //     if (xhr.readyState != 4) return;
-
-    //     if (xhr.status != 200) {
-    //         var errorMessage = xhr.status + ': ' + xhr.statusText;
-    //         console.error(xhr.responseText);
-    //         onFail(errorMessage);
-    //     } else {
-    //         var adminData = xhr.responseText;
-    //         onSuccess(adminData);
-    //     }
-    // }
 
     var jqxhr = $.get(dataAddress);
     jqxhr.done(function(data) {

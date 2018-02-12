@@ -1,33 +1,17 @@
-// function init() {
-//     window.addEventListener('scroll', function(e) {
-//         var mmenu;
-//         var pmenu;
-//         var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-//             headHeight = document.getElementById('header').offsetHeight,
-//             mmenu = document.getElementById("main-menu");
-//         pmenu = document.getElementById("pull");
-//         if (distanceY > headHeight) {
-//             mmenu.classList.add("menu-fix");
-//             pmenu.classList.add("menu-fix");
-//         } else {
-//             if (mmenu.classList.contains("menu-fix") || pmenu.classList.contains("menu-fix")) {
-//                 mmenu.classList.remove("menu-fix");
-//                 pmenu.classList.remove("menu-fix");
-//             }
-//         }
-//     });
-// }
-// window.onload = init();
-
 $(window).ready(function() {
+    var header = $("#header");
+    var fixedMenuClass = 'menu-fix';
+    var mainMenu = $("#main-menu");
+    var pullMenu = $("#pull");
+
     $(window).scroll(function() {
-        if ($(window).scrollTop() > $("#header").outerHeight()) {
-            $("#main-menu").addClass("menu-fix");
-            $("#pull").addClass("menu-fix");
+        if ($(window).scrollTop() > $(header).outerHeight()) {
+            $(mainMenu).addClass(fixedMenuClass);
+            $(pullMenu).addClass(fixedMenuClass);
         } else {
-            if ($("#main-menu").hasClass("menu-fix") || $("#pull").hasClass("menu-fix")) {
-                $("#main-menu").removeClass("menu-fix");
-                $("#pull").removeClass("menu-fix");
+            if ($(mainMenu).hasClass(fixedMenuClass) || $(pullMenu).hasClass(fixedMenuClass)) {
+                $(mainMenu).removeClass(fixedMenuClass);
+                $(pullMenu).removeClass(fixedMenuClass);
             }
         }
     });
@@ -52,22 +36,14 @@ $(function() {
 })
 
 function showError(elem, errorMessage) {
-    // elem.parentNode.className = 'f-row error';
-    // var msgElem = document.createElement('span');
-    // msgElem.className = "error-message";
-    // msgElem.innerHTML = errorMessage;
-    // elem.parentNode.appendChild(msgElem);
-
     var errField = $(elem).parent().addClass("f-row error");
     var msgElem = $('<span></span>').addClass("error-message").text(errorMessage);
     $(errField).append(msgElem);
 }
 
 function resetError(elem) {
-    elem.parentNode.className = 'f-row';
-    if (elem.parentNode.lastChild.className == "error-message") {
-        elem.parentNode.removeChild(elem.parentNode.lastChild);
-    }
+    var errField = $(elem).parent().removeClass("error");
+    $(errField).children().filter('.error-message').remove();
 }
 
 function toValidate() {
@@ -137,11 +113,5 @@ function sendMySuggestion() {
     var uploadAddress = document.forms.mySuggestion.action;
 
     sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
-
-    // var uploadAddress = document.forms.mySuggestion.action;
-    // $.post(uploadAddress, $("#contact-form").serialize(),
-    //     function(data) {
-    //         document.forms.mySuggestion.reset();
-    //     });
 
 }
