@@ -264,6 +264,10 @@ button:active {
     background-color: transparent;
 }
 
+.btn {
+    cursor: pointer;
+}
+
 .about-us {
     padding: 20px;
     text-align: center;

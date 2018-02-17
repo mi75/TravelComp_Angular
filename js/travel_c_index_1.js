@@ -84,3 +84,65 @@ function initSlideNav() {
     }
     return knobs; // возвращаем коллекцию кнопок для прокрутки setInterval-ом
 }
+
+function showError(elem, errorMessage) {
+    elem.parentNode.className = 'f-row error';
+    var msgElem = document.createElement('span');
+    msgElem.className = "error-message";
+    msgElem.innerHTML = errorMessage;
+    elem.parentNode.appendChild(msgElem);
+}
+
+function resetError(elem) {
+    elem.parentNode.className = 'f-row';
+    if (elem.parentNode.lastChild.className == "error-message") {
+        elem.parentNode.removeChild(elem.parentNode.lastChild);
+    }
+}
+
+function toValidate() {
+
+    var er = null;
+    var form = document.getElementById("feedback-form");
+    var elems = form.elements;
+
+    resetError(elems.from);
+    if (!validator.validate(elems.from.value, validator.rules.notEmpty)) {
+        showError(elems.from, ' Укажите, от кого.');
+        er = 1;
+    } else {
+        if (!validator.validate(elems.from.value, validator.rules.clientName)) {
+            resetError(elems.from);
+            showError(elems.from, ' допустимы только буквы.');
+            er = 1;
+        }
+    }
+    if (!validator.validate(elems.from.value, validator.rules.charsCount, 80)) {
+        showError(elems.from, ' максимум 80 символов.');
+        er = 1;
+    }
+
+    resetError(elems.message);
+    if (!validator.validate(elems.message.value, validator.rules.notEmpty)) {
+        showError(elems.message, ' Отсутствует текст.');
+        er = 1;
+    } else {
+        if (!validator.validate(elems.message.value, validator.rules.charsCount, 1000)) {
+            showError(elems.message, ' максимум 1000 символов.');
+            er = 1;
+        }
+    }
+    if (!er) sendFeedback();
+}
+
+function sendFeedback() {
+    var formData = new FormData(document.forms.feedback);
+    var uploadAddress = document.forms.feedback.action;
+
+    sendPost(uploadAddress, formData, function() {
+        $('#upload-file-info').text('');
+        document.forms.feedback.reset();
+        $('#myModal').modal('hide');
+        alert('Data was sent');
+    }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
+}

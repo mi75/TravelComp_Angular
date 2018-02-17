@@ -27,6 +27,16 @@ module.exports = {
         });
     },
 
+    addFeedback: function(contact, callback) {
+        connection.query('INSERT INTO feedback_1 SET ?', contact, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
+            }
+        });
+    },
+
     readTable: function(callback) {
         connection.query('SELECT * FROM form_1', function(err, result) {
             if (err) {

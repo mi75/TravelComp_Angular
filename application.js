@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var dbOperations = require('./dbOperations');
+var base64Img = require('base64-img');
 
 
 //create a server object:
@@ -41,9 +42,26 @@ http.createServer(function(req, res) {
                             }
                         }));
                     } else {
-                        returnError('Unsupported url', res, headers);
+                        if (req.url == '/api/feedback') {
+                            // data from contacts form: console.log(postData);
+                            var contact = {
+                                message: postData.message,
+                                name: postData.from,
+                                // photo: base64Img.base64(postData.photo, function(err, data) {}),
+                                photo: postData.photo == '' ? null : 'photo code',
+                                date: new Date()
+                            };
+                            dbOperations.addFeedback(contact, (function(err) {
+                                if (err) {
+                                    returnError(err.sqlMessage, res, headers);
+                                } else {
+                                    returnSuccess('/', res, headers);
+                                }
+                            }));
+                        } else {
+                            returnError('Unsupported url', res, headers);
+                        }
                     }
-
                 });
             }
         }
@@ -79,7 +97,6 @@ function processGetRequest(req, res) {
                 {
                     targetFileName = __dirname + '/index.html';
                     useLayout = true;
-                    console.log(req.url); // git test
                     break;
                 }
             case '/contacts':
