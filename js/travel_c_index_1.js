@@ -146,3 +146,24 @@ function sendFeedback() {
         alert('Data was sent');
     }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
 }
+
+var dataAddress = 'api/feedback';
+
+$('#forvard').on('click', function(e) {
+    e.preventDefault();
+    sendGet(dataAddress, function(userData) {
+        insertToFeedbackBlock(userData);
+    }, function(errorMessage) { alert(errorMessage) });
+});
+
+function insertToFeedbackBlock(dataContent) {
+    var datArray = JSON.parse(dataContent);
+    var names = $('.card-title');
+    var messages = $('.messages');
+    var dates = $('.text-muted');
+    $(datArray).each(function(i, item) {
+        $(names[i]).text(item['name']);
+        $(messages[i]).text(item['message']);
+        $(dates[i]).text('добавлено ' + item['date']);
+    });
+}

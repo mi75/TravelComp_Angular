@@ -124,16 +124,29 @@ function processGetRequest(req, res) {
     }
 
     if (useApi) {
-        dbOperations.readTable(function(err, result) {
-            if (err) {
-                returnError(err.sqlMessage, res);
-            } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.write(list);
-                res.end();
-            }
-        });
+        if (req.url.includes('api/feedback')) {
+            dbOperations.readFeedback(function(err, result) {
+                if (err) {
+                    returnError(err.sqlMessage, res);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.write(list);
+                    res.end();
+                }
+            });
+        } else {
+            dbOperations.readTable(function(err, result) {
+                if (err) {
+                    returnError(err.sqlMessage, res);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.write(list);
+                    res.end();
+                }
+            });
+        }
     } else {
         if (fs.existsSync(targetFileName)) {
 
