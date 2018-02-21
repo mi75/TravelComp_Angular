@@ -161,9 +161,18 @@ function insertToFeedbackBlock(dataContent) {
     var names = $('.card-title');
     var messages = $('.messages');
     var dates = $('.text-muted');
+
+    var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timezone: 'UTC'
+    };
+
     $(datArray).each(function(i, item) {
+        var d = new Date(item['date']);
         $(names[i]).text(item['name']);
         $(messages[i]).text(item['message']);
-        $(dates[i]).text('добавлено ' + item['date']);
+        $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
     });
 }
