@@ -47,8 +47,8 @@ module.exports = {
         });
     },
 
-    readFeedback: function(callback) {
-        connection.query('SELECT * FROM feedback_1 ORDER BY date DESC LIMIT 3', function(err, result) {
+    readFeedback: function(startRow, callback) {
+        connection.query('SELECT * FROM feedback_1 ORDER BY date DESC LIMIT ?, 3', startRow, function(err, result) {
             if (err) {
                 callback(err, null);
             } else {

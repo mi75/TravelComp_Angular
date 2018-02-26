@@ -23,6 +23,7 @@ function sendGet(dataAddress, onSuccess, onFail) {
         onSuccess(data);
     });
     jqxhr.fail(function(data, textStatus) {
+        console.log(data);
         onFail(textStatus);
     });
 

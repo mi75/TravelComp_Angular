@@ -1,7 +1,8 @@
 var http = require('http');
 var fs = require('fs');
 var dbOperations = require('./dbOperations');
-var base64Img = require('base64-img');
+var uuidv4 = require('uuid/v4');
+var url = require('url');
 
 
 //create a server object:
@@ -43,12 +44,17 @@ http.createServer(function(req, res) {
                         }));
                     } else {
                         if (req.url == '/api/feedback') {
-                            // data from contacts form: console.log(postData);
+                            // data from contacts form: 
+                            console.log(postData.photo);
+                            if (postData.photo !== '') {
+                                var photoName = uuidv4();
+                                var photoPath = __dirname + '/upload/' + photoName;
+                                fs.writeFile(photoPath, postData.photo);
+                            }
                             var contact = {
                                 message: postData.message,
                                 name: postData.from,
-                                // photo: base64Img.base64(postData.photo, function(err, data) {}),
-                                photo: postData.photo == '' ? null : 'photo code',
+                                photo: postData.photo == '' ? null : photoName,
                                 date: new Date()
                             };
                             dbOperations.addFeedback(contact, (function(err) {
@@ -125,7 +131,10 @@ function processGetRequest(req, res) {
 
     if (useApi) {
         if (req.url.includes('api/feedback')) {
-            dbOperations.readFeedback(function(err, result) {
+            var url_parts = url.parse(req.url, true);
+            var query = url_parts.query;
+            var startRow = parseInt(query.startRow);
+            dbOperations.readFeedback(startRow, function(err, result) {
                 if (err) {
                     returnError(err.sqlMessage, res);
                 } else {

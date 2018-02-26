@@ -137,6 +137,7 @@ function toValidate() {
 
 function sendFeedback() {
     var formData = new FormData(document.forms.feedback);
+
     var uploadAddress = document.forms.feedback.action;
 
     sendPost(uploadAddress, formData, function() {
@@ -144,16 +145,35 @@ function sendFeedback() {
         document.forms.feedback.reset();
         $('#myModal').modal('hide');
         alert('Data was sent');
+        startRow = 0;
+        getFeedbackBlocks();
     }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
 }
 
 var dataAddress = 'api/feedback';
+var startRow = 0;
+var filesAddress;
 
-$('#forvard').on('click', function(e) {
-    e.preventDefault();
-    sendGet(dataAddress, function(userData) {
+function getFeedbackBlocks() {
+    filesAddress = dataAddress + '?startRow=' + startRow;
+    sendGet(filesAddress, function(userData) {
         insertToFeedbackBlock(userData);
     }, function(errorMessage) { alert(errorMessage) });
+}
+
+$(window).ready(getFeedbackBlocks());
+
+$('#forward').on('click', function(e) {
+    e.preventDefault();
+    startRow += 3;
+    getFeedbackBlocks();
+});
+
+$('#reverse').on('click', function(e) {
+    e.preventDefault();
+    startRow -= 3;
+    if (startRow < 0) startRow = 0;
+    getFeedbackBlocks();
 });
 
 function insertToFeedbackBlock(dataContent) {
