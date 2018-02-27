@@ -137,6 +137,11 @@ function toValidate() {
 
 function sendFeedback() {
     var formData = new FormData(document.forms.feedback);
+    var files;
+    $('input[type=file]').change(function() {
+        files = this.files[0];
+    });
+    alert(files);
 
     var uploadAddress = document.forms.feedback.action;
 

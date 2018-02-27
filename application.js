@@ -44,8 +44,7 @@ http.createServer(function(req, res) {
                         }));
                     } else {
                         if (req.url == '/api/feedback') {
-                            // data from contacts form: 
-                            console.log(postData.photo);
+                            // data from contacts form: console.log(postData);
                             if (postData.photo !== '') {
                                 var photoName = uuidv4();
                                 var photoPath = __dirname + '/upload/' + photoName;

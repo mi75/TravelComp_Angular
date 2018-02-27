@@ -6,13 +6,31 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     });
     var jsd = JSON.stringify(object);
 
-    var jqxhr = $.post(uploadAddress, jsd, "json");
-    jqxhr.done(function() {
-        onSuccess();
-    });
-    jqxhr.fail(function(data, textStatus, errorThrown) {
-        var errorMessage = errorThrown + ': ' + textStatus;
-        onFail(errorMessage);
+    // var jqxhr = $.post(uploadAddress, jsd, "json");
+    // jqxhr.done(function() {
+    //     onSuccess();
+    // });
+    // jqxhr.fail(function(data, textStatus, errorThrown) {
+    //     var errorMessage = errorThrown + ': ' + textStatus;
+    //     onFail(errorMessage);
+    // });
+
+    $.ajax({
+        url: uploadAddress,
+        type: 'POST',
+        data: jsd,
+        cache: false,
+        dataType: 'json',
+        processData: false, // Не обрабатываем файлы (Don't process the files)
+        contentType: false, // Так jQuery скажет серверу что это строковой запрос
+        success: function(respond, textStatus, jqXHR) {
+
+            onSuccess();
+        },
+        error: function(data, textStatus, errorThrown) {
+            var errorMessage = errorThrown + ': ' + textStatus;
+            onFail(errorMessage);
+        }
     });
 }
 
