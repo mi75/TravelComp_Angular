@@ -1,10 +1,10 @@
 function sendPost(uploadAddress, formData, onSuccess, onFail) {
 
-    var object = {};
-    formData.forEach(function(value, key) {
-        object[key] = value;
-    });
-    var jsd = JSON.stringify(object);
+    // var object = {};
+    // formData.forEach(function(value, key) {
+    //     object[key] = value;
+    // });
+    // var jsd = JSON.stringify(object);
 
     // var jqxhr = $.post(uploadAddress, jsd, "json");
     // jqxhr.done(function() {
@@ -15,12 +15,15 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     //     onFail(errorMessage);
     // });
 
+    var form = $('#feedback-form')[0];
+    var formData = new FormData(form);
+
     $.ajax({
         url: uploadAddress,
         type: 'POST',
-        data: jsd,
+        data: formData,
         cache: false,
-        dataType: 'json',
+        //dataType: 'json',
         processData: false, // Не обрабатываем файлы (Don't process the files)
         contentType: false, // Так jQuery скажет серверу что это строковой запрос
         success: function(respond, textStatus, jqXHR) {

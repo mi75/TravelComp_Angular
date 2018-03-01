@@ -1,8 +1,9 @@
 var http = require('http');
 var fs = require('fs');
-var dbOperations = require('./dbOperations');
+//var dbOperations = require('./dbOperations');
 var uuidv4 = require('uuid/v4');
 var url = require('url');
+var Busboy = require('busboy');
 
 
 //create a server object:
@@ -18,51 +19,76 @@ http.createServer(function(req, res) {
                 var body = '';
                 var postData;
 
-                req.on('data', function(data) {
-                    body += data;
+
+                var busboy = new Busboy({ headers: req.headers });
+                req.pipe(busboy);
+
+
+                busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+                    console.log(filename);
+                    var saveTo =  __dirname + '/upload/' + filename;
+                    file.pipe(fs.createWriteStream(saveTo));
+                  });
+
+                  busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+                    console.log("The key/value is: " + key + "/" + value);
                 });
 
+                  busboy.on('finish', function() {
+                    res.writeHead(200, { 'Connection': 'close' });
+                    res.end("That's all folks!");
+                  });
+
+                // req.on('data', function(data) {
+                //     body += data;
+                // });
+
                 req.on('end', function() {
-                    postData = JSON.parse(body);
+                    //postData = JSON.parse(body);
 
                     if (req.url == '/api/contacts') {
+
                         // data from contacts form: console.log(postData);
-                        var contact = {
-                            message: postData.message,
-                            name: postData.from,
-                            email: postData.mail,
-                            telephone: postData.phone,
-                            howHeard: postData.how,
-                            keepMe: postData.cb == null ? 0 : 1
-                        };
-                        dbOperations.addContact(contact, (function(err) {
-                            if (err) {
-                                returnError(err.sqlMessage, res, headers);
-                            } else {
-                                returnSuccess('/contacts', res, headers);
-                            }
-                        }));
+                        // var contact = {
+                        //     message: postData.message,
+                        //     name: postData.from,
+                        //     email: postData.mail,
+                        //     telephone: postData.phone,
+                        //     howHeard: postData.how,
+                        //     keepMe: postData.cb == null ? 0 : 1
+                        // };
+                        // dbOperations.addContact(contact, (function(err) {
+                        //     if (err) {
+                        //         returnError(err.sqlMessage, res, headers);
+                        //     } else {
+                        //         returnSuccess('/contacts', res, headers);
+                        //     }
+                        // }));
                     } else {
                         if (req.url == '/api/feedback') {
                             // data from contacts form: console.log(postData);
-                            if (postData.photo !== '') {
-                                var photoName = uuidv4();
-                                var photoPath = __dirname + '/upload/' + photoName;
-                                fs.writeFile(photoPath, postData.photo);
-                            }
-                            var contact = {
-                                message: postData.message,
-                                name: postData.from,
-                                photo: postData.photo == '' ? null : photoName,
-                                date: new Date()
-                            };
-                            dbOperations.addFeedback(contact, (function(err) {
-                                if (err) {
-                                    returnError(err.sqlMessage, res, headers);
-                                } else {
-                                    returnSuccess('/', res, headers);
-                                }
-                            }));
+
+                           
+                              //return 
+
+                            // if (postData.photo !== '') {
+                            //     var photoName = uuidv4();
+                            //     var photoPath = __dirname + '/upload/' + photoName;
+                            //     fs.writeFile(photoPath, postData.photo);
+                            // }
+                            // var contact = {
+                            //     message: postData.message,
+                            //     name: postData.from,
+                            //     photo: postData.photo == '' ? null : photoName,
+                            //     date: new Date()
+                            // };
+                            // dbOperations.addFeedback(contact, (function(err) {
+                            //     if (err) {
+                            //         returnError(err.sqlMessage, res, headers);
+                            //     } else {
+                            //         returnSuccess('/', res, headers);
+                            //     }
+                            // }));
                         } else {
                             returnError('Unsupported url', res, headers);
                         }
@@ -133,27 +159,27 @@ function processGetRequest(req, res) {
             var url_parts = url.parse(req.url, true);
             var query = url_parts.query;
             var startRow = parseInt(query.startRow);
-            dbOperations.readFeedback(startRow, function(err, result) {
-                if (err) {
-                    returnError(err.sqlMessage, res);
-                } else {
-                    var list = '';
-                    if (result) list = JSON.stringify(result);
-                    res.write(list);
-                    res.end();
-                }
-            });
+            // dbOperations.readFeedback(startRow, function(err, result) {
+            //     if (err) {
+            //         returnError(err.sqlMessage, res);
+            //     } else {
+            //         var list = '';
+            //         if (result) list = JSON.stringify(result);
+            //         res.write(list);
+            //         res.end();
+            //     }
+            // });
         } else {
-            dbOperations.readTable(function(err, result) {
-                if (err) {
-                    returnError(err.sqlMessage, res);
-                } else {
-                    var list = '';
-                    if (result) list = JSON.stringify(result);
-                    res.write(list);
-                    res.end();
-                }
-            });
+            // dbOperations.readTable(function(err, result) {
+            //     if (err) {
+            //         returnError(err.sqlMessage, res);
+            //     } else {
+            //         var list = '';
+            //         if (result) list = JSON.stringify(result);
+            //         res.write(list);
+            //         res.end();
+            //     }
+            // });
         }
     } else {
         if (fs.existsSync(targetFileName)) {
