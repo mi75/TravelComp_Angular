@@ -18,7 +18,7 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     $.ajax({
         url: uploadAddress,
         type: 'POST',
-        data: jsd,
+        data: object,
         cache: false,
         dataType: 'json',
         processData: false, // Не обрабатываем файлы (Don't process the files)
