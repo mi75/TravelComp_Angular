@@ -152,6 +152,7 @@ function sendFeedback() {
 }
 
 var dataAddress = 'api/feedback';
+var usersPhotosFolder = 'upload/';
 var startRow = 0;
 var filesAddress;
 
@@ -180,6 +181,7 @@ $('#reverse').on('click', function(e) {
 function insertToFeedbackBlock(dataContent) {
     var datArray = JSON.parse(dataContent);
     var names = $('.card-title');
+    var photos = $('.card-customer');
     var messages = $('.messages');
     var dates = $('.text-muted');
 
@@ -193,6 +195,7 @@ function insertToFeedbackBlock(dataContent) {
     $(datArray).each(function(i, item) {
         var d = new Date(item['date']);
         $(names[i]).text(item['name']);
+        $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
         $(messages[i]).text(item['message']);
         $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
     });

@@ -18,9 +18,8 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     $.ajax({
         url: uploadAddress,
         type: 'POST',
-        data: object,
+        data: formData,
         cache: false,
-        dataType: 'json',
         processData: false, // Не обрабатываем файлы (Don't process the files)
         contentType: false, // Так jQuery скажет серверу что это строковой запрос
         success: function(respond, textStatus, jqXHR) {
