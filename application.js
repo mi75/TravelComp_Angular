@@ -16,99 +16,77 @@ http.createServer(function(req, res) {
             processGetRequest(req, res);
         } else {
             if (req.method == 'POST') {
-                // var body = '';
-                // var postData;
 
-                // req.on('data', function(data) {
-                //     body += data;
-                // });
+                if (req.url == '/api/feedback') {
 
-                var photoName = uuidv4();
-                var name;
-                var message;
-                var userFile = '';
-                var busboy = new Busboy({ headers: req.headers });
-                req.pipe(busboy);
+                    var photoName = uuidv4();
+                    var name;
+                    var message;
+                    var userFile = '';
+                    var busboy = new Busboy({ headers: req.headers });
+                    req.pipe(busboy);
 
-                busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-                    if (filename) { userFile = filename };
-                    var saveTo = __dirname + '/upload/' + photoName;
-                    file.pipe(fs.createWriteStream(saveTo));
-                });
-                console.log(userFile);
-                busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
-                    console.log("The key/value is: " + key + "/" + value);
-                    key == 'message' ? message = value : name = value;
-                });
+                    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+                        if (filename) { userFile = filename };
+                        var saveTo = __dirname + '/upload/' + photoName;
+                        file.pipe(fs.createWriteStream(saveTo));
+                    });
 
-                busboy.on('finish', function() {
+                    busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+                        key == 'message' ? message = value : name = value;
+                    });
 
-                    console.log(userFile);
-                    var contact = {
-                        message: message,
-                        name: name,
-                        photo: userFile == '' ? null : photoName,
-                        date: new Date()
-                    };
-                    console.log(contact);
-                    dbOperations.addFeedback(contact, (function(err) {
-                        if (err) {
-                            returnError(err.sqlMessage, res, headers);
-                        } else {
-                            returnSuccess('/', res, headers);
-                        }
-                    }));
+                    busboy.on('finish', function() {
 
-                    res.writeHead(200, { 'Connection': 'close' });
-                    res.end("That's all folks!");
-                });
-
-                req.on('end', function() {
-                    // postData = JSON.parse(body);
-
-                    if (req.url == '/api/contacts') {
-                        // data from contacts form: console.log(postData);
                         var contact = {
-                            message: postData.message,
-                            name: postData.from,
-                            email: postData.mail,
-                            telephone: postData.phone,
-                            howHeard: postData.how,
-                            keepMe: postData.cb == null ? 0 : 1
+                            message: message,
+                            name: name,
+                            photo: userFile == '' ? null : photoName,
+                            date: new Date()
                         };
-                        dbOperations.addContact(contact, (function(err) {
+
+                        dbOperations.addFeedback(contact, (function(err) {
                             if (err) {
                                 returnError(err.sqlMessage, res, headers);
                             } else {
-                                returnSuccess('/contacts', res, headers);
+                                returnSuccess('/', res, headers);
                             }
                         }));
-                    } else {
-                        if (req.url == '/api/feedback') {
+
+                        res.writeHead(200, { 'Connection': 'close' });
+                        res.end("That's all folks!");
+                    });
+                } else {
+                    var body = '';
+                    var postData;
+                    req.on('data', function(data) {
+                        body += data;
+                    });
+                    req.on('end', function() {
+                        postData = JSON.parse(body);
+
+                        if (req.url == '/api/contacts') {
                             // data from contacts form: console.log(postData);
-                            // if (postData.photo !== '') {
-                            //     var photoName = uuidv4();
-                            //     var photoPath = __dirname + '/upload/' + photoName;
-                            //     fs.writeFile(photoPath, postData.photo);
-                            // }
-                            // var contact = {
-                            //     message: postData.message,
-                            //     name: postData.from,
-                            //     photo: postData.photo == '' ? null : photoName,
-                            //     date: new Date()
-                            // };
-                            // dbOperations.addFeedback(contact, (function(err) {
-                            //     if (err) {
-                            //         returnError(err.sqlMessage, res, headers);
-                            //     } else {
-                            //         returnSuccess('/', res, headers);
-                            //     }
-                            // }));
+                            var contact = {
+                                message: postData.message,
+                                name: postData.from,
+                                email: postData.mail,
+                                telephone: postData.phone,
+                                howHeard: postData.how,
+                                keepMe: postData.cb == null ? 0 : 1
+                            };
+                            dbOperations.addContact(contact, (function(err) {
+                                if (err) {
+                                    returnError(err.sqlMessage, res, headers);
+                                } else {
+                                    returnSuccess('/contacts', res, headers);
+                                }
+                            }));
                         } else {
                             returnError('Unsupported url', res, headers);
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     } catch (err) {

@@ -141,7 +141,7 @@ function sendFeedback() {
 
     var uploadAddress = document.forms.feedback.action;
 
-    sendPost(uploadAddress, formData, function() {
+    sendPostWithFile(uploadAddress, formData, function() {
         $('#upload-file-info').text('');
         document.forms.feedback.reset();
         $('#myModal').modal('hide');
@@ -184,6 +184,7 @@ function insertToFeedbackBlock(dataContent) {
     var photos = $('.card-customer');
     var messages = $('.messages');
     var dates = $('.text-muted');
+    var noPhotoImage = 'img/default_customer.jpg';
 
     var options = {
         year: 'numeric',
@@ -195,7 +196,11 @@ function insertToFeedbackBlock(dataContent) {
     $(datArray).each(function(i, item) {
         var d = new Date(item['date']);
         $(names[i]).text(item['name']);
-        $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
+        if (item['photo']) {
+            $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
+        } else {
+            $(photos[i]).prop('src', noPhotoImage);
+        };
         $(messages[i]).text(item['message']);
         $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
     });
