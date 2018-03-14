@@ -154,6 +154,7 @@ function sendFeedback() {
 var dataAddress = 'api/feedback';
 var usersPhotosFolder = 'upload/';
 var startRow = 0;
+var rowsCounter = 0;
 var filesAddress;
 
 function getFeedbackBlocks() {
@@ -168,6 +169,7 @@ $(window).ready(getFeedbackBlocks());
 $('#forward').on('click', function(e) {
     e.preventDefault();
     startRow += 3;
+    if (startRow > rowsCounter - 3) startRow = rowsCounter - 3;
     getFeedbackBlocks();
 });
 
@@ -179,7 +181,7 @@ $('#reverse').on('click', function(e) {
 });
 
 function insertToFeedbackBlock(dataContent) {
-    var datArray = JSON.parse(dataContent);
+    var complexArray = JSON.parse(dataContent);
     var names = $('.card-title');
     var photos = $('.card-customer');
     var messages = $('.messages');
@@ -193,15 +195,20 @@ function insertToFeedbackBlock(dataContent) {
         timezone: 'UTC'
     };
 
-    $(datArray).each(function(i, item) {
-        var d = new Date(item['date']);
-        $(names[i]).text(item['name']);
-        if (item['photo']) {
-            $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
-        } else {
-            $(photos[i]).prop('src', noPhotoImage);
-        };
-        $(messages[i]).text(item['message']);
-        $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
+    $(complexArray).each(function(i, item) {
+        var rowsArray = item['rows'];
+        rowsCounter = item['count'][0].count; // значение запроса числа записей в базе
+
+        $(rowsArray).each(function(i, item) {
+            var d = new Date(item['date']);
+            $(names[i]).text(item['name']);
+            if (item['photo']) {
+                $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
+            } else {
+                $(photos[i]).prop('src', noPhotoImage);
+            };
+            $(messages[i]).text(item['message']);
+            $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
+        });
     });
 }

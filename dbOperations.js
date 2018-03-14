@@ -48,11 +48,27 @@ module.exports = {
     },
 
     readFeedback: function(startRow, callback) {
-        connection.query('SELECT * FROM feedback_1 ORDER BY date DESC LIMIT ?, 3', startRow, function(err, result) {
+
+        var count;
+
+        connection.query('SELECT COUNT(*) as count FROM feedback_1', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
-                callback(null, result);
+                count = result;
+            }
+        });
+
+        connection.query('SELECT * FROM feedback_1 ORDER BY date DESC LIMIT ?, 3', startRow, function(err, result) {
+            var dataModel;
+            if (err) {
+                callback(err, null);
+            } else {
+                dataModel = {
+                    rows: result,
+                    count: count
+                }
+                callback(null, dataModel);
             }
         });
     }
