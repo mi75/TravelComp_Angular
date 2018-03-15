@@ -54,7 +54,7 @@ http.createServer(function(req, res) {
                         }));
 
                         res.writeHead(200, { 'Connection': 'close' });
-                        res.end("That's all folks!");
+                        res.end();
                     });
                 } else {
                     var body = '';
