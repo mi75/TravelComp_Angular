@@ -196,7 +196,7 @@ function insertToFeedbackBlock(dataContent) {
     };
 
     var rowsArray = complexArray.rows; // масив записей базы
-    rowsCounter = complexArray.count[0].count; // значение запроса числа записей в базе
+    rowsCounter = complexArray.count; // значение запроса числа записей в базе
 
     $(rowsArray).each(function(i, item) {
         var d = new Date(item['date']);

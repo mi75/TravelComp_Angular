@@ -55,7 +55,7 @@ module.exports = {
             if (err) {
                 callback(err, null);
             } else {
-                count = result;
+                count = result[0].count;
             }
         });
 
