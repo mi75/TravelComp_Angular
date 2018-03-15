@@ -158,7 +158,6 @@ function processGetRequest(req, res) {
                 } else {
                     var list = '';
                     if (result) list = JSON.stringify(result);
-                    console.log(list);
                     res.write(list);
                     res.end();
                 }
