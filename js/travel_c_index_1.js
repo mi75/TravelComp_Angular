@@ -84,3 +84,130 @@ function initSlideNav() {
     }
     return knobs; // возвращаем коллекцию кнопок для прокрутки setInterval-ом
 }
+
+function showError(elem, errorMessage) {
+    elem.parentNode.className = 'f-row error';
+    var msgElem = document.createElement('span');
+    msgElem.className = "error-message";
+    msgElem.innerHTML = errorMessage;
+    elem.parentNode.appendChild(msgElem);
+}
+
+function resetError(elem) {
+    elem.parentNode.className = 'f-row';
+    if (elem.parentNode.lastChild.className == "error-message") {
+        elem.parentNode.removeChild(elem.parentNode.lastChild);
+    }
+}
+
+function toValidate() {
+
+    var er = null;
+    var form = document.getElementById("feedback-form");
+    var elems = form.elements;
+
+    resetError(elems.from);
+    if (!validator.validate(elems.from.value, validator.rules.notEmpty)) {
+        showError(elems.from, ' Укажите, от кого.');
+        er = 1;
+    } else {
+        if (!validator.validate(elems.from.value, validator.rules.clientName)) {
+            resetError(elems.from);
+            showError(elems.from, ' допустимы только буквы.');
+            er = 1;
+        }
+    }
+    if (!validator.validate(elems.from.value, validator.rules.charsCount, 80)) {
+        showError(elems.from, ' максимум 80 символов.');
+        er = 1;
+    }
+
+    resetError(elems.message);
+    if (!validator.validate(elems.message.value, validator.rules.notEmpty)) {
+        showError(elems.message, ' Отсутствует текст.');
+        er = 1;
+    } else {
+        if (!validator.validate(elems.message.value, validator.rules.charsCount, 1000)) {
+            showError(elems.message, ' максимум 1000 символов.');
+            er = 1;
+        }
+    }
+    if (!er) sendFeedback();
+}
+
+function sendFeedback() {
+    // var formData = new FormData(document.forms.feedback);
+    var formData = new FormData($('#feedback-form')[0]);
+
+    var uploadAddress = document.forms.feedback.action;
+
+    sendPostWithFile(uploadAddress, formData, function() {
+        $('#upload-file-info').text('');
+        document.forms.feedback.reset();
+        $('#myModal').modal('hide');
+        alert('Data was sent');
+        startRow = 0;
+        getFeedbackBlocks();
+    }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
+}
+
+var dataAddress = 'api/feedback';
+var usersPhotosFolder = 'upload/';
+var startRow = 0;
+var rowsCounter = 0;
+var filesAddress;
+
+function getFeedbackBlocks() {
+    filesAddress = dataAddress + '?startRow=' + startRow;
+    sendGet(filesAddress, function(userData) {
+        insertToFeedbackBlock(userData);
+    }, function(errorMessage) { alert(errorMessage) });
+}
+
+$(window).ready(getFeedbackBlocks());
+
+$('#forward').on('click', function(e) {
+    e.preventDefault();
+    startRow += 3;
+    if (startRow > rowsCounter - 3) startRow = rowsCounter - 3;
+    getFeedbackBlocks();
+});
+
+$('#reverse').on('click', function(e) {
+    e.preventDefault();
+    startRow -= 3;
+    if (startRow < 0) startRow = 0;
+    getFeedbackBlocks();
+});
+
+function insertToFeedbackBlock(dataContent) {
+    var complexArray = JSON.parse(dataContent);
+    var names = $('.card-title');
+    var photos = $('.card-customer');
+    var messages = $('.messages');
+    var dates = $('.text-muted');
+    var noPhotoImage = 'img/default_customer.jpg';
+
+    var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timezone: 'UTC'
+    };
+
+    var rowsArray = complexArray.rows; // масив записей базы
+    rowsCounter = complexArray.count; // значение запроса числа записей в базе
+
+    $(rowsArray).each(function(i, item) {
+        var d = new Date(item['date']);
+        $(names[i]).text(item['name']);
+        if (item['photo']) {
+            $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
+        } else {
+            $(photos[i]).prop('src', noPhotoImage);
+        };
+        $(messages[i]).text(item['message']);
+        $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
+    });
+
+}

@@ -16,6 +16,26 @@ function sendPost(uploadAddress, formData, onSuccess, onFail) {
     });
 }
 
+function sendPostWithFile(uploadAddress, formData, onSuccess, onFail) {
+
+    $.ajax({
+        url: uploadAddress,
+        type: 'POST',
+        data: formData,
+        cache: false,
+        processData: false, // Не обрабатываем файлы (Don't process the files)
+        contentType: false, // Так jQuery скажет серверу что это строковой запрос
+        success: function(respond, textStatus, jqXHR) {
+
+            onSuccess();
+        },
+        error: function(data, textStatus, errorThrown) {
+            var errorMessage = errorThrown + ': ' + textStatus;
+            onFail(errorMessage);
+        }
+    });
+}
+
 function sendGet(dataAddress, onSuccess, onFail) {
 
     var jqxhr = $.get(dataAddress);
@@ -23,6 +43,7 @@ function sendGet(dataAddress, onSuccess, onFail) {
         onSuccess(data);
     });
     jqxhr.fail(function(data, textStatus) {
+        console.log(data);
         onFail(textStatus);
     });
 

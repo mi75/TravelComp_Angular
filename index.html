@@ -30,13 +30,10 @@
         <div class="col-sm-6 col-md-4">
             <div class="rev-nav">
 
-                <button type="button" class="btn btn-outline-primary btn-lg">+Добавить отзыв</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg"><</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg">></button>
+                <button type="button" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg">+Добавить отзыв</button>
+                <button type="button" id="reverse" class="btn btn-outline-secondary btn-lg"><</button>
+                <button type="button" id="forward" class="btn btn-outline-secondary btn-lg">></button>
 
-                <!-- <button type="button" class="btn btn-default btn-lg r-n"><i class="glyphicon glyphicon-circle-arrow-left" style="color:rgb(0, 123, 255); font-size: 30px;;"></i></button>
-                        <button type="button" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-circle-arrow-right" style="color:rgb(0, 123, 255); font-size: 30px;"></i></button>
-                        <button type="button" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-plus-sign" style="color:rgb(0, 123, 255); font-size: 30px;;"></i></button> -->
             </div>
         </div>
     </div>
@@ -49,7 +46,7 @@
                     <img class="card-customer" src="img/customer1.jpg">
                     <div class="clear"></div>
                     <div class="layer">
-                        <p class="card-text">I spent my first full day on board the Napa Valley Wine Train, which meanders along 25 miles of track through beautiful scenery interspersed with such exclusive wineries as Robert Mondavi. You can disembark from the train if you
+                        <p class="card-text messages">I spent my first full day on board the Napa Valley Wine Train, which meanders along 25 miles of track through beautiful scenery interspersed with such exclusive wineries as Robert Mondavi. You can disembark from the train if you
                             wish and sample some of the produce, but a stunningly good three course lunch did for me. Driving over the Golden Gate Bridge didn’t disappoint, with clear skies and none of the usual fog obscuring the views, but just one day
                             in San Francisco was not nearly enough to do this fabulous city justice. I did however manage to cram in Alcatraz, Fisherman’s Wharf and Union Square, ride on one of the city’s historic cable car trams and climb Lombard Street,
                             dubbed the world’s crookedest, in full and glorious floral bloom.</p>
@@ -64,7 +61,7 @@
                     <img class="card-customer" src="img/customer2.png">
                     <div class="clear"></div>
                     <div class="layer">
-                        <p class="card-text">Goodnight from #Venice #Italy #ItalyBellissimo</p>
+                        <p class="card-text messages">Goodnight from #Venice #Italy #ItalyBellissimo</p>
                     </div>
                     <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
                 </div>
@@ -76,11 +73,59 @@
                     <img class="card-customer" src="">
                     <div class="clear"></div>
                     <div class="layer">
-                        <p class="card-text">My guests often ask me when they didn’t see me for on hour when they are on a tour with a local specialist: ‘did you enjoy your break’ not realizing that I got the tickets for the #eiffeltower in the meantime, so they don’t have
+                        <p class="card-text messages">My guests often ask me when they didn’t see me for on hour when they are on a tour with a local specialist: ‘did you enjoy your break’ not realizing that I got the tickets for the #eiffeltower in the meantime, so they don’t have
                             to wait in line later on!</p>
                     </div>
                     <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Поделитесь впечатлениями с друзьями</h4>
+            </div>
+            <div class="modal-body">
+                <form id="feedback-form" name="feedback" method="post" action="/api/feedback" onsubmit="return toValidate();">
+                    <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="message">Your story<span class="req">*</span>:</label><br />
+                                <textarea name="message" class="field" rows="13"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="from">Your full name<span class="req">*</span>:</label><br />
+                                <input type="text" name="from" class="field">
+                            </div>
+                            <div class="f-row">
+                                <!-- <label for="photo">Your photo:</label><br />
+                                <input type="file" id="file" name="photo"> -->
+                                <label class="btn btn-primary" for="my-file-selector">
+                                    <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none" 
+                                    onchange="$('#upload-file-info').html(this.files[0].name)">
+                                    <!-- <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none"
+                                    onchange="$('#upload-file-pic').attr('src',this.files[0].getAsDataURL())"> -->
+                                    Load file with your photo:
+                                </label>
+                                <span class='label label-info' id="upload-file-info"></span>
+                                <!-- <img class="card-customer" id="upload-file-pic" src="img/customer2.png"> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="toValidate()">Save changes</button>
             </div>
         </div>
     </div>
@@ -121,5 +166,7 @@
 </div>
 
 @scripts {
+<script src="js/validator.js"></script>
+<script src="js/apiCaller.js"></script>
 <script src="js/travel_c_index_1.js"></script>
 }

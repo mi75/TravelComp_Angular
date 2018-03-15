@@ -1,6 +1,9 @@
 var http = require('http');
 var fs = require('fs');
 var dbOperations = require('./dbOperations');
+var uuidv4 = require('uuid/v4');
+var url = require('url');
+var Busboy = require('busboy');
 
 
 //create a server object:
@@ -13,38 +16,77 @@ http.createServer(function(req, res) {
             processGetRequest(req, res);
         } else {
             if (req.method == 'POST') {
-                var body = '';
-                var postData;
 
-                req.on('data', function(data) {
-                    body += data;
-                });
+                if (req.url == '/api/feedback') {
 
-                req.on('end', function() {
-                    postData = JSON.parse(body);
+                    var photoName = uuidv4();
+                    var name;
+                    var message;
+                    var userFile = '';
+                    var busboy = new Busboy({ headers: req.headers });
+                    req.pipe(busboy);
 
-                    if (req.url == '/api/contacts') {
-                        // data from contacts form: console.log(postData);
+                    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+                        if (filename) { userFile = filename };
+                        var saveTo = __dirname + '/upload/' + photoName;
+                        file.pipe(fs.createWriteStream(saveTo));
+                    });
+
+                    busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+                        key == 'message' ? message = value : name = value;
+                    });
+
+                    busboy.on('finish', function() {
+
                         var contact = {
-                            message: postData.message,
-                            name: postData.from,
-                            email: postData.mail,
-                            telephone: postData.phone,
-                            howHeard: postData.how,
-                            keepMe: postData.cb == null ? 0 : 1
+                            message: message,
+                            name: name,
+                            photo: userFile == '' ? null : photoName,
+                            date: new Date()
                         };
-                        dbOperations.addContact(contact, (function(err) {
+
+                        dbOperations.addFeedback(contact, (function(err) {
                             if (err) {
                                 returnError(err.sqlMessage, res, headers);
                             } else {
-                                returnSuccess('/contacts', res, headers);
+                                returnSuccess('/', res, headers);
                             }
                         }));
-                    } else {
-                        returnError('Unsupported url', res, headers);
-                    }
 
-                });
+                        res.writeHead(200, { 'Connection': 'close' });
+                        res.end();
+                    });
+                } else {
+                    var body = '';
+                    var postData;
+                    req.on('data', function(data) {
+                        body += data;
+                    });
+                    req.on('end', function() {
+                        postData = JSON.parse(body);
+
+                        if (req.url == '/api/contacts') {
+                            // data from contacts form: console.log(postData);
+                            var contact = {
+                                message: postData.message,
+                                name: postData.from,
+                                email: postData.mail,
+                                telephone: postData.phone,
+                                howHeard: postData.how,
+                                keepMe: postData.cb == null ? 0 : 1
+                            };
+                            dbOperations.addContact(contact, (function(err) {
+                                if (err) {
+                                    returnError(err.sqlMessage, res, headers);
+                                } else {
+                                    returnSuccess('/contacts', res, headers);
+                                }
+                            }));
+                        } else {
+                            returnError('Unsupported url', res, headers);
+                        }
+                    });
+                }
             }
         }
     } catch (err) {
@@ -106,16 +148,32 @@ function processGetRequest(req, res) {
     }
 
     if (useApi) {
-        dbOperations.readTable(function(err, result) {
-            if (err) {
-                returnError(err.sqlMessage, res);
-            } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.write(list);
-                res.end();
-            }
-        });
+        if (req.url.includes('api/feedback')) {
+            var url_parts = url.parse(req.url, true);
+            var query = url_parts.query;
+            var startRow = parseInt(query.startRow);
+            dbOperations.readFeedback(startRow, function(err, result) {
+                if (err) {
+                    returnError(err.sqlMessage, res);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.write(list);
+                    res.end();
+                }
+            });
+        } else {
+            dbOperations.readTable(function(err, result) {
+                if (err) {
+                    returnError(err.sqlMessage, res);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.write(list);
+                    res.end();
+                }
+            });
+        }
     } else {
         if (fs.existsSync(targetFileName)) {
 
