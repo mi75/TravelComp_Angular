@@ -195,20 +195,19 @@ function insertToFeedbackBlock(dataContent) {
         timezone: 'UTC'
     };
 
-    $(complexArray).each(function(i, item) {
-        var rowsArray = item['rows'];
-        rowsCounter = item['count'][0].count; // значение запроса числа записей в базе
+    var rowsArray = complexArray.rows; // масив записей базы
+    rowsCounter = complexArray.count[0].count; // значение запроса числа записей в базе
 
-        $(rowsArray).each(function(i, item) {
-            var d = new Date(item['date']);
-            $(names[i]).text(item['name']);
-            if (item['photo']) {
-                $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
-            } else {
-                $(photos[i]).prop('src', noPhotoImage);
-            };
-            $(messages[i]).text(item['message']);
-            $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
-        });
+    $(rowsArray).each(function(i, item) {
+        var d = new Date(item['date']);
+        $(names[i]).text(item['name']);
+        if (item['photo']) {
+            $(photos[i]).prop('src', usersPhotosFolder + item['photo']);
+        } else {
+            $(photos[i]).prop('src', noPhotoImage);
+        };
+        $(messages[i]).text(item['message']);
+        $(dates[i]).text('добавлено: ' + d.toLocaleString("ru", options));
     });
+
 }
