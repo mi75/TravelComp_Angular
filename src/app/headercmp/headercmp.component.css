@@ -1,0 +1,148 @@
+.header {
+    margin: 0;
+    background-color: #e1e1e1;
+}
+
+.h-medals {
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url(Tours-2015-1.png);
+}
+
+.h-logo {
+    height: 130px;
+    text-align: center;
+}
+
+.h-logo img {
+    max-height: 120px;
+}
+
+.h-logo a {
+    outline: none;
+}
+
+.h-contacts {
+    margin-top: auto;
+    padding-bottom: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.main-menu {
+    height: 44px;
+    padding: 1px 0;
+}
+
+.main-menu ul {
+    padding: 1px 0;
+    margin: auto;
+    height: 42px;
+    background-color: white;
+}
+
+.main-menu li {
+    float: left;
+    list-style: none;
+    margin: auto;
+    padding: 6px 0;
+    box-sizing: border-box;
+    width: 14.285%;
+    height: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+.main-menu span {
+    text-decoration: none;
+    color: #006386;
+}
+
+.main-menu #pull {
+    display: none;
+}
+
+.main-menu a {
+    text-decoration: none;
+}
+
+.main-menu a:hover {
+    color: #006386;
+}
+
+.menu-fix {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    padding: 0;
+    margin-bottom: 0;
+    text-align: center;
+    z-index: 1000;
+}
+
+@media screen and (max-width: 960px) {
+    .main-menu {
+        height: 80px;
+    }
+    .main-menu ul {
+        width: 100%;
+        height: auto;
+        display: inline-block;
+        background-color: white;
+    }
+    .main-menu li {
+        width: 25%;
+        float: left;
+        position: relative;
+    }
+    .main-menu a {
+        text-decoration: none;
+        text-align: left;
+        width: 100%;
+        text-indent: 25px;
+    }
+    .main-menu a:hover {
+        color: #006386;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .main-menu {
+        height: 30px;
+    }
+    .main-menu ul {
+        display: none;
+    }
+    .main-menu #pull {
+        display: block;
+        height: 30px;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+    }
+    .main-menu #pull:after {
+        margin: 0;
+        background-color: white;
+        height: 30px;
+        display: block;
+        z-index: 1000;
+    }
+    .main-menu li {
+        margin: 0;
+        display: block;
+        background-color: white;
+        float: none;
+        width: 100%;
+        z-index: 1000;
+    }
+    .main-menu li a {
+        border-bottom: 1px solid #576979;
+    }
+}
+
+.clear {
+    clear: both;
+}

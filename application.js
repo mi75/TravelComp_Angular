@@ -119,8 +119,8 @@ function processGetRequest(req, res) {
         switch (req.url) {
             case '/':
                 {
-                    targetFileName = __dirname + '/index.html';
-                    useLayout = true;
+                    targetFileName = __dirname + '/src/app/app.component.html';
+                    // useLayout = true;
                     break;
                 }
             case '/contacts':

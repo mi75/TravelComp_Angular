@@ -1,0 +1,166 @@
+<div class="main-slider">
+    <ul id="slides">
+        <li class="slide showing"><button class="btn-sl">южная европа</button></li>
+        <li class="slide"><button class="btn-sl">итальянская ривьера</button></li>
+        <li class="slide"><button class="btn-sl">средиземноморье</button></li>
+    </ul>
+
+    <div id="sl-k" class="slider-knobs">
+        <!-- <button class="controls" id="previous">P</button>
+      <button class="controls" id="next">N</button> -->
+    </div>
+</div>
+
+<div class="about-us">
+    <h2>Welcome to a whole world of experience</h2>
+    <p>Here at The Ultimate Travel Company we have been creating luxury tailor-made journeys, escorted tours and bespoke adventures for the last 25 years. Indeed, every kind of travel imaginable. Worldwide.</p>
+    <p>Because everyone sees the world differently, our destination experts use their passion and unrivalled knowledge to design your ‘ultimate’ holiday, made to measure for you.</p>
+    <p>Award winning, financially protected and at your service.</p>
+    <h4>We are The Ultimate Travel Company for a reason.</h4>
+</div>
+
+
+<div class="reviews">
+    <div class="row">
+        <div class="col-sm-0 col-md-4"></div>
+        <div class="col-sm-6 col-md-4">
+            <h5>Отзывы Путешественников</h5>
+            <h2>#SIMPLYTRAVELS</h2>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="rev-nav">
+
+                <button type="button" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-lg">+Добавить отзыв</button>
+                <button type="button" id="reverse" class="btn btn-outline-secondary btn-lg"><</button>
+                <button type="button" id="forward" class="btn btn-outline-secondary btn-lg">></button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-deck-wrapper">
+        <div class="card-deck">
+            <div class="card">
+                <img class="card-img-top" src="img/friends_logo_2.jpg">
+                <div class="card-block">
+                    <h4 class="card-title">Зося Синицкая</h4>
+                    <img class="card-customer" src="img/customer1.jpg">
+                    <div class="clear"></div>
+                    <div class="layer">
+                        <p class="card-text messages">I spent my first full day on board the Napa Valley Wine Train, which meanders along 25 miles of track through beautiful scenery interspersed with such exclusive wineries as Robert Mondavi. You can disembark from the train if you
+                            wish and sample some of the produce, but a stunningly good three course lunch did for me. Driving over the Golden Gate Bridge didn’t disappoint, with clear skies and none of the usual fog obscuring the views, but just one day
+                            in San Francisco was not nearly enough to do this fabulous city justice. I did however manage to cram in Alcatraz, Fisherman’s Wharf and Union Square, ride on one of the city’s historic cable car trams and climb Lombard Street,
+                            dubbed the world’s crookedest, in full and glorious floral bloom.</p>
+                    </div>
+                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="img/friends_logo_2.jpg">
+                <div class="card-block">
+                    <h4 class="card-title">Киса и Ося</h4>
+                    <img class="card-customer" src="img/customer2.png">
+                    <div class="clear"></div>
+                    <div class="layer">
+                        <p class="card-text messages">Goodnight from #Venice #Italy #ItalyBellissimo</p>
+                    </div>
+                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="img/friends_logo_2.jpg">
+                <div class="card-block">
+                    <h4 class="card-title">злой турыст</h4>
+                    <img class="card-customer" src="">
+                    <div class="clear"></div>
+                    <div class="layer">
+                        <p class="card-text messages">My guests often ask me when they didn’t see me for on hour when they are on a tour with a local specialist: ‘did you enjoy your break’ not realizing that I got the tickets for the #eiffeltower in the meantime, so they don’t have
+                            to wait in line later on!</p>
+                    </div>
+                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Поделитесь впечатлениями с друзьями</h4>
+            </div>
+            <div class="modal-body">
+                <form id="feedback-form" name="feedback" method="post" action="/api/feedback" onsubmit="return toValidate();">
+                    <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="message">Your story<span class="req">*</span>:</label><br />
+                                <textarea name="message" class="field" rows="13"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="from">Your full name<span class="req">*</span>:</label><br />
+                                <input type="text" name="from" class="field">
+                            </div>
+                            <div class="f-row">
+                                <!-- <label for="photo">Your photo:</label><br />
+                              <input type="file" id="file" name="photo"> -->
+                                <label class="btn btn-primary" for="my-file-selector">
+                                  <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none" 
+                                  onchange="$('#upload-file-info').html(this.files[0].name)">
+                                  <!-- <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none"
+                                  onchange="$('#upload-file-pic').attr('src',this.files[0].getAsDataURL())"> -->
+                                  Load file with your photo:
+                              </label>
+                                <span class='label label-info' id="upload-file-info"></span>
+                                <!-- <img class="card-customer" id="upload-file-pic" src="img/customer2.png"> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="toValidate()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="up-tours">
+    <h5>Where can our trips take you?</h5>
+    <h2>What's popular</h2>
+    <div class="row">
+        <div class="tour-card1 col-sm-4">
+            <a href="#">
+                <h4>Europe and Britain</h4>
+                <div class="tour-overlay">
+                    <p class="tour-them">A true cultural Smorgasbord, Europe is steeped in history and bursting with flavour and new horizons.</p>
+                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
+                </div>
+            </a>
+        </div>
+        <div class="tour-card2 col-sm-4">
+            <a href="#">
+                <h4>Australia and New Zealand</h4>
+                <div class="tour-overlay">
+                    <p class="tour-them">Discover natural wonders in the South Pacific, where roaring oceans meet pristine beaches, tumbling glaciers and the deep, dusty outback.</p>
+                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
+                </div>
+            </a>
+        </div>
+        <div class="tour-card3 col-sm-4">
+            <a href="#">
+                <h4>South America</h4>
+                <div class="tour-overlay">
+                    <p class="tour-them">Awaken your senses, exploring ancient civilisations, vibrant rainforests and buzzing cities. Enjoy the colours and cultures of South America.</p>
+                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
