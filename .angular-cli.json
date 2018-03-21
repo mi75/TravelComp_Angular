@@ -23,7 +23,11 @@
         ],
         "scripts": [
             "assets/js/jquery-latest.js",
-            "assets/js/bootstrap.js"
+            "assets/js/bootstrap.js",
+            "assets/js/slider.js",
+            "assets/js/menu.js",
+            "assets/js/validator.js",
+            "assets/js/contform.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

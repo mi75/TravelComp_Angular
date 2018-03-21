@@ -10,6 +10,8 @@ import { HeadercmpComponent } from './headercmp/headercmp.component';
 import { BodycmpComponent } from './bodycmp/bodycmp.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AdminComponent } from './admin/admin.component';
+import { MSliderComponent } from './m-slider/m-slider.component';
+import { MReviewsComponent } from './m-reviews/m-reviews.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { AdminComponent } from './admin/admin.component';
     HeadercmpComponent,
     BodycmpComponent,
     ContactsComponent,
-    AdminComponent
+    AdminComponent,
+    MSliderComponent,
+    MReviewsComponent
   ],
   imports: [
     BrowserModule,
