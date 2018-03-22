@@ -1,0 +1,11 @@
+<p>
+    m-slider2 works!
+</p>
+<div class="main-slider">
+    <ul id="slides">
+        <li class="item {{item.pic}}" *ngFor="let item of slides; let i=index;" [class.showing]="item.showing">
+            {{item.title}}
+        </li>
+    </ul>
+</div>
+<span>Всего слайдов: <strong>{{slides.length}}</strong></span>

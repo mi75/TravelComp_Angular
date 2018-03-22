@@ -5,7 +5,6 @@ var uuidv4 = require('uuid/v4');
 var url = require('url');
 var Busboy = require('busboy');
 
-
 //create a server object:
 http.createServer(function(req, res) {
     var headers = { 'Test-Header': 'Test' };
@@ -169,6 +168,8 @@ function processGetRequest(req, res) {
                 } else {
                     var list = '';
                     if (result) list = JSON.stringify(result);
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
                     res.write(list);
                     res.end();
                 }

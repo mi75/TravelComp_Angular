@@ -55,6 +55,8 @@
 .reviews .layer {
     margin: 10px 10px 24px 10px;
     padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
     text-align: left;
     vertical-align: baseline;
     font-size: 14px;

@@ -12,6 +12,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { AdminComponent } from './admin/admin.component';
 import { MSliderComponent } from './m-slider/m-slider.component';
 import { MReviewsComponent } from './m-reviews/m-reviews.component';
+import { MSlider2Component } from './m-slider2/m-slider2.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MReviewsComponent } from './m-reviews/m-reviews.component';
     ContactsComponent,
     AdminComponent,
     MSliderComponent,
-    MReviewsComponent
+    MReviewsComponent,
+    MSlider2Component
   ],
   imports: [
     BrowserModule,

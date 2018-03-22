@@ -19,6 +19,15 @@
             </tr>
         </thead>
         <tbody id='dbtab'>
+            <tr *ngFor="let contact of contacts; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.telephone}}</td>
+                <td>{{contact.howHeard}}</td>
+                <td>{{contact.keepMe}}</td>
+                <td>{{contact.message}}</td>
+            </tr>
         </tbody>
     </table>
 </div>
