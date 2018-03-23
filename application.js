@@ -157,6 +157,8 @@ function processGetRequest(req, res) {
                 } else {
                     var list = '';
                     if (result) list = JSON.stringify(result);
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
                     res.write(list);
                     res.end();
                 }

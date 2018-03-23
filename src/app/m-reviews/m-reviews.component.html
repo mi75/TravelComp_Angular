@@ -17,44 +17,16 @@
     </div>
     <div class="card-deck-wrapper">
         <div class="card-deck">
-            <div class="card">
+            <div class="card" *ngFor="let feedback of feedbacks; let i=index;">
                 <img class="card-img-top" src="/assets/images/bodycmp/friends_logo_2.jpg">
                 <div class="card-block">
-                    <h4 class="card-title">Зося Синицкая</h4>
-                    <img class="card-customer" src="/assets/images/bodycmp/customer1.jpg">
+                    <h4 class="card-title">{{feedback.name}}</h4>
+                    <img class="card-customer" [src]="'D:/Work/tmp/P3TravelComp/upload/' + feedback.photo" />
                     <div class="clear"></div>
                     <div class="layer">
-                        <p class="card-text messages">I spent my first full day on board the Napa Valley Wine Train, which meanders along 25 miles of track through beautiful scenery interspersed with such exclusive wineries as Robert Mondavi. You can disembark from the train if you
-                            wish and sample some of the produce, but a stunningly good three course lunch did for me. Driving over the Golden Gate Bridge didn’t disappoint, with clear skies and none of the usual fog obscuring the views, but just one day
-                            in San Francisco was not nearly enough to do this fabulous city justice. I did however manage to cram in Alcatraz, Fisherman’s Wharf and Union Square, ride on one of the city’s historic cable car trams and climb Lombard Street,
-                            dubbed the world’s crookedest, in full and glorious floral bloom.</p>
+                        <p class="card-text messages">{{feedback.message}}</p>
                     </div>
-                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="/assets/images/bodycmp/friends_logo_2.jpg">
-                <div class="card-block">
-                    <h4 class="card-title">Киса и Ося</h4>
-                    <img class="card-customer" src="/assets/images/bodycmp/customer2.png">
-                    <div class="clear"></div>
-                    <div class="layer">
-                        <p class="card-text messages">Goodnight from #Venice #Italy #ItalyBellissimo</p>
-                    </div>
-                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="/assets/images/bodycmp/friends_logo_2.jpg">
-                <div class="card-block">
-                    <h4 class="card-title">злой турыст</h4>
-                    <img class="card-customer" src="/assets/images/bodycmp/default_customer.jpg">
-                    <div class="clear"></div>
-                    <div class="layer">
-                        <p class="card-text messages">My guests often ask me when they didn’t see me for on hour when they are on a tour with a local specialist: ‘did you enjoy your break’ not realizing that I got the tickets for the #eiffeltower in the meantime, so they don’t have
-                            to wait in line later on!</p>
-                    </div>
-                    <p class="card-text"><small class="text-muted">добавлено 1 Апр. 2018</small></p>
+                    <p class="card-text"><small class="text-muted">добавлено {{feedback.date}}</small></p>
                 </div>
             </div>
         </div>
