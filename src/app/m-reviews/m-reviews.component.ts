@@ -28,7 +28,7 @@ export class MReviewsComponent implements OnInit {
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow=0').subscribe( res => {
       this.feedbacks = res.rows;
       this.rowsCounter = res.count;
-      this.check.checkExist(this.feedbacks, this.feedbacks.length, this.defCustPhoto)
+      this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )
   }
 
@@ -37,7 +37,7 @@ export class MReviewsComponent implements OnInit {
     if (this.startRow > this.rowsCounter - 3) this.startRow = this.rowsCounter - 3;
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
-      this.check.checkExist(this.feedbacks, this.feedbacks.length, this.defCustPhoto)
+      this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )
   }
 
@@ -46,7 +46,7 @@ export class MReviewsComponent implements OnInit {
     if (this.startRow < 0) this.startRow = 0;
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
-      this.check.checkExist(this.feedbacks, this.feedbacks.length, this.defCustPhoto)
+      this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )
   }
 
