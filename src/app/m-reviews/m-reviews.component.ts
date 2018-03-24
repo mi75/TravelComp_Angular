@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiGetCallerService } from '../_services/api-get-caller.service';
+import { MReviewsService } from '../_services/m-reviews.service';
 
 @Component({
   selector: 'm-reviews',
   templateUrl: './m-reviews.component.html',
   styleUrls: ['./m-reviews.component.css'],
-  providers: [ApiGetCallerService]
+  providers: [ApiGetCallerService, MReviewsService]
 })
 export class MReviewsComponent implements OnInit {
 
@@ -17,18 +18,16 @@ export class MReviewsComponent implements OnInit {
 
 
   constructor(
-    private load: ApiGetCallerService
+    private load: ApiGetCallerService,
+    private check: MReviewsService
   ) { }
+
 
   ngOnInit() {
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow=0').subscribe( res => {
       this.feedbacks = res.rows;
       this.rowsCounter = res.count;
-      for (let i=0; i<this.feedbacks.length; i++){
-        if (!this.feedbacks[i].photo) {
-          this.feedbacks[i].photo = 'default_customer.jpg';
-        }
-      }
+      this.check.checkPhoto(this.feedbacks, this.feedbacks.length)
     } )
   }
 
@@ -37,11 +36,7 @@ export class MReviewsComponent implements OnInit {
     if (this.startRow > this.rowsCounter - 3) this.startRow = this.rowsCounter - 3;
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
-      for (let i=0; i<this.feedbacks.length; i++){
-        if (!this.feedbacks[i].photo) {
-          this.feedbacks[i].photo = 'default_customer.jpg';
-        }
-      }
+      this.check.checkPhoto(this.feedbacks, this.feedbacks.length)
     } )
   }
 
@@ -50,11 +45,7 @@ export class MReviewsComponent implements OnInit {
     if (this.startRow < 0) this.startRow = 0;
     this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
-      for (let i=0; i<this.feedbacks.length; i++){
-        if (!this.feedbacks[i].photo) {
-          this.feedbacks[i].photo = 'default_customer.jpg';
-        }
-      }
+      this.check.checkPhoto(this.feedbacks, this.feedbacks.length)
     } )
   }
 
