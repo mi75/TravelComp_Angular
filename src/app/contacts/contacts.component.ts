@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ValidatorService } from '../_services/validator.service';
 
 @Component({
   selector: 'contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css']
+  styleUrls: ['./contacts.component.css'],
+  providers: [ValidatorService]
 })
 export class ContactsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private valid: ValidatorService
+  ) { }
 
   ngOnInit() {
   }
 
+  toValidate(){
+    
+  }
 }

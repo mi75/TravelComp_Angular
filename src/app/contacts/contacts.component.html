@@ -21,25 +21,25 @@
             <div class="col-sm-6 col-md-4">
                 <div class="f-row">
                     <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
-                    <textarea name="message" class="field" rows="13"></textarea>
+                    <textarea #newMessage name="message" class="field" rows="13"></textarea>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="f-row">
                     <label for="from">Your full name<span class="req">*</span>:</label><br />
-                    <input type="text" name="from" class="field">
+                    <input #newName type="text" name="from" class="field">
                 </div>
                 <div class="f-row">
                     <label for="mail">Your Email address<span class="req">*</span>:</label><br />
-                    <input type="text" name="mail" class="field">
+                    <input #newEmail type="text" name="mail" class="field">
                 </div>
                 <div class="f-row">
                     <label for="phone">Your telephone number<span class="req">*</span>:</label><br />
-                    <input type="text" name="phone" class="field">
+                    <input #newPhone type="text" name="phone" class="field">
                 </div>
                 <div class="f-row">
                     <label for="how">Select, how did you hear about us?<span class="req">*</span>:</label><br />
-                    <select name="how" class="field">
+                    <select #newHowHeard name="how" class="field">
                               <option></option>
                               <option value="1">от друзей</option>
                               <option value="2">через поиск туров</option>
@@ -49,11 +49,11 @@
             </div>
         </div>
         <label>
-          <input type="checkbox" name="cb" checked>
+          <input #newKeepMe type="checkbox" name="cb" checked>
           <span class="pseudocheckbox">Keep me up to date with news and offers</span>
           </label>
         <div class="go">
-            <input class="go-button" type="button" onclick="toValidate()" value="SUBMIT">
+            <input (click)="toValidate(newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe)" class="go-button" type="button" value="SUBMIT">
         </div>
     </form>
 </div>
