@@ -2,10 +2,10 @@
     m-slider2 works!
 </p>
 <div class="main-slider">
-    <ul id="slides">
-        <li class="item {{item.pic}}" *ngFor="let item of slides; let i=index;" [class.showing]="item.showing">
-            {{item.title}}
-        </li>
+    <ul id="slides" class="slide {{slide.showing}}" [style.background-image]="'url(' + slide.pic + ')'" *ngFor="let slide of slides; let i=index;">
+
+        {{slide.title}}
+
     </ul>
 </div>
 <span>Всего слайдов: <strong>{{slides.length}}</strong></span>
