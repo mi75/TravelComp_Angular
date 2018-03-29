@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.load.getData('http://127.0.0.1:8080/api/admin').subscribe( res => {
+    this.load.getData('api/admin').subscribe( res => {
       this.contacts = res;
     } )
   }

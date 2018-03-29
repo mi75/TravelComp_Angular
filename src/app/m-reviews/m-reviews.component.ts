@@ -11,8 +11,9 @@ import { MReviewsService } from '../_services/m-reviews.service';
 export class MReviewsComponent implements OnInit {
 
   feedbacks;
-  @Input() usersImgPath:string = "/assets/images/upload/";
+  // @Input() usersImgPath:string = "/assets/images/upload/";
   // @Output() feedbacksForwarding = new EventEmitter();
+  usersImgPath:string = "/assets/images/upload/";
   startRow=0;
   rowsCounter = 0;
   defCustPhoto='default_customer.jpg';
@@ -25,7 +26,7 @@ export class MReviewsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.load.getData('http://127.0.0.1:8080/api/feedback?startRow=0').subscribe( res => {
+    this.load.getData('api/feedback?startRow=0').subscribe( res => {
       this.feedbacks = res.rows;
       this.rowsCounter = res.count;
       this.check.checkExist(this.feedbacks, this.defCustPhoto)
@@ -35,7 +36,7 @@ export class MReviewsComponent implements OnInit {
   fbForwarding(){
     this.startRow += 3;
     if (this.startRow > this.rowsCounter - 3) this.startRow = this.rowsCounter - 3;
-    this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
+    this.load.getData('api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
       this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )
@@ -44,7 +45,7 @@ export class MReviewsComponent implements OnInit {
   fbReverse(){
     this.startRow -= 3;
     if (this.startRow < 0) this.startRow = 0;
-    this.load.getData('http://127.0.0.1:8080/api/feedback?startRow='+this.startRow).subscribe( res => {
+    this.load.getData('api/feedback?startRow='+this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
       this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )

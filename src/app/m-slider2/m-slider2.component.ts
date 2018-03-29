@@ -19,15 +19,7 @@ export class MSlider2Component implements OnInit {
   slides=this.sls.getSlides();
 
   ngOnInit() {
+    this.sls.startAnimation();
   }
-
-
-  //   nextSlide() {
-  //     goToSlide(currentSlide + 1);
-  // }
-
-  //   goToSlide(n) {
-  //     slides[currentSlide].className = 'slide showing';
-  // }
 
 }
