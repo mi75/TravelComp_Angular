@@ -9,17 +9,21 @@ import { SliderService } from '../_services/slider.service';
 })
 export class MSlider2Component implements OnInit {
 
-  // currentSlide = 0;
-  // slideInterval = setInterval(nextSlide, 2000);
 
   constructor(
     private sls: SliderService
   ) { }
 
   slides=this.sls.getSlides();
+  knobs=this.sls.getKnobs();
+
 
   ngOnInit() {
     this.sls.startAnimation();
+  }
+
+  goToPic(p) {
+    this.sls.goToPic(p);
   }
 
 }
