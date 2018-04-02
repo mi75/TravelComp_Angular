@@ -13,7 +13,7 @@ export class ValidatorService {
       phone : 3,
       charsCount: 4,
     },
-    validate: function(stringToValidate, rule, additionalParameter){
+    validate: function(stringToValidate, rule, additionalParameter?){
       if (rule == this.rules.notEmpty){
         return this.validateNotEmpty(stringToValidate);
       }
