@@ -1,12 +1,11 @@
 <div class="main-slider">
     <ul id="slides">
-        <li class="slide" *ngFor="let slide of slides; let i=index;" [class.showing]="slide.showing" [style.background-image]="'url(' + slide.pic + ')'">
+        <li class="slide" *ngFor="let slide of slides" [class.showing]="slide.showing" [style.background-image]="'url(' + slide.pic + ')'">
             <button class="btn-sl">{{slide.title}}</button>
         </li>
     </ul>
     <div id="sl-k" class="slider-knobs">
-        <button class="sl-b" *ngFor="let knob of knobs; let i=index;" [class.clicked]="knob.clicked" (click)="goToPic(i)">
-        {{knob.value}}
+        <button class="sl-b" *ngFor="let knob of knobs; let i=index;" [class.clicked]="knob" (click)="goToPic(i)">
         </button>
     </div>
 </div>

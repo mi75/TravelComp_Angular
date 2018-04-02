@@ -10,7 +10,6 @@ import { HeadercmpComponent } from './headercmp/headercmp.component';
 import { BodycmpComponent } from './bodycmp/bodycmp.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AdminComponent } from './admin/admin.component';
-import { MSliderComponent } from './m-slider/m-slider.component';
 import { MReviewsComponent } from './m-reviews/m-reviews.component';
 import { MSlider2Component } from './m-slider2/m-slider2.component';
 
@@ -22,7 +21,6 @@ import { MSlider2Component } from './m-slider2/m-slider2.component';
     BodycmpComponent,
     ContactsComponent,
     AdminComponent,
-    MSliderComponent,
     MReviewsComponent,
     MSlider2Component
   ],
