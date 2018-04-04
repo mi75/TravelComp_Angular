@@ -15,7 +15,6 @@ http.createServer(function(req, res) {
             processGetRequest(req, res);
         } else {
             if (req.method == 'POST') {
-
                 if (req.url == '/api/feedback') {
 
                     var photoName = uuidv4();
@@ -63,6 +62,7 @@ http.createServer(function(req, res) {
                     });
                     req.on('end', function() {
                         postData = JSON.parse(body);
+                        console.log(postData);
 
                         if (req.url == '/api/contacts') {
                             // data from contacts form: console.log(postData);

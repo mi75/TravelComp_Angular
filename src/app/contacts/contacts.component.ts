@@ -1,17 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ValidatorService } from '../_services/validator.service';
 // import { FormControl, FormGroup } from '@angular/forms';
+import { ValidatorService } from '../_services/validator.service';
+import { ApiGetCallerService } from '../_services/api-get-caller.service';
 
 @Component({
   selector: 'contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
-  providers: [ValidatorService]
+  providers: [ValidatorService, ApiGetCallerService]
 })
 export class ContactsComponent implements OnInit {
 
   constructor(
-    private valid: ValidatorService
+    private valid: ValidatorService,
+    private send: ApiGetCallerService
   ) { }
 
   ngOnInit() {
@@ -93,7 +95,7 @@ export class ContactsComponent implements OnInit {
     }
 
     if (!er) {
-      this.sendMySuggestion();
+      this.sendMySuggestion(newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe);
       newMessage.value = '';
       newName.value = '';
       newEmail.value = '';
@@ -103,9 +105,13 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  sendMySuggestion() {
+  sendMySuggestion(newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe) {
     // this.form.reset();
     // this.form.reset(this.form.value);
     // sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
+  this.send.postData('api/contacts', newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe)
+    .subscribe(
+      error => alert(error)
+    );
   }
 }

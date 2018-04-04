@@ -18,4 +18,14 @@ export class ApiGetCallerService {
     } )
   }
 
+  // postData(addr, form: MySuggestion){
+  //   const body = {name: form.name, phone: form.phone};
+  //   return this.http.post(this.webAdddr+addr, body); 
+  // }
+
+  postData(addr, newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe){
+    const data = {message: newMessage, from: newName, mail: newEmail, phone: newPhone, how: newHowHeard, cb: newKeepMe};
+    return this.http.post(this.webAdddr+addr, data);
+  }
+
 }
