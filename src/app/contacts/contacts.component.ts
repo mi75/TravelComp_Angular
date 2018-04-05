@@ -1,19 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { FormControl, FormGroup } from '@angular/forms';
 import { ValidatorService } from '../_services/validator.service';
-import { ApiGetCallerService } from '../_services/api-get-caller.service';
+import { ApiCallerService } from '../_services/api-caller.service';
 
 @Component({
   selector: 'contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
-  providers: [ValidatorService, ApiGetCallerService]
+  providers: [ValidatorService, ApiCallerService]
 })
 export class ContactsComponent implements OnInit {
 
   constructor(
     private valid: ValidatorService,
-    private send: ApiGetCallerService
+    private send: ApiCallerService
   ) { }
 
   ngOnInit() {
@@ -109,9 +109,10 @@ export class ContactsComponent implements OnInit {
     // this.form.reset();
     // this.form.reset(this.form.value);
     // sendPost(uploadAddress, formData, function() { document.forms.mySuggestion.reset(); }, function(errorMessage) { alert(errorMessage) }); //from apiCaller.js
-  this.send.postData('api/contacts', newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe)
-    .subscribe(
-      error => alert(error)
-    );
+    const data = {message: newMessage, from: newName, mail: newEmail, phone: newPhone, how: newHowHeard, cb: newKeepMe};
+    this.send.postData('api/contacts', data)
+      .subscribe(
+        error => alert(error)
+      );
   }
 }

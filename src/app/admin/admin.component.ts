@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiGetCallerService } from '../_services/api-get-caller.service';
+import { ApiCallerService } from '../_services/api-caller.service';
 
 @Component({
   selector: 'admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  providers: [ApiGetCallerService]
+  providers: [ApiCallerService]
 })
 export class AdminComponent implements OnInit {
 
   contacts;
   constructor(
-    private load: ApiGetCallerService
+    private load: ApiCallerService
   ) { }
 
   ngOnInit() {

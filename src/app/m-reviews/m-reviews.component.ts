@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ApiGetCallerService } from '../_services/api-get-caller.service';
+import { ApiCallerService } from '../_services/api-caller.service';
 import { MReviewsService } from '../_services/m-reviews.service';
 
 @Component({
   selector: 'm-reviews',
   templateUrl: './m-reviews.component.html',
   styleUrls: ['./m-reviews.component.css'],
-  providers: [ApiGetCallerService, MReviewsService]
+  providers: [ApiCallerService, MReviewsService]
 })
 export class MReviewsComponent implements OnInit {
 
@@ -20,7 +20,7 @@ export class MReviewsComponent implements OnInit {
 
 
   constructor(
-    private load: ApiGetCallerService,
+    private load: ApiCallerService,
     private check: MReviewsService
   ) { }
 

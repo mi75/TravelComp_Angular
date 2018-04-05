@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ApiGetCallerService {
+export class ApiCallerService {
 
   webAdddr:string = 'http://127.0.0.1:8080/';
 
@@ -18,13 +18,7 @@ export class ApiGetCallerService {
     } )
   }
 
-  // postData(addr, form: MySuggestion){
-  //   const body = {name: form.name, phone: form.phone};
-  //   return this.http.post(this.webAdddr+addr, body); 
-  // }
-
-  postData(addr, newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe){
-    const data = {message: newMessage, from: newName, mail: newEmail, phone: newPhone, how: newHowHeard, cb: newKeepMe};
+  postData(addr, data){
     return this.http.post(this.webAdddr+addr, data);
   }
 
