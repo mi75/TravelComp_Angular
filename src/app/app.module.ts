@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -12,6 +12,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { AdminComponent } from './admin/admin.component';
 import { MReviewsComponent } from './m-reviews/m-reviews.component';
 import { MSlider2Component } from './m-slider2/m-slider2.component';
+import { Contacts2Component } from './contacts2/contacts2.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,13 @@ import { MSlider2Component } from './m-slider2/m-slider2.component';
     ContactsComponent,
     AdminComponent,
     MReviewsComponent,
-    MSlider2Component
+    MSlider2Component,
+    Contacts2Component
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot([
       {
@@ -35,7 +38,7 @@ import { MSlider2Component } from './m-slider2/m-slider2.component';
       },
       {
         path: 'contacts',
-        component: ContactsComponent
+        component: Contacts2Component
       },
       {
         path: 'admin',
