@@ -9,7 +9,8 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class AdminComponent implements OnInit {
 
-  contacts;
+  contacts:object;
+  
   constructor(
     private load: ApiCallerService
   ) { }

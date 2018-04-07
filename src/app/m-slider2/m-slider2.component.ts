@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SliderService } from '../_services/slider.service';
+// import { Slide } from '../slide';
 
 @Component({
   selector: 'm-slider2',

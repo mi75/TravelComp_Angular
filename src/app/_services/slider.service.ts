@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
 import {SLIDES} from '../SLIDES';
 import { element } from 'protractor';
+import { Slide } from '../slide';
 
 @Injectable()
 export class SliderService {
 
-	currentSlide=0;
-	animation;
-	// knobs: boolean[];
-	knobs=[];
+	currentSlide:number = 0;
+	animation:NodeJS.Timer;
+	knobs:boolean[] = [];
 
-  	getSlides(){
+  	public getSlides() : Slide[] {
+		for (let i=0; i<SLIDES.length; i++){
+			if (SLIDES[i].showing){
+				this.currentSlide = i;
+			}
+		}
 		return SLIDES;
 	}
 
 	getKnobs(){
 		for (let i=0; i<SLIDES.length; i++){
-			this.knobs.push(false);
+			this.knobs.push(SLIDES[i].showing);
 		}
-		this.knobs[0] = true;
 		return this.knobs;
 	}
 

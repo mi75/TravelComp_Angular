@@ -1,5 +1,5 @@
 export class Slide {
     title: string
-    showing: string
+    showing: boolean
     pic: string
 }

@@ -5,7 +5,7 @@ export class ValidatorService {
 
   constructor() { }
 
-  validator = {
+  validator:object = {
     rules: {
       notEmpty: 0,
       clientName: 1,

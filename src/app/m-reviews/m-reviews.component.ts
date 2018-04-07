@@ -10,19 +10,18 @@ import { MReviewsService } from '../_services/m-reviews.service';
 })
 export class MReviewsComponent implements OnInit {
 
-  feedbacks;
+  feedbacks:object;
   // @Input() usersImgPath:string = "/assets/images/upload/";
   // @Output() feedbacksForwarding = new EventEmitter();
   usersImgPath:string = "/assets/images/upload/";
-  startRow=0;
-  rowsCounter = 0;
-  defCustPhoto='default_customer.jpg';
-
+  startRow:number = 0;
+  rowsCounter:number = 0;
+  defCustPhoto:string = 'default_customer.jpg';
 
   constructor(
     private load: ApiCallerService,
     private check: MReviewsService
-  ) { }
+  ) { } 
 
 
   ngOnInit() {
