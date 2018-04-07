@@ -11,23 +11,28 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class Contacts2Component implements OnInit {
 
-  contactForm: FormGroup;
-  message: AbstractControl;
+  public contactForm: FormGroup = new FormGroup({
+    message: new FormControl(''),
+    from: new FormControl(''),
+    mail: new FormControl(''),
+    phone: new FormControl(''),
+    how: new FormControl(''),
+    cb: new FormControl(true)
+  });
 
   constructor(
     private valid: ValidatorService,
     private send: ApiCallerService,
-    fb: FormBuilder
+    private fb: FormBuilder
   ) {
-    this.contactForm = fb.group({
-      'message': [''],
-      'from': [''],
-      'mail': [''],
-      'phone': [''],
-      'how': [''],
-      'cb': [true]
-    });
-    this.message = this.contactForm.controls['message'];
+    // this.contactForm = fb.group({
+    //   message: [''],
+    //   from: [''],
+    //   mail: [''],
+    //   phone: [''],
+    //   how: [''],
+    //   cb: [true]
+    // });
    }
 
   ngOnInit() {
@@ -122,15 +127,17 @@ export class Contacts2Component implements OnInit {
   //   form.reset();
   // }
 
-  toValidate(value: string): void {  
-    console.log(value);
+  toValidate(data: string): void {
+    let er = null;
+    
+    console.log(data);
     this.contactForm.reset();
     
-    // form.message.value = '';
-      // form.from.value = '';
-      // form.mail.value = '';
-      // form.phone.value = '';
-      // form.how.value = '';
+    // this.resetError(this.contactForm.how);
+    // if (!this.contactForm.how.value) {
+    //     this.showError(this.contactForm.how, ' Укажите источник.');
+    //     er = 1;
+    // }
   }
 
   sendMySuggestion(newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe) {
