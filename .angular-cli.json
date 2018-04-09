@@ -22,7 +22,8 @@
             "bootstrap.css"
         ],
         "scripts": [
-            "assets/js/menu.js"
+            "assets/js/menu.js",
+            "assets/js/test.ts"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

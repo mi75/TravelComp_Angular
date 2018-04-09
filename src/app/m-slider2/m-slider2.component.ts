@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SliderService } from '../_services/slider.service';
-// import { Slide } from '../slide';
+import { Slide } from '../slide';
 
 @Component({
   selector: 'm-slider2',
@@ -18,10 +18,8 @@ export class MSlider2Component implements OnInit, OnDestroy {
     private sls: SliderService
   ) { }
 
-  slides=this.sls.getSlides();
-  knobs=this.sls.getKnobs();
- 
-
+  slides:Slide[] = this.sls.getSlides();
+  knobs:boolean[] = this.sls.getKnobs();
 
   ngOnInit() {
     this.sls.startAnimation();

@@ -10,6 +10,14 @@ http.createServer(function(req, res) {
     var headers = { 'Test-Header': 'Test' };
 
     try {
+        console.log(req.method);
+        if (req.method == 'OPTIONS') {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', '*');
+            res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+            res.end();
+            return;
+        }
 
         if (req.method == 'GET') {
             processGetRequest(req, res);
