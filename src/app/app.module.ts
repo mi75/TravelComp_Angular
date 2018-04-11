@@ -13,6 +13,7 @@ import { AdminComponent } from './admin/admin.component';
 import { MReviewsComponent } from './m-reviews/m-reviews.component';
 import { MSlider2Component } from './m-slider2/m-slider2.component';
 import { Contacts2Component } from './contacts2/contacts2.component';
+import { ValidatorMessageComponent } from './validator-message/validator-message.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { Contacts2Component } from './contacts2/contacts2.component';
     AdminComponent,
     MReviewsComponent,
     MSlider2Component,
-    Contacts2Component
+    Contacts2Component,
+    ValidatorMessageComponent
   ],
   imports: [
     BrowserModule,

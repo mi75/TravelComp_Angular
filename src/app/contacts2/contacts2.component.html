@@ -15,6 +15,7 @@
     <h2>Contact our experts</h2>
     <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong> or complete a form below:</p>
     <!-- <form id="contact-form" name="mySuggestion" method="post" action="/api/contacts" onsubmit="return toValidate();"> -->
+    <!-- <form [formGroup]="contactForm" (ngSubmit)="toValidate(contactForm.value)"> -->
     <form [formGroup]="contactForm" (ngSubmit)="toValidate(contactForm.value)">
         <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
         <div class="row">
@@ -24,6 +25,7 @@
                     <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
                     <textarea formControlName="message" class="field" rows="13"></textarea>
                 </div>
+                <validator-message [field]="contactForm.get('message')"></validator-message>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="f-row">
@@ -34,6 +36,7 @@
                     <label for="mail">Your Email address<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="mail" class="field">
                 </div>
+                <validator-message [field]="contactForm.get('mail')"></validator-message>
                 <div class="f-row">
                     <label for="phone">Your telephone number<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="phone" class="field">
