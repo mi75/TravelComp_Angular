@@ -11,43 +11,59 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class Contacts2Component implements OnInit {
 
-  public contactForm: FormGroup = new FormGroup({
-    message: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1000)
-    ]),
-    from: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(80),
-      Validators.pattern(/[0-9!?,.;:@\\#$\/)(%^&*]/g)
-    ]),
-    mail: new FormControl('',[
-      Validators.required,
-      Validators.email
-    ]),
-    phone: new FormControl('',[
-      Validators.required,
-      this.phoneValidator()
-    ]),
-    how: new FormControl('',[
-      Validators.required
-    ]),
-    cb: new FormControl(true)
-  });
+  // public contactForm: FormGroup = new FormGroup({
+  //   message: new FormControl('',[
+  //     Validators.required,
+  //     Validators.maxLength(1000)
+  //   ]),
+  //   from: new FormControl('',[
+  //     Validators.required,
+  //     Validators.maxLength(80),
+  //     Validators.pattern(/[0-9!?,.;:@\\#$\/)(%^&*]/g)
+  //   ]),
+  //   mail: new FormControl('',[
+  //     Validators.required,
+  //     Validators.email
+  //   ]),
+  //   phone: new FormControl('',[
+  //     Validators.required,
+  //     this.phoneValidator()
+  //   ]),
+  //   how: new FormControl('',[
+  //     Validators.required
+  //   ]),
+  //   cb: new FormControl(true)
+  // });
+  public contactForm: FormGroup;
 
   constructor(
     // private valid: ValidatorService,
     // private send: ApiCallerService,
     private fb: FormBuilder
   ) {
-    // this.contactForm = fb.group({
-    //   message: [''],
-    //   from: [''],
-    //   mail: [''],
-    //   phone: [''],
-    //   how: [''],
-    //   cb: [true]
-    // });
+    this.contactForm = fb.group({
+      message: ['', [
+        Validators.required,
+        Validators.maxLength(1000)
+      ]],
+      from: ['', [
+        Validators.required,
+        Validators.maxLength(80),
+        Validators.pattern(/[0-9!?,.;:@\\#$\/)(%^&*]/g)
+      ]],
+      mail: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      phone: ['', [
+        Validators.required,
+        this.phoneValidator()
+      ]],
+      how: ['', [
+        Validators.required
+      ]],
+      cb: [true]
+    });
    }
 
   ngOnInit() {
@@ -93,6 +109,7 @@ export class Contacts2Component implements OnInit {
     
     console.log(data['message'], data['how'], data['cb']);
     // this.contactForm.get('message').setValue('HELLO');
+    console.log(this.contactForm.errors);
 
     this.contactForm.reset({
       message: '',
