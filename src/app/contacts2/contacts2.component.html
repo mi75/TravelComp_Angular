@@ -15,8 +15,7 @@
     <h2>Contact our experts</h2>
     <p>You have a suggestion? Want us to plan your next holiday? Give us a call on <strong><i>+380503469575</i></strong> or complete a form below:</p>
     <!-- <form id="contact-form" name="mySuggestion" method="post" action="/api/contacts" onsubmit="return toValidate();"> -->
-    <!-- <form [formGroup]="contactForm" (ngSubmit)="toValidate(contactForm.value)"> -->
-    <form [formGroup]="contactForm" (ngSubmit)="toValidate(contactForm.value)">
+    <form [formGroup]="contactForm" (ngSubmit)="sendMySuggestion(contactForm.value)">
         <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
         <div class="row">
             <div class="col-sm-0 col-md-2"></div>
@@ -24,31 +23,38 @@
                 <div class="f-row">
                     <label for="message">Your query or suggestion<span class="req">*</span>:</label><br />
                     <textarea formControlName="message" class="field" rows="13"></textarea>
+                    <!-- <textarea class="field" rows="13" [formControl]="contactForm.controls['message']"></textarea> -->
+                    <textarea class="field" rows="13" [formControl]="message"></textarea>
+                    <validator-message [field]="contactForm.get('message')"></validator-message>
+                    <!-- <div *ngIf="!message.valid" class="ui error message">is invalid</div> -->
+                    <!-- <div *ngIf="message.hasError('required')" class="ui error message">is required</div> -->
                 </div>
-                <validator-message [field]="contactForm.get('message')"></validator-message>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="f-row">
                     <label for="from">Your full name<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="from" class="field">
+                    <validator-message [field]="contactForm.get('from')"></validator-message>
                 </div>
                 <div class="f-row">
                     <label for="mail">Your Email address<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="mail" class="field">
+                    <validator-message [field]="contactForm.get('mail')"></validator-message>
                 </div>
-                <validator-message [field]="contactForm.get('mail')"></validator-message>
                 <div class="f-row">
                     <label for="phone">Your telephone number<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="phone" class="field">
+                    <validator-message [field]="contactForm.get('phone')"></validator-message>
                 </div>
                 <div class="f-row">
                     <label for="how">Select, how did you hear about us?<span class="req">*</span>:</label><br />
                     <select formControlName="how" class="field">
-                            <option></option>
-                            <option value="1">от друзей</option>
-                            <option value="2">через поиск туров</option>
-                            <option value="3">обратил внимание на рекламу</option>
-                        </select>
+                        <option></option>
+                        <option value="1">от друзей</option>
+                        <option value="2">через поиск туров</option>
+                        <option value="3">обратил внимание на рекламу</option>
+                    </select>
+                    <validator-message [field]="contactForm.get('how')"></validator-message>
                 </div>
             </div>
         </div>

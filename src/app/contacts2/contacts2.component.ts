@@ -35,54 +35,71 @@ export class Contacts2Component implements OnInit {
   //   cb: new FormControl(true)
   // });
   public contactForm: FormGroup;
+  // public message: AbstractControl;
 
   constructor(
     // private valid: ValidatorService,
     // private send: ApiCallerService,
-    private fb: FormBuilder
+    private _fb: FormBuilder
   ) {
-    this.contactForm = fb.group({
-      message: ['', [
+    // this.contactForm = _fb.group({  
+    //   'message':  ['', Validators.required]  
+    // });
+    // this.message = this.contactForm.controls['message'];
+
+    // this.contactForm = fb.group({
+    //   message: ['', [
+    //     Validators.required,
+    //     Validators.maxLength(1000)
+    //   ]],
+    //   from: ['', [
+    //     Validators.required,
+    //     Validators.maxLength(80),
+    //     Validators.pattern(/[0-9!?,.;:@\\#$\/)(%^&*]/g)
+    //   ]],
+    //   mail: ['', [
+    //     Validators.required,
+    //     Validators.email
+    //   ]],
+    //   phone: ['', [
+    //     Validators.required,
+    //     this.phoneValidator()
+    //   ]],
+    //   how: ['', [
+    //     Validators.required
+    //   ]],
+    //   cb: [true]
+    // });
+
+    this.contactForm = this._fb.group({
+      message: this._fb.control('', [
         Validators.required,
         Validators.maxLength(1000)
-      ]],
-      from: ['', [
+      ]),
+      from: this._fb.control('', [
         Validators.required,
         Validators.maxLength(80),
         Validators.pattern(/[0-9!?,.;:@\\#$\/)(%^&*]/g)
-      ]],
-      mail: ['', [
+      ]),
+      mail: this._fb.control('', [
         Validators.required,
         Validators.email
-      ]],
-      phone: ['', [
+      ]),
+      phone: this._fb.control('', [
         Validators.required,
         this.phoneValidator()
-      ]],
-      how: ['', [
+      ]),
+      how: this._fb.control('', [
         Validators.required
-      ]],
-      cb: [true]
+      ]),
+      cb: this._fb.control(true)
     });
+
    }
 
   ngOnInit() {
   }
   
-  // resetError(elem) {
-  //   elem.parentNode.className = 'f-row';
-  //   if (elem.parentNode.lastChild.className == "error-message") {
-  //       elem.parentNode.removeChild(elem.parentNode.lastChild);
-  //   }
-  // }
-
-  // showError(elem, errorMessage) {
-  //   elem.parentNode.className = 'f-row error';
-  //   var msgElem = document.createElement('span');
-  //   msgElem.className = "error-message";
-  //   msgElem.innerHTML = errorMessage;
-  //   elem.parentNode.appendChild(msgElem);
-  // }
 
   private userNameValidator(): ValidatorFn {
     const pattern: RegExp = /^[\w\.\$@\*\!]{5,30}$/;
@@ -105,7 +122,7 @@ export class Contacts2Component implements OnInit {
     };
   }
 
-  toValidate(data: FormGroup): void {
+  sendMySuggestion(data: FormGroup): void {
     
     console.log(data['message'], data['how'], data['cb']);
     // this.contactForm.get('message').setValue('HELLO');
@@ -121,13 +138,5 @@ export class Contacts2Component implements OnInit {
     });
 
   }
-
-  // sendMySuggestion(newMessage, newName, newEmail, newPhone, newHowHeard, newKeepMe) {
-  //   const data = {message: newMessage, from: newName, mail: newEmail, phone: newPhone, how: newHowHeard, cb: newKeepMe};
-  //   this.send.postData('api/contacts', data)
-  //     .subscribe(
-  //       error => alert(error)
-  //     );
-  // }
 
 }
