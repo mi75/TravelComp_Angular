@@ -10,7 +10,6 @@ http.createServer(function(req, res) {
     var headers = { 'Test-Header': 'Test' };
 
     try {
-        console.log(req.method);
         if (req.method == 'OPTIONS') {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Access-Control-Allow-Methods', '*');
@@ -70,7 +69,6 @@ http.createServer(function(req, res) {
                     });
                     req.on('end', function() {
                         postData = JSON.parse(body);
-                        console.log(postData);
 
                         if (req.url == '/api/contacts') {
                             // data from contacts form: console.log(postData);

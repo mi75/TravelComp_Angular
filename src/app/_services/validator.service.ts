@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Injectable()
 export class ValidatorService {
@@ -13,7 +14,7 @@ export class ValidatorService {
       phone : 3,
       charsCount: 4,
     },
-    validate: function(stringToValidate, rule, additionalParameter?){
+    validate: function(stringToValidate : string, rule, additionalParameter?){
       if (rule == this.rules.notEmpty){
         return this.validateNotEmpty(stringToValidate);
       }
@@ -65,6 +66,56 @@ export class ValidatorService {
       return(nettoLength <= numberOfChars);
     }
     
+  }
+
+  public messageValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}=>{
+      if (!this.validator.validate(control.value, this.validator.rules.notEmpty)) {
+          return {custom: 'oтсутствует текст'};
+        } else {
+              return (this.validator.validate(control.value, this.validator.rules.charsCount, 1000)) ? null : {custom: 'максимум 1000 символов'};
+          }
+    };
+  }
+
+  public userNameValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}=>{
+        if (!this.validator.validate(control.value, this.validator.rules.notEmpty)) {
+          return {custom: 'yкажите, от кого'};
+        } else {
+          if (!this.validator.validate(control.value, this.validator.rules.clientName)) {
+            return {custom: 'допустимы только буквы'};
+          } else {
+              return (this.validator.validate(control.value, this.validator.rules.charsCount, 80)) ? null : {custom: 'максимум 80 символов'};
+          }
+        }
+    };
+  }
+
+  public mailValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}=>{
+        if (!control.value) {
+          return {custom: 'yкажите адрес'};
+        } else {
+        return (this.validator.validate(control.value, this.validator.rules.email)) ? null : {custom: 'некорректный адрес'};
+        }
+    };
+  }
+
+  public phoneValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}=>{
+        if (!this.validator.validate(control.value, this.validator.rules.notEmpty)) {
+          return {custom: 'yкажите телефон'};
+        } else {
+              return (this.validator.validate(control.value, this.validator.rules.phone)) ? null : {custom: 'некорректный номер'};
+          }
+    };
+  }
+
+  public notEmptyValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}=>{ 
+        return (control.value) ? null : {custom: 'yкажите источник'}; 
+    };
   }
 
 }
