@@ -53,11 +53,11 @@ export class ValidatorService {
   
     validatePhone: function(stringToValidate){
       var simb = stringToValidate.replace(/[0-9)( +-]/g, '');
-          var d = stringToValidate.match(/[0-9]/g);
-          if (simb || (d.length!==12 && d.length!==10) || (d[0]!=='0' && String(d.slice(0,3)) !== '3,8,0')) {
-            return false;
-          }
-          return true;
+      var dig = stringToValidate.match(/[0-9]/g);
+      if (simb || (!dig) || !((dig[0]=='0' && dig.length==10) || (String(dig.slice(0,3)) == '3,8,0' && dig.length==12))) {
+        return false;
+      }
+      return true;
     },
   
     validateCharsCount: function(stringToValidate, numberOfChars){

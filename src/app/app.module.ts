@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { FootercmpComponent } from './footercmp/footercmp.component';
 import { HeadercmpComponent } from './headercmp/headercmp.component';
 import { BodycmpComponent } from './bodycmp/bodycmp.component';
-import { ContactsComponent } from './contacts/contacts.component';
 import { AdminComponent } from './admin/admin.component';
 import { MReviewsComponent } from './m-reviews/m-reviews.component';
 import { MSlider2Component } from './m-slider2/m-slider2.component';
@@ -21,7 +20,6 @@ import { ValidatorMessageComponent } from './validator-message/validator-message
     FootercmpComponent,
     HeadercmpComponent,
     BodycmpComponent,
-    ContactsComponent,
     AdminComponent,
     MReviewsComponent,
     MSlider2Component,
