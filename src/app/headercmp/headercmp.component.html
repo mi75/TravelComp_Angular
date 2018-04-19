@@ -1,4 +1,4 @@
-<div class="header row" id="header">
+<div class="header row" id="header" #header>
     <div class="h-medals col-md-4">
         <a href="#"></a>
     </div>
@@ -14,10 +14,10 @@
 </div>
 
 <div class="main-menu">
-    <span id="pull">
+    <span id="pull" [class.menu-fix]="mf">
                     <a href="#">Menu</a>
                 </span>
-    <ul id="main-menu">
+    <ul id="main-menu" [class.menu-fix]="mf">
         <li><a href="#">география туров</a></li>
         <li><a href="#">авиатуры</a></li>
         <li><a href="#">круизы</a></li>
