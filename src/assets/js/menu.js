@@ -19,20 +19,20 @@
 // }
 // window.onload = init();
 
-$(function() {
-    var pull = $('#pull');
-    var menu = $('.main-menu ul');
-    var menuHeight = menu.height();
+// $(function() {
+//     var pull = $('#pull');
+//     var menu = $('#main-menu');
+//     var menuHeight = menu.height();
 
-    $(pull).on('click', function(e) {
-        e.preventDefault();
-        menu.slideToggle();
-    });
+//     $(pull).on('click', function(e) {
+//         e.preventDefault();
+//         menu.slideToggle();
+//     });
 
-    $(window).resize(function() {
-        var w = $(window).width();
-        if (w > 500 && menu.is(':hidden')) {
-            menu.removeAttr('style');
-        }
-    });
-})
+//     $(window).resize(function() {
+//         var w = $(window).width();
+//         if (w > 500 && menu.is(':hidden')) {
+//             menu.removeAttr('style');
+//         }
+//     });
+// })
