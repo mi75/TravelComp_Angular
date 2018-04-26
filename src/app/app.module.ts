@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -32,7 +32,7 @@ import { ValidatorMessageComponent } from './validator-message/validator-message
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    NgbModule.forRoot(),
+    // NgbModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '',

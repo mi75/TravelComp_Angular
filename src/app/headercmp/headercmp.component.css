@@ -116,6 +116,9 @@
     .main-menu ul {
         display: none;
     }
+    .visible {
+        display: block !important;
+    }
     .main-menu #pull {
         display: block;
         height: 30px;

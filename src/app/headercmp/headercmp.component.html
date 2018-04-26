@@ -13,11 +13,11 @@
     </div>
 </div>
 
-<!-- <div class="main-menu">
-    <span id="pull" [class.menu-fix]="mf" (click)="menuExpand">
-        <a href="#">Menu</a>
+<div class="main-menu">
+    <span id="pull" [class.menu-fix]="menuFixedPosition">
+        <a (click)="menuExpand($event)" href="#">Menu</a>
     </span>
-    <ul id="main-menu" #mainMenu [class.menu-fix]="mf">
+    <ul id="main-menu" [ngClass]="{'menu-fix': menuFixedPosition, 'visible': menuVisible}">
         <li><a href="#">география туров</a></li>
         <li><a href="#">авиатуры</a></li>
         <li><a href="#">круизы</a></li>
@@ -26,44 +26,4 @@
         <li><a routerLink="/contacts">контакты</a></li>
         <li><a routerLink="/admin">поиск</a></li>
     </ul>
-</div> -->
-
-<!-- <div class="main-menu">
-    <nav class="navbar navbar-inverse navbar-toggleable-sm bg-faded" role="navigation">
-        <button type="button" class="navbar-toggler navbar-toggler-right" (click)="isCollapsed = !isCollapsed">
-            <span class="navbar-toggler-icon" [class.menu-fix]="mf">click</span>
-        </button>
-        <a class="navbar-brand" routerLink="/">Home</a>
-        <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
-            <ul id="main-menu" [class.menu-fix]="mf">
-                <li><a href="#">география туров</a></li>
-                <li><a href="#">авиатуры</a></li>
-                <li><a href="#">круизы</a></li>
-                <li><a href="#">горящие туры</a></li>
-                <li><a routerLink="/">о нас</a></li>
-                <li><a routerLink="/contacts">контакты</a></li>
-                <li><a routerLink="/admin">поиск</a></li>
-            </ul>
-        </div>
-    </nav>
-</div> -->
-
-<div class="main-menu" [class.menu-fix]="mf">
-    <nav class="navbar navbar-toggleable-sm navbar-light">
-        <button type="button" class="navbar-toggler navbar-toggler-right" (click)="isExpanded = !isExpanded" [attr.aria-expanded]="!isExpanded" aria-controls="navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" routerLink="/">Home</a>
-        <div class="collapse navbar-collapse" id="navbarContent" [ngbCollapse]="!isExpanded">
-            <ul id="main-menu">
-                <li><a href="#">география туров</a></li>
-                <li><a href="#">авиатуры</a></li>
-                <li><a href="#">круизы</a></li>
-                <li><a href="#">горящие туры</a></li>
-                <li><a routerLink="/">о нас</a></li>
-                <li><a routerLink="/contacts">контакты</a></li>
-                <li><a routerLink="/admin">поиск</a></li>
-            </ul>
-        </div>
-    </nav>
 </div>
