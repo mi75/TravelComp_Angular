@@ -6,27 +6,29 @@
                 <h4 class="modal-title" id="myModalLabel">Поделитесь впечатлениями с друзьями</h4>
             </div>
             <div class="modal-body">
-                <form id="feedback-form" name="feedback" method="post" action="/api/feedback" onsubmit="return toValidate();">
+                <form [formGroup]="feedbackForm" (ngSubmit)="sendMyReview(feedbackForm.value)">
                     <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="f-row">
                                 <label for="message">Your story<span class="req">*</span>:</label><br />
-                                <textarea name="message" class="field" rows="13"></textarea>
+                                <textarea formControlName="message" class="field" rows="13"></textarea>
+                                <validator-message [field]="feedbackForm.get('message')"></validator-message>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="f-row">
                                 <label for="from">Your full name<span class="req">*</span>:</label><br />
-                                <input type="text" name="from" class="field">
+                                <input type="text" formControlName="from" class="field">
+                                <validator-message [field]="feedbackForm.get('from')"></validator-message>
                             </div>
                             <div class="f-row">
                                 <label class="btn btn-primary" for="my-file-selector">
-                                <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none" 
-                                onchange="$('#upload-file-info').html(this.files[0].name)">
+                                <input id="my-file-selector" type="file"  formControlName="photo" accept="image/png,image/jpeg" style="display:none" 
+                                onchange="ff=this.files[0].name">
                                 Load file with your photo:
                             </label>
-                                <span class='label label-info' id="upload-file-info"></span>
+                                <span class='label label-info' id="upload-file-info">{{ff}}</span>
                             </div>
                         </div>
                     </div>
@@ -34,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="toValidate()">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
