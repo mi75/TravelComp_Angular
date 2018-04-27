@@ -1,0 +1,41 @@
+<div (click)="onContainerClicked($event)" class="modal fade bs-example-modal-lg" [ngClass]="{'show': visibleAnimate}" [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Поделитесь впечатлениями с друзьями</h4>
+            </div>
+            <div class="modal-body">
+                <form id="feedback-form" name="feedback" method="post" action="/api/feedback" onsubmit="return toValidate();">
+                    <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="message">Your story<span class="req">*</span>:</label><br />
+                                <textarea name="message" class="field" rows="13"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="f-row">
+                                <label for="from">Your full name<span class="req">*</span>:</label><br />
+                                <input type="text" name="from" class="field">
+                            </div>
+                            <div class="f-row">
+                                <label class="btn btn-primary" for="my-file-selector">
+                                <input id="my-file-selector" type="file" name="photo" accept="image/png,image/jpeg" style="display:none" 
+                                onchange="$('#upload-file-info').html(this.files[0].name)">
+                                Load file with your photo:
+                            </label>
+                                <span class='label label-info' id="upload-file-info"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="toValidate()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

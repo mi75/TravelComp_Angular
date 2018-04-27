@@ -14,6 +14,7 @@ import { MReviewsComponent } from './m-reviews/m-reviews.component';
 import { MSlider2Component } from './m-slider2/m-slider2.component';
 import { Contacts2Component } from './contacts2/contacts2.component';
 import { ValidatorMessageComponent } from './validator-message/validator-message.component';
+import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ValidatorMessageComponent } from './validator-message/validator-message
     MReviewsComponent,
     MSlider2Component,
     Contacts2Component,
-    ValidatorMessageComponent
+    ValidatorMessageComponent,
+    ModalReviewsFormComponent
   ],
   imports: [
     BrowserModule,
