@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ValidatorService } from '../_services/validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
@@ -25,7 +25,8 @@ export class ModalReviewsFormComponent implements OnInit {
       from: this._fb.control('', [
         valid.userNameValidator()
       ]),
-      photo: this._fb.control('')
+      photo: ''
+      // photo: null
     });
    }
 
@@ -52,7 +53,21 @@ export class ModalReviewsFormComponent implements OnInit {
     }
   }
 
+  @ViewChild("fileInput") fileInput;
+
   sendMyReview(data: FormGroup): void {
+
+    let fi = this.fileInput.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+      // this.send
+      //   .upload(fileToUpload)
+      //   .subscribe(res => {
+      //       console.log(res);
+      //   });
+      console.log(fileToUpload);
+
+    }
 
     Object.keys(this.feedbackForm.controls).forEach(field => { 
       const control = this.feedbackForm.get(field); 
@@ -67,9 +82,25 @@ export class ModalReviewsFormComponent implements OnInit {
       this.feedbackForm.reset({
         message: '',
         from: '',
-        photo: ''
+        photo: null
       });
+      // console.log(this.feedbackForm.controls.photo.value);
+      this.visibleAnimate = false;
+      setTimeout(() => this.visible = false, 300);
     }
   }
+
+  // imageUrl: any;
+  // imageUpload(e) {
+  //   let reader = new FileReader();
+  //   //get the selected file from event
+  //   let file = e.target.files[0];
+  //   reader.onloadend = () => {
+  //     //Assign the result to variable for setting the src of image element
+  //     this.imageUrl = reader.result;
+  //     console.log(this.imageUrl);
+  //   }
+  //   reader.readAsDataURL(file);
+  // }
 
 }
