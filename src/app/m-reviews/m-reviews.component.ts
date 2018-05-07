@@ -11,8 +11,6 @@ import { MReviewsService } from '../_services/m-reviews.service';
 export class MReviewsComponent implements OnInit {
 
   feedbacks:object;
-  // @Input() usersImgPath:string = "/assets/images/upload/";
-  // @Output() feedbacksForwarding = new EventEmitter();
   usersImgPath:string = "/assets/images/upload/";
   startRow:number = 0;
   rowsCounter:number = 0;
@@ -25,6 +23,10 @@ export class MReviewsComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getFeedback();
+  }
+
+  getFeedback() {
     this.load.getData('api/feedback?startRow=0').subscribe( res => {
       this.feedbacks = res.rows;
       this.rowsCounter = res.count;
@@ -48,6 +50,12 @@ export class MReviewsComponent implements OnInit {
       this.feedbacks = res.rows;
       this.check.checkExist(this.feedbacks, this.defCustPhoto)
     } )
+  }
+
+  insertFeedback(newFeedback) {
+    this.feedbacks[0].message = newFeedback.controls.message.value;
+    this.feedbacks[0].name = newFeedback.controls.from.value;
+    this.feedbacks[0].photo = newFeedback.controls.photo.value;
   }
 
 

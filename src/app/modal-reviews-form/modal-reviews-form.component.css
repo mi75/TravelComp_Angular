@@ -149,3 +149,8 @@ form .field {
     font-size: 0.8em;
     color: red;
 }
+
+.customer-photo {
+    float: left;
+    width: 27%;
+}

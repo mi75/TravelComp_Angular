@@ -24,13 +24,12 @@
                             </div>
                             <div class="f-row">
                                 <label class="btn btn-primary" for="my-file-selector">
-                                <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none">
-                                <!-- (change)="imageUpload($event)"> -->
-                                <!-- onchange="ff=this.files[0].name"> -->
+                                <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                                (change)="imageUpload($event)">
                                 Load file with your photo:
                             </label>
-                                <!-- <span class='label label-info' id="upload-file-info">{{fileInput}}</span> -->
-                                <!-- <img [src]="imageUrl" /> -->
+                                <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
+                                <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageUrl" />
                             </div>
                         </div>
                     </div>
@@ -38,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="sendMyReview(feedbackForm.value)">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="sendMyReview()">Save changes</button>
             </div>
         </div>
     </div>

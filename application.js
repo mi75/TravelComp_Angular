@@ -24,6 +24,10 @@ http.createServer(function(req, res) {
             if (req.method == 'POST') {
                 if (req.url == '/api/feedback') {
 
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Methods', '*');
+                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+
                     var photoName = uuidv4();
                     var name;
                     var message;
@@ -33,7 +37,7 @@ http.createServer(function(req, res) {
 
                     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                         if (filename) { userFile = filename };
-                        var saveTo = __dirname + '/upload/' + photoName;
+                        var saveTo = __dirname + '/src/assets/images/upload/' + photoName;
                         file.pipe(fs.createWriteStream(saveTo));
                     });
 
@@ -57,9 +61,6 @@ http.createServer(function(req, res) {
                                 returnSuccess('/', res, headers);
                             }
                         }));
-
-                        res.writeHead(200, { 'Connection': 'close' });
-                        res.end();
                     });
                 } else {
                     var body = '';

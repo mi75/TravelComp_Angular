@@ -22,11 +22,5 @@ export class ApiCallerService {
     return this.http.post(this.webAdddr+addr, data);
   }
 
-  // upload(fileToUpload: any) {
-  //   let input = new FormData();
-  //   input.append("file", fileToUpload);
-
-  //   return this.http.post("/api/uploadFile", input);
-  // }
 
 }
