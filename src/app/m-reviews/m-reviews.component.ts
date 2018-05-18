@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { MReviewsService } from '../_services/m-reviews.service';
+import { FeedbackFormat } from "../feedback-format";
 
 @Component({
   selector: 'm-reviews',
@@ -10,7 +11,7 @@ import { MReviewsService } from '../_services/m-reviews.service';
 })
 export class MReviewsComponent implements OnInit {
 
-  feedbacks:object;
+  feedbacks:FeedbackFormat;
   usersImgPath:string = "/assets/images/upload/";
   startRow:number = 0;
   rowsCounter:number = 0;
@@ -31,7 +32,8 @@ export class MReviewsComponent implements OnInit {
       this.feedbacks = res.rows;
       this.rowsCounter = res.count;
       this.check.checkExist(this.feedbacks, this.defCustPhoto)
-    } )
+    } );
+    this.startRow = 0;
   }
 
   fbForwarding(){
@@ -53,10 +55,21 @@ export class MReviewsComponent implements OnInit {
   }
 
   insertFeedback(newFeedback) {
-    this.feedbacks[0].message = newFeedback.controls.message.value;
-    this.feedbacks[0].name = newFeedback.controls.from.value;
-    this.feedbacks[0].photo = newFeedback.controls.photo.value;
+    if (this.startRow==0) {
+      for (let i=2; i>0; i--) {
+        this.feedbacks[i].name = this.feedbacks[i-1].name;
+        this.feedbacks[i].message = this.feedbacks[i-1].message;
+        this.feedbacks[i].photo = this.feedbacks[i-1].photo;
+        this.feedbacks[i].date = this.feedbacks[i-1].date;
+      }
+      this.rowsCounter += 1;
+      this.feedbacks[0].message = newFeedback.message;
+      this.feedbacks[0].name = newFeedback.name;
+      newFeedback.photo ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
+      this.feedbacks[0].date = new Date();
+    } else {
+        this.getFeedback();
+    }
   }
-
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ValidatorService } from '../_services/validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
+import { FeedbackFormat } from "../feedback-format";
+
 
 @Component({
   selector: 'modal-reviews-form',
@@ -9,6 +11,7 @@ import { ApiCallerService } from '../_services/api-caller.service';
   styleUrls: ['./modal-reviews-form.component.css'],
   providers: [ValidatorService, ApiCallerService]
 })
+
 export class ModalReviewsFormComponent implements OnInit {
 
   public feedbackForm: FormGroup;
@@ -25,6 +28,7 @@ export class ModalReviewsFormComponent implements OnInit {
       from: this._fb.control('', [
         valid.userNameValidator()
       ])
+      // photo: this._fb.control(null)
     });
    }
 
@@ -32,6 +36,7 @@ export class ModalReviewsFormComponent implements OnInit {
   }
 
   @Output() sendingFeedback = new EventEmitter();
+  
 
   public visible = false;
   public visibleAnimate = false;
@@ -52,6 +57,13 @@ export class ModalReviewsFormComponent implements OnInit {
     if ((<HTMLElement>event.target).classList.contains('modal')) {
       this.hide();
     }
+  }
+
+  public newFeedback:FeedbackFormat = {
+    name: '',
+    message: '',
+    photo: '',
+    date: null
   }
 
   imageUrl: any;
@@ -75,7 +87,7 @@ export class ModalReviewsFormComponent implements OnInit {
     let fi = this.fileInput.nativeElement;
     if (fi.files && fi.files[0]) {
       let fileToUpload = fi.files[0];
-      feedbackData.append("photo", fileToUpload);
+      feedbackData.set("photo", fileToUpload);
     }
 
     Object.keys(this.feedbackForm.controls).forEach(field => { 
@@ -85,27 +97,39 @@ export class ModalReviewsFormComponent implements OnInit {
 
     if (this.feedbackForm.valid) {
 
+      this.newFeedback.name = this.feedbackForm.get('from').value;
+      this.newFeedback.message = this.feedbackForm.get('message').value;
+      // this.newFeedback[0].date =  new Date();
+
       Object.keys(this.feedbackForm.controls).forEach(field => { 
         const control = this.feedbackForm.get(field); 
-        feedbackData.append(field, control.value);
+        feedbackData.set(field, control.value);
       });
 
+      // .subscribe(function(errorMessage){alert(errorMessage);})
+      // .subscribe(errorMessage => alert(errorMessage))
+      
       this.send.postData('api/feedback', feedbackData)
       .subscribe(
-        error => alert(error)
+        success => {
+          this.onSuccess(success.json().feedbackPhotoName);
+        },
+        error => {alert('Error')}
       );
-
-      this.sendingFeedback.emit(this.feedbackForm);
-
-      this.feedbackForm.reset({
-        message: '',
-        from: '',
-        photo: null
-      });
-
-      this.hide();
     }
   }
 
+  onSuccess(feedbackPhotoName) {
+    if (feedbackPhotoName) { this.newFeedback.photo = feedbackPhotoName }
+    this.sendingFeedback.emit(this.newFeedback);
+
+    this.feedbackForm.reset({
+      message: '',
+      from: ''
+      // photo: null
+    });
+
+    this.hide();
+  }
 
 }

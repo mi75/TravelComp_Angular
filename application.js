@@ -7,7 +7,11 @@ var Busboy = require('busboy');
 
 //create a server object:
 http.createServer(function(req, res) {
-    var headers = { 'Test-Header': 'Test' };
+    var headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': 'origin, content-type, accept'
+    };
 
     try {
         if (req.method == 'OPTIONS') {
@@ -24,10 +28,6 @@ http.createServer(function(req, res) {
             if (req.method == 'POST') {
                 if (req.url == '/api/feedback') {
 
-                    res.setHeader('Access-Control-Allow-Origin', '*');
-                    res.setHeader('Access-Control-Allow-Methods', '*');
-                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
-
                     var photoName = uuidv4();
                     var name;
                     var message;
@@ -38,6 +38,7 @@ http.createServer(function(req, res) {
                     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                         if (filename) { userFile = filename };
                         var saveTo = __dirname + '/src/assets/images/upload/' + photoName;
+                        // var saveTo = __dirname + '/../upload/' + photoName;
                         file.pipe(fs.createWriteStream(saveTo));
                     });
 
@@ -58,7 +59,8 @@ http.createServer(function(req, res) {
                             if (err) {
                                 returnError(err.sqlMessage, res, headers);
                             } else {
-                                returnSuccess('/', res, headers);
+                                var rapidData = JSON.stringify({ feedbackPhotoName: contact.photo });
+                                returnSuccess('/', res, headers, rapidData);
                             }
                         }));
                     });
@@ -102,9 +104,9 @@ http.createServer(function(req, res) {
 
 }).listen(8080);
 
-function returnSuccess(location, response, headers) {
-    response.writeHead(301, { Location: location }, headers);
-    response.end();
+function returnSuccess(location, response, headers, data) {
+    response.writeHead(200, headers);
+    response.end(data);
 }
 
 function returnError(errorMessage, response, headers) {

@@ -24,7 +24,7 @@
                             </div>
                             <div class="f-row">
                                 <label class="btn btn-primary" for="my-file-selector">
-                                <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                                <input id="my-file-selector" type="file" #fileInput formControlName="photo" accept="image/png,image/jpeg" style="display:none"
                                 (change)="imageUpload($event)">
                                 Load file with your photo:
                             </label>
