@@ -3,4 +3,5 @@ export class FeedbackFormat {
     message: string
     photo: string
     date: Date
+    base64Pic: string
 }

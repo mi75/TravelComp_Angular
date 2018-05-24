@@ -11,7 +11,7 @@ import { FeedbackFormat } from "../feedback-format";
 })
 export class MReviewsComponent implements OnInit {
 
-  feedbacks:FeedbackFormat;
+  feedbacks:FeedbackFormat[];
   usersImgPath:string = "/assets/images/upload/";
   startRow:number = 0;
   rowsCounter:number = 0;
@@ -54,7 +54,7 @@ export class MReviewsComponent implements OnInit {
     } )
   }
 
-  insertFeedback(newFeedback) {
+  insertFeedback(newFeedback:FeedbackFormat) {
     if (this.startRow==0) {
       for (let i=2; i>0; i--) {
         this.feedbacks[i].name = this.feedbacks[i-1].name;
@@ -65,8 +65,11 @@ export class MReviewsComponent implements OnInit {
       this.rowsCounter += 1;
       this.feedbacks[0].message = newFeedback.message;
       this.feedbacks[0].name = newFeedback.name;
-      newFeedback.photo ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
-      this.feedbacks[0].date = new Date();
+      // newFeedback.photo ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
+      // this.feedbacks[0].photo = this.defCustPhoto;
+      newFeedback.base64Pic ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
+      newFeedback.base64Pic ? this.feedbacks[0].base64Pic = newFeedback.base64Pic : this.feedbacks[0].base64Pic = null;
+      this.feedbacks[0].date = newFeedback.date;
     } else {
         this.getFeedback();
     }

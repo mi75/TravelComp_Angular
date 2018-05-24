@@ -33,6 +33,7 @@ export class ModalReviewsFormComponent implements OnInit {
    }
 
   ngOnInit() {
+  
   }
 
   @Output() sendingFeedback = new EventEmitter();
@@ -59,21 +60,17 @@ export class ModalReviewsFormComponent implements OnInit {
     }
   }
 
-  public newFeedback:FeedbackFormat = {
-    name: '',
-    message: '',
-    photo: '',
-    date: null
-  }
+  public newFeedback:FeedbackFormat = new FeedbackFormat();
+  
 
-  imageUrl: any;
+  imageBase64: any;
   imageUpload(e) {
     let reader = new FileReader();
     //get the selected file from event
     let file = e.target.files[0];
     reader.onloadend = () => {
       //Assign the result to variable for setting the src of image element
-      this.imageUrl = reader.result;
+      this.imageBase64 = reader.result;
     }
     reader.readAsDataURL(file);
   }
@@ -99,7 +96,8 @@ export class ModalReviewsFormComponent implements OnInit {
 
       this.newFeedback.name = this.feedbackForm.get('from').value;
       this.newFeedback.message = this.feedbackForm.get('message').value;
-      // this.newFeedback[0].date =  new Date();
+      this.newFeedback.base64Pic = this.imageBase64;
+      this.newFeedback.date =  new Date();
 
       Object.keys(this.feedbackForm.controls).forEach(field => { 
         const control = this.feedbackForm.get(field); 
@@ -120,14 +118,15 @@ export class ModalReviewsFormComponent implements OnInit {
   }
 
   onSuccess(feedbackPhotoName) {
-    if (feedbackPhotoName) { this.newFeedback.photo = feedbackPhotoName }
+    if (feedbackPhotoName) {this.newFeedback.photo = feedbackPhotoName}
     this.sendingFeedback.emit(this.newFeedback);
-
     this.feedbackForm.reset({
       message: '',
       from: ''
-      // photo: null
     });
+
+    this.imageBase64 = '';
+    this.fileInput.nativeElement.value = '';
 
     this.hide();
   }
