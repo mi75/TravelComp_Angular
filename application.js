@@ -59,8 +59,9 @@ http.createServer(function(req, res) {
                             if (err) {
                                 returnError(err.sqlMessage, res, headers);
                             } else {
-                                var rapidData = JSON.stringify({ feedbackPhotoName: contact.photo });
-                                returnSuccess('/', res, headers, rapidData);
+                                // var rapidData = JSON.stringify({ feedbackPhotoName: contact.photo });
+                                // returnSuccess('/', res, headers, rapidData);
+                                returnSuccess('/', res, headers);
                             }
                         }));
                     });
@@ -104,9 +105,11 @@ http.createServer(function(req, res) {
 
 }).listen(8080);
 
-function returnSuccess(location, response, headers, data) {
+// function returnSuccess(location, response, headers, data) {
+function returnSuccess(location, response, headers) {
     response.writeHead(200, headers);
-    response.end(data);
+    // response.end(data);
+    response.end();
 }
 
 function returnError(errorMessage, response, headers) {

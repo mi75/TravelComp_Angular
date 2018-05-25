@@ -110,15 +110,16 @@ export class ModalReviewsFormComponent implements OnInit {
       this.send.postData('api/feedback', feedbackData)
       .subscribe(
         success => {
-          this.onSuccess(success.json().feedbackPhotoName);
+          // this.onSuccess(success.json().feedbackPhotoName);
+          this.onSuccess();
         },
         error => {alert('Error')}
       );
     }
   }
 
-  onSuccess(feedbackPhotoName) {
-    if (feedbackPhotoName) {this.newFeedback.photo = feedbackPhotoName}
+  onSuccess() {
+    // if (feedbackPhotoName) {this.newFeedback.photo = feedbackPhotoName}
     this.sendingFeedback.emit(this.newFeedback);
     this.feedbackForm.reset({
       message: '',

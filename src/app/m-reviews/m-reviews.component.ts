@@ -59,16 +59,23 @@ export class MReviewsComponent implements OnInit {
       for (let i=2; i>0; i--) {
         this.feedbacks[i].name = this.feedbacks[i-1].name;
         this.feedbacks[i].message = this.feedbacks[i-1].message;
-        this.feedbacks[i].photo = this.feedbacks[i-1].photo;
+        if (this.feedbacks[i-1].base64Pic) {
+          this.feedbacks[i].base64Pic = this.feedbacks[i-1].base64Pic;
+        } else {
+          this.feedbacks[i].base64Pic = null;
+          this.feedbacks[i].photo = this.feedbacks[i-1].photo;
+        }
         this.feedbacks[i].date = this.feedbacks[i-1].date;
       }
       this.rowsCounter += 1;
       this.feedbacks[0].message = newFeedback.message;
       this.feedbacks[0].name = newFeedback.name;
-      // newFeedback.photo ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
-      // this.feedbacks[0].photo = this.defCustPhoto;
-      newFeedback.base64Pic ? this.feedbacks[0].photo = newFeedback.photo : this.feedbacks[0].photo = this.defCustPhoto;
-      newFeedback.base64Pic ? this.feedbacks[0].base64Pic = newFeedback.base64Pic : this.feedbacks[0].base64Pic = null;
+      if (newFeedback.base64Pic) {
+        this.feedbacks[0].base64Pic = newFeedback.base64Pic;
+      } else {
+        this.feedbacks[0].base64Pic = null;
+        this.feedbacks[0].photo = this.defCustPhoto;
+      }
       this.feedbacks[0].date = newFeedback.date;
     } else {
         this.getFeedback();
