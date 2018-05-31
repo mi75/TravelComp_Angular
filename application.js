@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var dbOperations = require('./dbOperations');
-var uuidv4 = require('uuid/v4');
+var uuidv4 = require('uuid-v4');
 var url = require('url');
 var Busboy = require('busboy');
 
