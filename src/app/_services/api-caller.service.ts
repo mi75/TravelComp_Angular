@@ -1,6 +1,8 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class ApiCallerService {
@@ -12,10 +14,10 @@ export class ApiCallerService {
   ) { }
 
   getData(addr){
-    return this.http.get(this.webAdddr+addr)
-      .map( item => {
+    return this.http.get(this.webAdddr+addr).pipe(
+      map( item => {
       return item.json();
-    } )
+    } ))
   }
 
   postData(addr, data){
