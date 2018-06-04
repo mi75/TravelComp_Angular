@@ -1,6 +1,6 @@
-import { Slide } from "./slide";
+import { Slide } from './slide';
 
-export const SLIDES : Slide[] = [
+export const SLIDES: Slide[] = [
     {
         title: 'южная европа',
         showing: true,

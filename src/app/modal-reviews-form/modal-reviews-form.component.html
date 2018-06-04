@@ -24,10 +24,10 @@
                             </div>
                             <div class="f-row">
                                 <label class="btn btn-primary" for="my-file-selector">
-                                <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
-                                (change)="imageUpload($event)">
-                                Load file with your photo:
-                            </label>
+                              <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                              (change)="imageUpload($event)">
+                              Load file with your photo:
+                          </label>
                                 <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                                 <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
                             </div>

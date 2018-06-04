@@ -1,23 +1,20 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { ValidatorService } from '../_services/validator.service';
+import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { FeedbackFormat } from "../feedback-format";
-
 
 @Component({
   selector: 'modal-reviews-form',
   templateUrl: './modal-reviews-form.component.html',
-  styleUrls: ['./modal-reviews-form.component.css'],
-  providers: [ValidatorService, ApiCallerService]
+  styleUrls: ['./modal-reviews-form.component.css']
 })
-
 export class ModalReviewsFormComponent implements OnInit {
 
   public feedbackForm: FormGroup;
 
   constructor(
-    private valid: ValidatorService,
+    private valid: CommonValidatorService,
     private send: ApiCallerService,
     private _fb: FormBuilder
   ) {
@@ -28,16 +25,14 @@ export class ModalReviewsFormComponent implements OnInit {
       from: this._fb.control('', [
         valid.userNameValidator()
       ])
-      // photo: this._fb.control(null)
     });
-   }
+  }
 
   ngOnInit() {
-  
   }
 
   @Output() sendingFeedback = new EventEmitter();
-  
+
 
   public visible = false;
   public visibleAnimate = false;
@@ -61,7 +56,7 @@ export class ModalReviewsFormComponent implements OnInit {
   }
 
   public newFeedback:FeedbackFormat = new FeedbackFormat();
-  
+
 
   imageBase64: any;
   imageUpload(e) {
@@ -71,7 +66,7 @@ export class ModalReviewsFormComponent implements OnInit {
     reader.onloadend = () => {
       //Assign the result to variable for setting the src of image element
       this.imageBase64 = reader.result;
-    }
+    };
     reader.readAsDataURL(file);
   }
 
@@ -84,11 +79,11 @@ export class ModalReviewsFormComponent implements OnInit {
     let fi = this.fileInput.nativeElement;
     if (fi.files && fi.files[0]) {
       let fileToUpload = fi.files[0];
-      feedbackData.set("photo", fileToUpload);
+      feedbackData.set('photo', fileToUpload);
     }
 
-    Object.keys(this.feedbackForm.controls).forEach(field => { 
-      const control = this.feedbackForm.get(field); 
+    Object.keys(this.feedbackForm.controls).forEach(field => {
+      const control = this.feedbackForm.get(field);
       control.markAsTouched({ onlySelf: true });
     });
 
@@ -99,14 +94,14 @@ export class ModalReviewsFormComponent implements OnInit {
       this.newFeedback.base64Pic = this.imageBase64;
       this.newFeedback.date =  new Date();
 
-      Object.keys(this.feedbackForm.controls).forEach(field => { 
-        const control = this.feedbackForm.get(field); 
+      Object.keys(this.feedbackForm.controls).forEach(field => {
+        const control = this.feedbackForm.get(field);
         feedbackData.set(field, control.value);
       });
 
       // .subscribe(function(errorMessage){alert(errorMessage);})
       // .subscribe(errorMessage => alert(errorMessage))
-      
+
       this.send.postData('api/feedback', feedbackData)
       .subscribe(
         success => {
@@ -131,5 +126,6 @@ export class ModalReviewsFormComponent implements OnInit {
 
     this.hide();
   }
+
 
 }

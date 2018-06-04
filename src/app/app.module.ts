@@ -1,31 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { FootercmpComponent } from './footercmp/footercmp.component';
-import { HeadercmpComponent } from './headercmp/headercmp.component';
-import { BodycmpComponent } from './bodycmp/bodycmp.component';
-import { AdminComponent } from './admin/admin.component';
-import { MReviewsComponent } from './m-reviews/m-reviews.component';
-import { MSlider2Component } from './m-slider2/m-slider2.component';
-import { Contacts2Component } from './contacts2/contacts2.component';
+import { CommonFooterComponent } from './common-footer/common-footer.component';
+import { CommonHeaderComponent } from './common-header/common-header.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { MainReviewsComponent } from './main-reviews/main-reviews.component';
+import { MainSliderComponent } from './main-slider/main-slider.component';
+import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { ValidatorMessageComponent } from './validator-message/validator-message.component';
 import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FootercmpComponent,
-    HeadercmpComponent,
-    BodycmpComponent,
-    AdminComponent,
-    MReviewsComponent,
-    MSlider2Component,
-    Contacts2Component,
+    CommonFooterComponent,
+    CommonHeaderComponent,
+    MainPageComponent,
+    AdminPageComponent,
+    MainReviewsComponent,
+    MainSliderComponent,
+    ContactsPageComponent,
     ValidatorMessageComponent,
     ModalReviewsFormComponent
   ],
@@ -34,19 +33,18 @@ import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-fo
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    // NgbModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '',
-        component: BodycmpComponent
+        component: MainPageComponent
       },
       {
         path: 'contacts',
-        component: Contacts2Component
+        component: ContactsPageComponent
       },
       {
         path: 'admin',
-        component: AdminComponent
+        component: AdminPageComponent
       }
     ])
   ],

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValidatorMessageComponent } from './validator-message.component';
+import { MainSliderComponent } from './main-slider.component';
 
-describe('ValidatorMessageComponent', () => {
-  let component: ValidatorMessageComponent;
-  let fixture: ComponentFixture<ValidatorMessageComponent>;
+describe('MainSliderComponent', () => {
+  let component: MainSliderComponent;
+  let fixture: ComponentFixture<MainSliderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ValidatorMessageComponent ]
+      declarations: [ MainSliderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ValidatorMessageComponent);
+    fixture = TestBed.createComponent(MainSliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

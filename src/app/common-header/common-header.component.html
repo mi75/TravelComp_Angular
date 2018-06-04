@@ -1,0 +1,29 @@
+<div class="header row" id="header" #header>
+    <div class="h-medals col-md-4">
+        <a href="#"></a>
+    </div>
+    <div class="h-logo col-md-4">
+        <a href="#"><img src="/assets/images/headercmp/friends_logo.jpg"></a>
+    </div>
+    <div class="h-contacts col-md-4">
+        <span class="glyphicon glyphicon-earphone"></span><br />
+        <span class="adr-phone">067 445 40 33<br /></span>
+        <span class="adr-phone">063 346 95 75<br /></span>
+        <span class="adr-phone">050 346 95 75</span>
+    </div>
+</div>
+
+<div class="main-menu">
+    <span id="pull" [class.menu-fix]="menuFixedPosition">
+      <a (click)="menuExpand($event)" href="#">Menu</a>
+  </span>
+    <ul id="main-menu" [ngClass]="{'menu-fix': menuFixedPosition, 'visible': menuVisible}">
+        <li><a href="#">география туров</a></li>
+        <li><a href="#">авиатуры</a></li>
+        <li><a href="#">круизы</a></li>
+        <li><a href="#">горящие туры</a></li>
+        <li><a routerLink="/">о нас</a></li>
+        <li><a routerLink="/contacts">контакты</a></li>
+        <li><a routerLink="/admin">поиск</a></li>
+    </ul>
+</div>
