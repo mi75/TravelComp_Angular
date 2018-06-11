@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { MReviewsService } from '../_services/m-reviews.service';
-import { FeedbackFormat } from "../feedback-format";
+import { FeedbackFormat } from '../feedback-format';
 
 @Component({
   selector: 'main-reviews',
@@ -12,7 +12,7 @@ import { FeedbackFormat } from "../feedback-format";
 export class MainReviewsComponent implements OnInit {
 
   feedbacks:FeedbackFormat[];
-  usersImgPath:string = '/assets/images/upload/';
+  usersImgPath:string = ApiCallerService.webAdddr + 'src/assets/images/upload/';
   startRow:number = 0;
   rowsCounter:number = 0;
   defCustPhoto:string = 'default_customer.jpg';

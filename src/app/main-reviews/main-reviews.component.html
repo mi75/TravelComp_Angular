@@ -23,7 +23,6 @@
                     <h4 class="card-title">{{feedback.name}}</h4>
                     <img class="card-customer" *ngIf="!feedbacks[i].base64Pic" src="{{usersImgPath + feedback.photo}}" />
                     <img class="card-customer" *ngIf="feedbacks[i].base64Pic" [src]="feedback.base64Pic" />
-                    <!-- <img class="card-customer" src="'D:/Work/tmp/upload/'+{{feedback.photo}}" /> -->
                     <div class="clear"></div>
                     <div class="layer">
                         <p class="card-text messages">{{feedback.message}}</p>

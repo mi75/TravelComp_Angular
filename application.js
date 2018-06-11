@@ -38,7 +38,6 @@ http.createServer(function(req, res) {
                     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                         if (filename) { userFile = filename };
                         var saveTo = __dirname + '/src/assets/images/upload/' + photoName;
-                        // var saveTo = __dirname + '/../upload/' + photoName;
                         file.pipe(fs.createWriteStream(saveTo));
                     });
 
