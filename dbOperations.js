@@ -37,8 +37,8 @@ module.exports = {
         });
     },
 
-    readTable: function(callback) {
-        connection.query('SELECT * FROM form_1', function(err, result) {
+    readContacts: function(callback) {
+        connection.query('SELECT * FROM contacts_1', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {

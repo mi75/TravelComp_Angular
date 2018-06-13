@@ -175,7 +175,7 @@ function processGetRequest(req, res) {
                 }
             });
         } else {
-            dbOperations.readTable(function(err, result) {
+            dbOperations.readContacts(function(err, result) {
                 if (err) {
                     returnError(err.sqlMessage, res);
                 } else {
