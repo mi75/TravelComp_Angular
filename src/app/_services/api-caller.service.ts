@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
 
 export class ApiCallerService {
 
-  public static readonly webAdddr = 'http://127.0.0.1:8080/';
+  public static readonly webAdddr = 'http://127.0.0.1:3000/';
 
   constructor(
     private http: Http

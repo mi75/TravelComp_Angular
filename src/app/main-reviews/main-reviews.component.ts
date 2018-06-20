@@ -41,7 +41,7 @@ export class MainReviewsComponent implements OnInit {
     this.load.getData('api/feedback?startRow=' + this.startRow).subscribe( res => {
       this.feedbacks = res.rows;
       this.check.checkExist(this.feedbacks, this.defCustPhoto);
-    } )
+    } );
   }
 
   fbReverse() {
