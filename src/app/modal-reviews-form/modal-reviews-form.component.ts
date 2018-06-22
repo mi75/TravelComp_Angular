@@ -108,7 +108,7 @@ export class ModalReviewsFormComponent implements OnInit {
           // this.onSuccess(success.json().feedbackPhotoName);
           this.onSuccess();
         },
-        error => {alert('Error')}
+        error => {alert('Sending Error')}
       );
     }
   }

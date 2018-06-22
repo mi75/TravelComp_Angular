@@ -12,7 +12,7 @@ import { FeedbackFormat } from '../feedback-format';
 export class MainReviewsComponent implements OnInit {
 
   feedbacks:FeedbackFormat[];
-  usersImgPath:string = ApiCallerService.webAdddr + 'src/assets/images/upload/';
+  usersImgPath:string = ApiCallerService.webAdddr + 'api/images?id=';
   startRow:number = 0;
   rowsCounter:number = 0;
   defCustPhoto:string = 'default_customer.jpg';
