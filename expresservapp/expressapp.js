@@ -2,8 +2,8 @@ var express = require("express");
 var fs = require("fs");
 var bodyParser = require("body-parser");
 var cors = require("cors");
-var Busboy = require('busboy');
-var uuidv4 = require('uuid-v4');
+var multer = require('multer'); // for processing of files from forms
+var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
 
 var dbOperations = require('../dbOperations');
 
@@ -52,43 +52,24 @@ apiRouter.route("/admin")
     });
 
 apiRouter.route("/feedback")
-    .post(jsonParser, function(req, res) {
-        var photoName = uuidv4();
-        var name;
-        var message;
-        var userFile = '';
-        var busboy = new Busboy({ headers: req.headers });
-        req.pipe(busboy);
+    .post(upload.single('photo'), function(req, res) { // multer's method
 
-        busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-            if (filename) { userFile = filename };
-            var saveTo = __dirname + '/../src/assets/images/upload/' + photoName;
-            file.pipe(fs.createWriteStream(saveTo));
-        });
+        var contact = {
+            message: req.body.message,
+            name: req.body.from,
+            photo: (!req.file) ? null : req.file.filename,
+            date: new Date()
+        };
 
-        busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
-            key == 'message' ? message = value : name = value;
-        });
-
-        busboy.on('finish', function() {
-
-            var contact = {
-                message: message,
-                name: name,
-                photo: userFile == '' ? null : photoName,
-                date: new Date()
-            };
-
-            dbOperations.addFeedback(contact, (function(err) {
-                if (err) {
-                    res.status(501);
-                    res.send(err.sqlMessage);
-                } else {
-                    res.writeHead(200);
-                    res.end();
-                }
-            }));
-        });
+        dbOperations.addFeedback(contact, (function(err) {
+            if (err) {
+                res.status(501);
+                res.send(err.sqlMessage);
+            } else {
+                res.writeHead(200);
+                res.end();
+            }
+        }));
     });
 
 apiRouter.route("/feedback")
