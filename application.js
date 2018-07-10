@@ -5,18 +5,27 @@ var uuidv4 = require('uuid-v4');
 var url = require('url');
 var Busboy = require('busboy');
 
-
 //create a server object:
 http.createServer(function(req, res) {
-    var headers = { 'Test-Header': 'Test' };
+    var headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': 'origin, content-type, accept'
+    };
 
     try {
+        if (req.method == 'OPTIONS') {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', '*');
+            res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+            res.end();
+            return;
+        }
 
         if (req.method == 'GET') {
             processGetRequest(req, res);
         } else {
             if (req.method == 'POST') {
-
                 if (req.url == '/api/feedback') {
 
                     var photoName = uuidv4();
@@ -28,7 +37,7 @@ http.createServer(function(req, res) {
 
                     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
                         if (filename) { userFile = filename };
-                        var saveTo = __dirname + '/upload/' + photoName;
+                        var saveTo = __dirname + '/src/assets/images/upload/' + photoName;
                         file.pipe(fs.createWriteStream(saveTo));
                     });
 
@@ -49,12 +58,11 @@ http.createServer(function(req, res) {
                             if (err) {
                                 returnError(err.sqlMessage, res, headers);
                             } else {
+                                // var rapidData = JSON.stringify({ feedbackPhotoName: contact.photo });
+                                // returnSuccess('/', res, headers, rapidData);
                                 returnSuccess('/', res, headers);
                             }
                         }));
-
-                        res.writeHead(200, { 'Connection': 'close' });
-                        res.end();
                     });
                 } else {
                     var body = '';
@@ -96,8 +104,10 @@ http.createServer(function(req, res) {
 
 }).listen(8080);
 
+// function returnSuccess(location, response, headers, data) {
 function returnSuccess(location, response, headers) {
-    response.writeHead(301, { Location: location }, headers);
+    response.writeHead(200, headers);
+    // response.end(data);
     response.end();
 }
 
@@ -119,8 +129,8 @@ function processGetRequest(req, res) {
         switch (req.url) {
             case '/':
                 {
-                    targetFileName = __dirname + '/index.html';
-                    useLayout = true;
+                    targetFileName = __dirname + '/src/app/app.component.html';
+                    // useLayout = true;
                     break;
                 }
             case '/contacts':
@@ -158,17 +168,21 @@ function processGetRequest(req, res) {
                 } else {
                     var list = '';
                     if (result) list = JSON.stringify(result);
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
                     res.write(list);
                     res.end();
                 }
             });
         } else {
-            dbOperations.readTable(function(err, result) {
+            dbOperations.readContacts(function(err, result) {
                 if (err) {
                     returnError(err.sqlMessage, res);
                 } else {
                     var list = '';
                     if (result) list = JSON.stringify(result);
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
                     res.write(list);
                     res.end();
                 }

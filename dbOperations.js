@@ -18,7 +18,7 @@ connection.connect(function(err) {
 
 module.exports = {
     addContact: function(contact, callback) {
-        connection.query('INSERT INTO form_1 SET ?', contact, function(err, result) {
+        connection.query('INSERT INTO contacts_1 SET ?', contact, function(err, result) {
             if (err) {
                 callback(err);
             } else {
@@ -37,8 +37,8 @@ module.exports = {
         });
     },
 
-    readTable: function(callback) {
-        connection.query('SELECT * FROM form_1', function(err, result) {
+    readContacts: function(callback) {
+        connection.query('SELECT * FROM contacts_1', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {

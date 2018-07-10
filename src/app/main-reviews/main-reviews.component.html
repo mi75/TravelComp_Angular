@@ -1,0 +1,40 @@
+<div class="reviews">
+    <div class="row">
+        <div class="col-sm-0 col-md-4"></div>
+        <div class="col-sm-6 col-md-4">
+            <h5>Отзывы Путешественников</h5>
+            <h2>#SIMPLYTRAVELS</h2>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="rev-nav">
+
+                <button type="button" class="btn btn-outline-primary btn-lg" (click)="modal.show()">+Добавить отзыв</button>
+                <button type="button" id="reverse" class="btn btn-outline-secondary btn-lg" (click)="fbReverse()"><</button>
+                <button type="button" id="forward" class="btn btn-outline-secondary btn-lg" (click)="fbForwarding()">></button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-deck-wrapper">
+        <div class="card-deck">
+            <div class="card" *ngFor="let feedback of feedbacks; let i=index;">
+                <img class="card-img-top" src="/assets/images/bodycmp/friends_logo_2.jpg">
+                <div class="card-block">
+                    <h4 class="card-title">{{feedback.name}}</h4>
+                    <img class="card-customer" *ngIf="!feedbacks[i].base64Pic" src="{{usersImgPath + feedback.photo}}" />
+                    <img class="card-customer" *ngIf="feedbacks[i].base64Pic" [src]="feedback.base64Pic" />
+                    <div class="clear"></div>
+                    <div class="layer">
+                        <p class="card-text messages">{{feedback.message}}</p>
+                    </div>
+                    <p class="card-text"><small class="text-muted">добавлено {{feedback.date | date:'d.MM.y'}}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<modal-reviews-form #modal (sendingFeedback)="insertFeedback( $event )">
+
+</modal-reviews-form>

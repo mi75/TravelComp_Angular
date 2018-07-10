@@ -1,0 +1,48 @@
+.soci-icons {
+    text-align: center;
+}
+
+.footer {
+    background-color: #e1e1e1;
+    margin: 0 auto;
+    min-height: 240px;
+    text-align: center;
+}
+
+.footer h5 {
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.footer p {
+    padding: 20px;
+    text-align: left;
+}
+
+.footer form {
+    padding: 20px;
+    text-align: left;
+}
+
+.sign-form input {
+    max-width: 75%;
+    height: 36px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 7px;
+    font-size: 16px;
+}
+
+.sign-form button {
+    max-width: 25%;
+    background-color: #006386;
+    border-style: none;
+    font-size: 100%;
+    color: white;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+
+.clear {
+    clear: both;
+}

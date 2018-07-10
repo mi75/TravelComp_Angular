@@ -1,0 +1,33 @@
+<div>
+    <h2>Hi, admin!..</h2>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-striped table-bordered table-hover">
+        <caption>
+            Queries & suggestions
+        </caption>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>name</th>
+                <th>email</th>
+                <th>telephone</th>
+                <th>howHeard</th>
+                <th>keepMe</th>
+                <th>message</th>
+            </tr>
+        </thead>
+        <tbody id='dbtab'>
+            <tr *ngFor="let contact of contacts; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.telephone}}</td>
+                <td>{{contact.howHeard}}</td>
+                <td>{{contact.keepMe}}</td>
+                <td>{{contact.message}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

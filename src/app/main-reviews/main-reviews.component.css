@@ -1,0 +1,72 @@
+.btn {
+    cursor: pointer;
+}
+
+.reviews {
+    padding: 20px;
+    text-align: center;
+}
+
+.rev-nav {
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+}
+
+.rev-nav .btn-outline-primary {
+    font-size: 16px;
+    padding: 12px;
+}
+
+.rev-nav .btn-outline-secondary {
+    font-size: 30px;
+    padding: 2px 14px;
+}
+
+@media screen and (max-width: 980px) {
+    .rev-nav .btn-outline-primary {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .rev-nav .btn-outline-secondary {
+        font-size: 20px;
+        padding: 2px 8px;
+    }
+}
+
+.reviews .card-img-top {
+    width: 60%;
+}
+
+.reviews .card-title {
+    float: left;
+    width: 60%;
+}
+
+.reviews .card-customer {
+    float: right;
+    width: 27%;
+    border-radius: 50%;
+    position: absolute;
+    right: 4%;
+    top: 10%;
+}
+
+.reviews .layer {
+    margin: 10px 10px 24px 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    width: 100%;
+    text-align: left;
+    vertical-align: baseline;
+    font-size: 14px;
+    overflow: auto;
+    overflow-x: hidden;
+    max-height: 240px;
+}
+
+.reviews .text-muted {
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+}
