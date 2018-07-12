@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
 var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
+var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
 
 var dbOperations = require('../dbOperations');
 
@@ -14,6 +15,40 @@ serverApp.use(cors());
 var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
+
+apiRouter.route("/trips")
+    .get(function(req, res) {
+        dbOperations.readTrips(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var trip = {
+            title: req.body.title,
+            pic: (!req.file) ? null : req.file.filename,
+            onMain: req.body.cb == true ? 1 : 0
+        };
+
+        dbOperations.addTrip(trip, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
 
 apiRouter.route("/contacts")
     .post(jsonParser, function(req, res) {
