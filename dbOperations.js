@@ -1,5 +1,3 @@
-var http = require('http');
-var fs = require('fs');
 var mysql = require('mysql');
 
 // create a MySQL DB connection:
@@ -73,12 +71,62 @@ module.exports = {
         });
     },
 
-    readTrips: function(callback) {
+    readTripsOnMain: function(callback) {
+        connection.query('SELECT * FROM trips_1 WHERE (`on_main` = "1") ORDER BY id DESC', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
+    readTripsForAdmin: function(callback) {
         connection.query('SELECT * FROM trips_1', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
                 callback(null, result);
+            }
+        });
+    },
+
+    readTripForEdit: function(editRowId, callback) {
+        connection.query('SELECT * FROM trips_1 WHERE (`id` = "?")', editRowId, function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
+    writeTripAfterEdit: function(trip, editRowId, callback) {
+        connection.query('UPDATE * trips_1 SET ? WHERE (`id` = "?")', trip, editRowId, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
+            }
+        });
+    },
+
+    delTrip: function(delRowId, callback) {
+        connection.query('DELETE FROM trips_1 WHERE (`id` = "?")', delRowId, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
+            }
+        });
+    },
+
+    addTrip: function(trip, callback) {
+        connection.query('INSERT INTO trips_1 SET ?', trip, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
             }
         });
     }

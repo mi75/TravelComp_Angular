@@ -18,7 +18,22 @@ var apiRouter = express.Router();
 
 apiRouter.route("/trips")
     .get(function(req, res) {
-        dbOperations.readTrips(function(err, result) {
+        dbOperations.readTripsOnMain(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trip")
+    .get(function(req, res) {
+        var editRowId = parseInt(req.query.rowId);
+        dbOperations.readTripForEdit(editRowId, function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
