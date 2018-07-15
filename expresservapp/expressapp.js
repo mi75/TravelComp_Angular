@@ -30,10 +30,39 @@ apiRouter.route("/trips")
         });
     });
 
+apiRouter.route("/alltrips")
+    .get(function(req, res) {
+        dbOperations.readTripsForAdmin(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
 apiRouter.route("/trip")
     .get(function(req, res) {
         var editRowId = parseInt(req.query.rowId);
         dbOperations.readTripForEdit(editRowId, function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/triperase")
+    .get(function(req, res) {
+        var delRowId = parseInt(req.query.rowId);
+        dbOperations.delTrip(delRowId, function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -55,6 +84,28 @@ apiRouter.route("/trips")
         };
 
         dbOperations.addTrip(trip, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
+apiRouter.route("/trip")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var trip = {
+            title: req.body.title,
+            pic: (!req.file) ? null : req.file.filename,
+            onMain: req.body.cb == true ? 1 : 0
+        };
+
+        var editRowId = parseInt(req.query.rowId);
+
+        dbOperations.writeTripAfterEdit(trip, editRowId, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);

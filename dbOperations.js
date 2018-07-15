@@ -119,6 +119,13 @@ module.exports = {
                 callback();
             }
         });
+        connection.query('SELECT * FROM trips_1', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
     },
 
     addTrip: function(trip, callback) {
