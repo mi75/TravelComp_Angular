@@ -74,12 +74,13 @@ apiRouter.route("/triperase")
         });
     });
 
-apiRouter.route("/trips")
-    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+apiRouter.route("/newtrip")
+    // .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+    .post(jsonParser, function(req, res) {
 
         var trip = {
             title: req.body.title,
-            pic: (!req.file) ? null : req.file.filename,
+            picture: (!req.file) ? null : req.file.filename,
             onMain: req.body.cb == true ? 1 : 0
         };
 
@@ -99,7 +100,7 @@ apiRouter.route("/trip")
 
         var trip = {
             title: req.body.title,
-            pic: (!req.file) ? null : req.file.filename,
+            picture: (!req.file) ? null : req.file.filename,
             onMain: req.body.cb == true ? 1 : 0
         };
 

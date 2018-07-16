@@ -115,8 +115,6 @@ module.exports = {
         connection.query('DELETE FROM trips_1 WHERE (`id` = "?")', delRowId, function(err, result) {
             if (err) {
                 callback(err);
-            } else {
-                callback();
             }
         });
         connection.query('SELECT * FROM trips_1', function(err, result) {
