@@ -89,8 +89,13 @@ apiRouter.route("/trips/create")
 
         var trip = {
             title: req.body.title,
-            picture: (!req.file) ? null : req.file.originalname,
-            onMain: req.body.cb == 'true' ? 1 : 0
+            picture: (!req.file) ? null : req.file.filename,
+            onMain: req.body.displ == 'true' ? 1 : 0,
+            startDate: req.body.start,
+            finishDate: req.body.finish,
+            price: req.body.price,
+            characteristics: req.body.characteristics,
+            program: req.body.program
         };
 
         dbOperations.addTrip(trip, (function(err) {
@@ -110,7 +115,12 @@ apiRouter.route("/trips/edit")
         var trip = {
             title: req.body.title,
             picture: (!req.file) ? null : req.file.filename,
-            onMain: req.body.cb == 'true' ? 1 : 0
+            onMain: req.body.displ == 'true' ? 1 : 0,
+            startDate: req.body.start,
+            finishDate: req.body.finish,
+            price: req.body.price,
+            characteristics: req.body.characteristics,
+            program: req.body.program
         };
 
         var editRowId = parseInt(req.query.rowId);
