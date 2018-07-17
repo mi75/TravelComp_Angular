@@ -4,7 +4,17 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
 var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
-var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, __dirname + '/../src/assets/images/bodycmp/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  });
+var picsForSlider = multer({ storage: storage }); // for storage with original file name
+
 
 var dbOperations = require('../dbOperations');
 
@@ -16,9 +26,9 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
-apiRouter.route("/trips")
+apiRouter.route("/trips/display")
     .get(function(req, res) {
-        dbOperations.readTripsOnMain(function(err, result) {
+        dbOperations.readTripsOnPage(function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -30,7 +40,7 @@ apiRouter.route("/trips")
         });
     });
 
-apiRouter.route("/alltrips")
+apiRouter.route("/trips/all")
     .get(function(req, res) {
         dbOperations.readTripsForAdmin(function(err, result) {
             if (err) {
@@ -44,7 +54,7 @@ apiRouter.route("/alltrips")
         });
     });
 
-apiRouter.route("/trip")
+apiRouter.route("/trips/edit")
     .get(function(req, res) {
         var editRowId = parseInt(req.query.rowId);
         dbOperations.readTripForEdit(editRowId, function(err, result) {
@@ -59,8 +69,8 @@ apiRouter.route("/trip")
         });
     });
 
-apiRouter.route("/triperase")
-    .get(function(req, res) {
+apiRouter.route("/trips/delete")
+    .post(function(req, res) {
         var delRowId = parseInt(req.query.rowId);
         dbOperations.delTrip(delRowId, function(err, result) {
             if (err) {
@@ -74,14 +84,13 @@ apiRouter.route("/triperase")
         });
     });
 
-apiRouter.route("/newtrip")
-    // .post(picsForSlider.single('picture'), function(req, res) { // multer's method
-    .post(jsonParser, function(req, res) {
+apiRouter.route("/trips/create")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
             title: req.body.title,
-            picture: (!req.file) ? null : req.file.filename,
-            onMain: req.body.cb == true ? 1 : 0
+            picture: (!req.file) ? null : req.file.originalname,
+            onMain: req.body.cb == 'true' ? 1 : 0
         };
 
         dbOperations.addTrip(trip, (function(err) {
@@ -95,13 +104,13 @@ apiRouter.route("/newtrip")
         }));
     });
 
-apiRouter.route("/trip")
+apiRouter.route("/trips/edit")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
             title: req.body.title,
             picture: (!req.file) ? null : req.file.filename,
-            onMain: req.body.cb == true ? 1 : 0
+            onMain: req.body.cb == 'true' ? 1 : 0
         };
 
         var editRowId = parseInt(req.query.rowId);

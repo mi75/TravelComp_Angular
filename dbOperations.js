@@ -71,8 +71,8 @@ module.exports = {
         });
     },
 
-    readTripsOnMain: function(callback) {
-        connection.query('SELECT * FROM trips_1 WHERE (`on_main` = "1") ORDER BY id DESC', function(err, result) {
+    readTripsOnPage: function(callback) {
+        connection.query('SELECT * FROM trips_1 WHERE (`onMain` = "1") ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -92,7 +92,7 @@ module.exports = {
     },
 
     readTripForEdit: function(editRowId, callback) {
-        connection.query('SELECT * FROM trips_1 WHERE (`id` = "?")', editRowId, function(err, result) {
+        connection.query('SELECT * FROM trips_1 WHERE id = ?', editRowId, function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -102,7 +102,7 @@ module.exports = {
     },
 
     writeTripAfterEdit: function(trip, editRowId, callback) {
-        connection.query('UPDATE * trips_1 SET ? WHERE (`id` = "?")', trip, editRowId, function(err, result) {
+        connection.query('UPDATE trips_1 SET ? WHERE id = ?', [trip, editRowId], function(err, result) {
             if (err) {
                 callback(err);
             } else {
@@ -112,7 +112,7 @@ module.exports = {
     },
 
     delTrip: function(delRowId, callback) {
-        connection.query('DELETE FROM trips_1 WHERE (`id` = "?")', delRowId, function(err, result) {
+        connection.query('DELETE FROM trips_1 WHERE id = ?', delRowId, function(err, result) {
             if (err) {
                 callback(err);
             }
