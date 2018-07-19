@@ -3,23 +3,38 @@ import {SLIDES} from '../SLIDES';
 import { element } from 'protractor';
 import { Slide } from '../slide';
 
+import { ApiCallerService } from '../_services/api-caller.service';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class MSliderService {
 
-  constructor() { }
+  constructor(
+		private load: ApiCallerService
+	) { }
 
   currentSlide:number = 0;
   animation:NodeJS.Timer;
   knobs:boolean[] = [];
 
-  public getSlides(): Slide[] {
-    for (let i=0; i<SLIDES.length; i++) {
-      if (SLIDES[i].showing) {
-        this.currentSlide = i;
-      }
-    }
+  // public getSlides(): Slide[] {
+  //   for (let i=0; i<SLIDES.length; i++) {
+  //     if (SLIDES[i].showing) {
+  //       this.currentSlide = i;
+  //     }
+  //   }
+  //   return SLIDES;
+	// }
+
+	tripToSlides:Slide[];
+	
+	public getSlides(): Slide[] {
+    this.load.getData('api/trips/all').subscribe( res => {
+      this.tripToSlides = res;
+		});
+		console.log(this.tripToSlides);
     return SLIDES;
   }
 
