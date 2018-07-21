@@ -4,16 +4,7 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
 var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, __dirname + '/../src/assets/images/bodycmp/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
-  });
-var picsForSlider = multer({ storage: storage }); // for storage with original file name
+var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
 
 
 var dbOperations = require('../dbOperations');
@@ -28,7 +19,7 @@ var apiRouter = express.Router();
 
 apiRouter.route("/trips/display")
     .get(function(req, res) {
-        dbOperations.readTripsOnPage(function(err, result) {
+        dbOperations.readTripsOnMainPage(function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -89,7 +80,8 @@ apiRouter.route("/trips/create")
 
         var trip = {
             title: req.body.title,
-            picture: (!req.file) ? null : req.file.filename,
+            picName: (!req.file) ? null : req.file.originalname,
+            picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
             startDate: req.body.start,
             finishDate: req.body.finish,
@@ -114,7 +106,8 @@ apiRouter.route("/trips/edit")
 
         var trip = {
             title: req.body.title,
-            picture: (!req.file) ? null : req.file.filename,
+            picName: (!req.file) ? null : req.file.originalname,
+            picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
             startDate: req.body.start,
             finishDate: req.body.finish,
