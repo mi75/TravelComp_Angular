@@ -53,9 +53,9 @@ apiRouter.route("/trips/edit")
                 res.status(500);
                 res.send(err.sqlMessage);
             } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
+                // var list = '';
+                // if (result) list = JSON.stringify(result);
+                res.send(result);
             }
         });
     });
@@ -90,7 +90,9 @@ apiRouter.route("/trips/create")
             program: req.body.program
         };
 
-        dbOperations.addTrip(trip, (function(err) {
+        var featureIds = req.query.featureIds.split(',');
+
+        dbOperations.addTrip(trip, featureIds, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -116,9 +118,10 @@ apiRouter.route("/trips/edit")
             program: req.body.program
         };
 
-        var editRowId = parseInt(req.query.rowId);
+        var editTripId = parseInt(req.query.rowId);
+        var featureIds = req.query.featureIds.split(',');
 
-        dbOperations.writeTripAfterEdit(trip, editRowId, (function(err) {
+        dbOperations.writeTripAfterEdit(trip, editTripId, featureIds, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
