@@ -95,22 +95,14 @@ module.exports = {
     },
 
     readTripForEdit: function(editRowId, callback) {
-        connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.Description) AS features\
+        connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.id) AS features\
                         FROM trips_1 JOIN trips_trip_features_1 ON trips_1.id=trips_trip_features_1.trip_id\
                         JOIN trip_features_1 ON trips_trip_features_1.feature_id=trip_features_1.id WHERE trips_1.id = ?\
-                        GROUP BY trips_1.id', editRowId, function(err, result1) {
+                        GROUP BY trips_1.id', editRowId, function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
-                connection.query('SELECT feature_id FROM trips_trip_features_1 WHERE (`trip_id` = ?);', editRowId, function(err, result2) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        let result = JSON.stringify(result1) + JSON.stringify(result2);
-                        callback(null, result);
-                    }
-                });
-                // callback(null, result);
+                callback(null, result);
             }
         });
     },
@@ -125,17 +117,26 @@ module.exports = {
         connection.query('DELETE FROM trips_trip_features_1 WHERE (`trip_id` = ?);', editTripId, function(err, result) {
             if (err) {
                 callback(err);
-            }
+            }  else {
+                var valuesToInsert = [];
+
+                for (let i=0; i<featureIds.length; i++) {
+                   featureId = featureIds[i];
+                   var arrayToPush = [];
+                   arrayToPush.push(editTripId);
+                   arrayToPush.push(featureId);
+                   valuesToInsert.push(arrayToPush);
+               }
+
+               connection.query('INSERT INTO trips_trip_features_1 (`trip_id`, `feature_id`) VALUES ?', [valuesToInsert], function(err, result) {
+               if (err) {
+                 callback(err);
+               } else{
+                   callback();
+               }
+           });
+           }
         });
-        for (let i=0; i<featureIds.length; i++) {
-            featureId = featureIds[i];
-            connection.query('INSERT INTO trips_trip_features_1 (`trip_id`, `feature_id`) VALUES (?, ?);', [editTripId, featureId], function(err, result) {
-                if (err) {
-                  callback(err);
-                }
-            });
-        }
-        callback();
     },
 
     delTrip: function(delRowId, callback) {
@@ -162,35 +163,31 @@ module.exports = {
     },
 
     addTrip: function(trip, featureIds, callback) {
-        var newTripId=0;
         var featureId;
         connection.query('INSERT INTO trips_1 SET ?', trip, function(err, result) {
             if (err) {
                 callback(err);
-            } // else {
-            //     console.log(trip.title);
-            //     callback();
-            // }
-        });
-        connection.query('SELECT id FROM trips_1 WHERE (`title` = ?);', trip.title, function(err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                newTripId = result[0].id;
-                console.log(newTripId);
+            }  else {
+                 var tripId = result.insertId; // new trip's id
+                 var valuesToInsert = [];
+
+                 for (let i=0; i<featureIds.length; i++) {
+                    featureId = featureIds[i];
+                    var arrayToPush = [];
+                    arrayToPush.push(tripId);
+                    arrayToPush.push(featureId);
+                    valuesToInsert.push(arrayToPush);
+                }
+
+                connection.query('INSERT INTO trips_trip_features_1 (`trip_id`, `feature_id`) VALUES ?', [valuesToInsert], function(err, result) {
+                if (err) {
+                  callback(err);
+                } else{
+                    callback();
+                }
+            });
             }
         });
-        console.log(newTripId);
-        for (let i=0; i<featureIds.length; i++) {
-            featureId = featureIds[i];
-            // console.log(newTripId);
-            // connection.query('INSERT INTO trips_trip_features_1 (`trip_id`, `feature_id`) VALUES (?, ?);', [newTripId, featureId], function(err, result) {
-            //     if (err) {
-            //       callback(err);
-            //     }
-            // });
-        }
-        callback();
     }
 }
 

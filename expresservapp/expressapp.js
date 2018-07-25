@@ -53,9 +53,9 @@ apiRouter.route("/trips/edit")
                 res.status(500);
                 res.send(err.sqlMessage);
             } else {
-                // var list = '';
-                // if (result) list = JSON.stringify(result);
-                res.send(result);
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
             }
         });
     });
