@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
 var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
+var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
+
 
 var dbOperations = require('../dbOperations');
 
@@ -14,6 +16,121 @@ serverApp.use(cors());
 var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
+
+apiRouter.route("/trips/display")
+    .get(function(req, res) {
+        dbOperations.readTripsOnMainPage(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips/all")
+    .get(function(req, res) {
+        dbOperations.readTripsForAdmin(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips/edit")
+    .get(function(req, res) {
+        var editRowId = parseInt(req.query.rowId);
+        dbOperations.readTripForEdit(editRowId, function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips/delete")
+    .post(function(req, res) {
+        var delRowId = parseInt(req.query.rowId);
+        dbOperations.delTrip(delRowId, function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips/create")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var trip = {
+            title: req.body.title,
+            picName: (!req.file) ? null : req.file.originalname,
+            picFile: (!req.file) ? null : req.file.filename,
+            onMain: req.body.displ == 'true' ? 1 : 0,
+            startDate: req.body.start,
+            finishDate: req.body.finish,
+            price: req.body.price,
+            characteristics: req.body.characteristics,
+            program: req.body.program
+        };
+
+        var featureIds = req.query.featureIds.split(',');
+
+        dbOperations.addTrip(trip, featureIds, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
+apiRouter.route("/trips/edit")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var trip = {
+            title: req.body.title,
+            picName: (!req.file) ? null : req.file.originalname,
+            picFile: (!req.file) ? null : req.file.filename,
+            onMain: req.body.displ == 'true' ? 1 : 0,
+            startDate: req.body.start,
+            finishDate: req.body.finish,
+            price: req.body.price,
+            characteristics: req.body.characteristics,
+            program: req.body.program
+        };
+
+        var editTripId = parseInt(req.query.rowId);
+        var featureIds = req.query.featureIds.split(',');
+
+        dbOperations.writeTripAfterEdit(trip, editTripId, featureIds, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
 
 apiRouter.route("/contacts")
     .post(jsonParser, function(req, res) {
