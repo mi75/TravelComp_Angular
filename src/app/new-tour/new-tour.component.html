@@ -4,7 +4,7 @@
 
 <div class="newtrip_form">
   <h2>Готовим новую поездку</h2>
-  <form [formGroup]="tourForm" (ngSubmit)="sendMySuggestion(tourForm.value)">
+  <form [formGroup]="tourForm" (ngSubmit)="sendNewTour(tourForm.value)">
       <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
       <div class="row">
           <div class="col-sm-0 col-md-2"></div>

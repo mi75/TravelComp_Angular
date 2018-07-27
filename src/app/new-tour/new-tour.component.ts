@@ -44,4 +44,30 @@ export class NewTourComponent implements OnInit {
   ngOnInit() {
   }
 
+  sendNewTour(data: FormGroup): void {
+
+    Object.keys(this.tourForm.controls).forEach(field => {
+      const control = this.tourForm.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+
+    if (this.tourForm.valid) {
+      this.send.postData('api/trips/create', data)
+      .subscribe(
+        error => alert(error)
+      );
+      this.tourForm.reset({
+        program: '',
+        title: '',
+        startDate: '',
+        finishDate: '',
+        price: '',
+        cb1: true,
+        cb2: true,
+        cb3: true,
+        cb4: true
+      });
+    }
+  }
+
 }
