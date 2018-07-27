@@ -14,6 +14,8 @@ import { MainSliderComponent } from './main-slider/main-slider.component';
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { ValidatorMessageComponent } from './validator-message/validator-message.component';
 import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-form.component';
+import { AdminToursComponent } from './admin-tours/admin-tours.component';
+import { NewTourComponent } from './new-tour/new-tour.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-fo
     MainSliderComponent,
     ContactsPageComponent,
     ValidatorMessageComponent,
-    ModalReviewsFormComponent
+    ModalReviewsFormComponent,
+    AdminToursComponent,
+    NewTourComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,14 @@ import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-fo
       {
         path: 'admin',
         component: AdminPageComponent
+      },
+      {
+        path: 'alltours',
+        component: AdminToursComponent
+      },
+      {
+        path: 'newtour',
+        component: NewTourComponent
       }
     ])
   ],

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MSliderService } from '../_services/m-slider.service';
 import { Slide } from '../slide';
 
+
 @Component({
   selector: 'main-slider',
   templateUrl: './main-slider.component.html',

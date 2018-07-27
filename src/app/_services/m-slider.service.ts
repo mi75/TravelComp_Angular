@@ -28,19 +28,38 @@ export class MSliderService {
   //   return SLIDES;
 	// }
 
-	tripToSlides:Slide[];
+	// public static readonly sliderPicAddr = '/assets/images/bodycmp/';
+	mainSlides:Slide[] = [];
+	
+	// public getSlides(): Slide[] {
+  //   this.load.getData('api/trips/display').subscribe( res => {
+	// 		for (let i=0; i<res.length; i++) {
+	// 			var newSlide:Slide;
+	// 			newSlide.title = res[i].title;
+	// 			if (i=0) {
+	// 				newSlide.showing = true;
+	// 			}  else {newSlide.showing = false};
+	// 			newSlide.pic = '/assets/images/bodycmp/' + res[i].picFile;
+	// 			this.mainSlides.push(newSlide);
+	// 		}
+	// 	});
+  //   return this.mainSlides;
+	// }
 	
 	public getSlides(): Slide[] {
-    this.load.getData('api/trips/all').subscribe( res => {
-      this.tripToSlides = res;
+    this.load.getData('api/trips/display').subscribe( res => {
+			for (let i=0; i<res.length; i++) {
+				this.mainSlides.push(SLIDES[i]);
+				this.mainSlides[i].title = res[i].title;
+				this.mainSlides[i].pic = '/assets/images/bodycmp/' + res[i].picFile;
+			}
 		});
-		console.log(this.tripToSlides);
-    return SLIDES;
+    return this.mainSlides;
   }
 
 	getKnobs() {
-		for (let i=0; i<SLIDES.length; i++) {
-			this.knobs.push(SLIDES[i].showing);
+		for (let i=0; i<this.mainSlides.length; i++) {
+			this.knobs.push(this.mainSlides[i].showing);
 		}
 		return this.knobs;
 	}
@@ -56,10 +75,10 @@ export class MSliderService {
 	}
 
 	goToSlide() {
-		SLIDES[this.currentSlide].showing = false;
+		this.mainSlides[this.currentSlide].showing = false;
 		this.knobs[this.currentSlide] = false;
-		this.currentSlide = (this.currentSlide + 1 + SLIDES.length) % SLIDES.length;
-		SLIDES[this.currentSlide].showing = true;
+		this.currentSlide = (this.currentSlide + 1 + this.mainSlides.length) % this.mainSlides.length;
+		this.mainSlides[this.currentSlide].showing = true;
 		this.knobs[this.currentSlide] = true;
 	}
 
@@ -68,10 +87,10 @@ export class MSliderService {
 		for (let i=0; i<this.knobs.length; i++) {
 			this.knobs[i] = false;
 		}
-		SLIDES.forEach(element => {
+		this.mainSlides.forEach(element => {
 			element.showing = false;
 		});
-		SLIDES[pic].showing = true;
+		this.mainSlides[pic].showing = true;
 		this.knobs[pic] = true;
 		this.currentSlide = pic;
 		this.animation = setInterval(() => {
