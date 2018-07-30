@@ -12,30 +12,30 @@
               <div class="f-row">
                   <label for="program">Программа поездки<span class="req">*</span>:</label><br />
                   <textarea formControlName="program" class="field" rows="13"></textarea>
-                  <validator-message [field]="tourForm.get('program')"></validator-message>
+                  <!-- <validator-message [field]="tourForm.get('program')"></validator-message> -->
               </div>
           </div>
           <div class="col-sm-6 col-md-4">
+              <label>
+                  <input type="checkbox"  formControlName="displ" checked>
+                  <span class="pseudocheckbox">Показывать на сайте?</span>
+                </label>
               <div class="f-row">
                   <label for="title">Trip name<span class="req">*</span>:</label><br />
                   <input type="text" formControlName="title" class="field">
-                  <validator-message [field]="tourForm.get('title')"></validator-message>
+                  <!-- <validator-message [field]="tourForm.get('title')"></validator-message> -->
               </div>
               <div class="f-row">
                   <label for="startDate">Start date<span class="req">*</span>:</label><br />
                   <input type="text" formControlName="startDate" class="field">
-                  <validator-message [field]="tourForm.get('startDate')"></validator-message>
+                  <!-- <validator-message [field]="tourForm.get('startDate')"></validator-message> -->
               </div>
               <div class="f-row">
                   <label for="finishDate">Finish date<span class="req">*</span>:</label><br />
                   <input type="text" formControlName="finishDate" class="field">
-                  <validator-message [field]="tourForm.get('finishDate')"></validator-message>
+                  <!-- <validator-message [field]="tourForm.get('finishDate')"></validator-message> -->
               </div>
-              <div class="f-row">
-                  <label for="price">Trip's price<span class="req">*</span>:</label><br />
-                  <input type="text" formControlName="price" class="field">
-                  <validator-message [field]="tourForm.get('price')"></validator-message>
-              </div>
+              
           </div>
       </div>
       <div class="row">
@@ -44,44 +44,42 @@
             <div class="f-row">
                 <label for="characteristics">Особенности поездки<span class="req">*</span>:</label><br />
                 <textarea formControlName="characteristics" class="field" rows="13"></textarea>
-                <validator-message [field]="tourForm.get('characteristics')"></validator-message>
+                <!-- <validator-message [field]="tourForm.get('characteristics')"></validator-message> -->
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
+            <div class="f-row">
+                <label class="btn btn-primary" for="my-file-selector">
+              <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+              (change)="imageUpload($event)">
+              Load file with your photo:
+          </label>
+                <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
+                <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
+            </div>
+            <div class="f-row">
+                <label for="price">Trip's price<span class="req">*</span>:</label><br />
+                <input type="text" formControlName="price" class="field">
+                <!-- <validator-message [field]="tourForm.get('price')"></validator-message> -->
+            </div>
           <label>
             <input type="checkbox"  formControlName="cb1" checked>
             <span class="pseudocheckbox">Хорошее настроение</span>
-            </label>
-            <label>
+          </label>
+          <label>
               <input type="checkbox"  formControlName="cb2">
               <span class="pseudocheckbox">Проезд на комфортабельном автобусе</span>
-            </label>
-            <label>
+          </label>
+          <label>
               <input type="checkbox"  formControlName="cb3">
               <span class="pseudocheckbox">Проживание в 3/4* отеле</span>
-            </label>
-            <label>
+          </label>
+          <label>
               <input type="checkbox"  formControlName="cb4">
               <span class="pseudocheckbox">Сопровождение организатора</span>
-            </label>
+          </label>
         </div>
     </div>
-    <!-- <label>
-    <input type="checkbox"  formControlName="cb1" checked>
-    <span class="pseudocheckbox">Хорошее настроение</span>
-    </label>
-    <label>
-      <input type="checkbox"  formControlName="cb2">
-      <span class="pseudocheckbox">Проезд на комфортабельном автобусе</span>
-    </label>
-    <label>
-      <input type="checkbox"  formControlName="cb3">
-      <span class="pseudocheckbox">Проживание в 3/4* отеле</span>
-    </label>
-    <label>
-      <input type="checkbox"  formControlName="cb4">
-      <span class="pseudocheckbox">Сопровождение организатора</span>
-    </label> -->
       <div class="go">
           <button type="submit" class="go-button">SUBMIT</button>
       </div>

@@ -43,6 +43,12 @@ export class MSliderService {
 	// 			this.mainSlides.push(newSlide);
 	// 		}
 	// 	});
+
+	// 	for (let i=0; i<this.mainSlides.length; i++) {
+  //     if (this.mainSlides[i].showing) {
+  //       this.currentSlide = i;
+  //     }
+  //   }
   //   return this.mainSlides;
 	// }
 	
