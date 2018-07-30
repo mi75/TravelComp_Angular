@@ -21,4 +21,19 @@ export class AdminToursComponent implements OnInit {
     });
   }
 
+  delTrip(id) {
+    confirm('Are you shure?');
+    // let dataToDel = new FormData();
+    // dataToDel.set('rowId', id);
+    this.load.postData('api/trips/delete?rowId=' + id, null)
+      .subscribe(
+        res => {
+          alert('Deleted');
+          this.tours = res;
+          console.log(this.tours);
+        },
+        error => {alert('Sending Error')}
+      );
+  }
+
 }

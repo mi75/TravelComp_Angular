@@ -20,6 +20,7 @@
               <th>characteristics</th>
               <th>program</th>
               <th>features</th>
+              <th>CRUD</th>
           </tr>
       </thead>
       <tbody id='dbtab'>
@@ -35,6 +36,7 @@
               <td>{{tour.characteristics}}</td>
               <td>{{tour.program}}</td>
               <td>{{tour.features}}</td>
+              <input type="button" (click)="delTrip(tour.id)" value="del"/>
           </tr>
       </tbody>
   </table>

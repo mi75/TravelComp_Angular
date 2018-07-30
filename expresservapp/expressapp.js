@@ -78,8 +78,6 @@ apiRouter.route("/trips/delete")
 apiRouter.route("/trips/create")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
-    console.log(req.body.title);
-
         var trip = {
             title: req.body.title,
             picName: (!req.file) ? null : req.file.originalname,
