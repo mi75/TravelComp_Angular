@@ -63,14 +63,13 @@ apiRouter.route("/trips/edit")
 apiRouter.route("/trips/delete")
     .post(function(req, res) {
         var delRowId = parseInt(req.query.rowId);
-        dbOperations.delTrip(delRowId, function(err, result) {
+        dbOperations.delTrip(delRowId, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
             } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
+                res.writeHead(200);
+                res.end();
             }
         });
     });

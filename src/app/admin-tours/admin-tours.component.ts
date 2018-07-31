@@ -9,7 +9,7 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class AdminToursComponent implements OnInit {
 
-  tours:object;
+  tours:object[];
 
   constructor(
     private load: ApiCallerService
@@ -21,16 +21,14 @@ export class AdminToursComponent implements OnInit {
     });
   }
 
-  delTrip(id) {
+  delTrip(id, index) {
     confirm('Are you shure?');
     // let dataToDel = new FormData();
     // dataToDel.set('rowId', id);
     this.load.postData('api/trips/delete?rowId=' + id, null)
       .subscribe(
-        res => {
-          alert('Deleted');
-          this.tours = res;
-          console.log(this.tours);
+        success => {
+          this.tours.splice(index, 1);
         },
         error => {alert('Sending Error')}
       );
