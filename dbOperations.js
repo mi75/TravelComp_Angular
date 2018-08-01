@@ -71,6 +71,16 @@ module.exports = {
         });
     },
 
+    readTripFeaturesTable: function(callback) {
+        connection.query('SELECT * FROM trip_features_1', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
     readTripsOnMainPage: function(callback) {
         connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onMain` = "1") ORDER BY id DESC', function(err, result) {
             if (err) {

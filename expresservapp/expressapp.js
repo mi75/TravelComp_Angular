@@ -17,6 +17,20 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
+apiRouter.route("/trips/features")
+    .get(function(req, res) {
+        dbOperations.readTripFeaturesTable(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
 apiRouter.route("/trips/display")
     .get(function(req, res) {
         dbOperations.readTripsOnMainPage(function(err, result) {

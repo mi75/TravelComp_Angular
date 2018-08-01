@@ -62,11 +62,11 @@
                 <input type="text" formControlName="price" class="field">
                 <!-- <validator-message [field]="tourForm.get('price')"></validator-message> -->
             </div>
-          <label>
-            <input type="checkbox"  formControlName="cb1" checked>
-            <span class="pseudocheckbox">Хорошее настроение</span>
+          <label *ngFor="let feature of tripFeatures; let i=index;">
+            <input type="checkbox"  formControlName=feature.id checked>
+            <span class="pseudocheckbox">{{feature.Description}}</span>
           </label>
-          <label>
+          <!-- <label>
               <input type="checkbox"  formControlName="cb2">
               <span class="pseudocheckbox">Проезд на комфортабельном автобусе</span>
           </label>
@@ -77,7 +77,7 @@
           <label>
               <input type="checkbox"  formControlName="cb4">
               <span class="pseudocheckbox">Сопровождение организатора</span>
-          </label>
+          </label> -->
         </div>
     </div>
       <div class="go">

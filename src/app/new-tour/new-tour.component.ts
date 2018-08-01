@@ -12,11 +12,12 @@ import { FeedbackFormat } from "../feedback-format";
 })
 export class NewTourComponent implements OnInit {
 
+  tripFeatures:object[];
   public tourForm: FormGroup;
 
   constructor(
     private valid: CommonValidatorService,
-    private send: ApiCallerService,
+    private apiCall: ApiCallerService,
     private _fb: FormBuilder
   ) {
     this.tourForm = this._fb.group({
@@ -38,49 +39,21 @@ export class NewTourComponent implements OnInit {
       ]),
       price: this._fb.control('', [
         // valid.notEmptyValidator()
-      ]),
-      cb1: this._fb.control(true),
-      cb2: this._fb.control(false),
-      cb3: this._fb.control(false),
-      cb4: this._fb.control(false),
+      ])
+      // cb1: this._fb.control(true),
+      // cb2: this._fb.control(false),
+      // cb3: this._fb.control(false),
+      // cb4: this._fb.control(false)
     });
    }
 
   ngOnInit() {
+    this.apiCall.getData('api/trips/features').subscribe( res => {
+      this.tripFeatures = res;
+    });
   }
 
   @Output() sendingNewTour = new EventEmitter();
-
-  // sendNewTour(data: FormGroup): void {
-
-  //   // Object.keys(this.tourForm.controls).forEach(field => {
-  //   //   const control = this.tourForm.get(field);
-  //   //   control.markAsTouched({ onlySelf: true });
-  //   // });
-
-  //   // if (this.tourForm.valid) {
-  //     if (data) {
-  //     this.send.postData('api/trips/create', data)
-  //     .subscribe(
-  //       error => alert(error)
-  //     );
-  //     this.tourForm.reset({
-  //       onMain: true,
-  //       program: '',
-  //       characteristics: '',
-  //       title: '',
-  //       startDate: '',
-  //       finishDate: '',
-  //       price: '',
-  //       cb1: true,
-  //       cb2: false,
-  //       cb3: false,
-  //       cb4: false
-  //     });
-  //   }
-  // }
-
-
 
   imageBase64: any;
   imageUpload(e) {
@@ -125,7 +98,7 @@ export class NewTourComponent implements OnInit {
 
       console.log(newTourData);
 
-      this.send.postData('api/trips/create?featureIds=1', newTourData)
+      this.apiCall.postData('api/trips/create?featureIds=1', newTourData)
       .subscribe(
         success => {
           this.onSuccess();
@@ -144,11 +117,11 @@ export class NewTourComponent implements OnInit {
         title: '',
         startDate: '',
         finishDate: '',
-        price: '',
-        cb1: true,
-        cb2: false,
-        cb3: false,
-        cb4: false
+        price: ''
+        // cb1: true,
+        // cb2: false,
+        // cb3: false,
+        // cb4: false
     });
 
     this.imageBase64 = '';
