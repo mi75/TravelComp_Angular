@@ -14,6 +14,7 @@ export class NewTourComponent implements OnInit {
 
   tripFeatures:object[];
   public tourForm: FormGroup;
+  featuresArr = [];
 
   constructor(
     private valid: CommonValidatorService,
@@ -39,11 +40,12 @@ export class NewTourComponent implements OnInit {
       ]),
       price: this._fb.control('', [
         // valid.notEmptyValidator()
-      ])
-      // cb1: this._fb.control(true),
-      // cb2: this._fb.control(false),
-      // cb3: this._fb.control(false),
-      // cb4: this._fb.control(false)
+      ]),
+      cb0: this._fb.control(true),
+      cb1: this._fb.control(false),
+      cb2: this._fb.control(false),
+      cb3: this._fb.control(false),
+      cb4: this._fb.control(false)
     });
    }
 
@@ -53,7 +55,7 @@ export class NewTourComponent implements OnInit {
     });
   }
 
-  @Output() sendingNewTour = new EventEmitter();
+// @Output() sendingNewTour = new EventEmitter();
 
   imageBase64: any;
   imageUpload(e) {
@@ -86,19 +88,18 @@ export class NewTourComponent implements OnInit {
 
     if (this.tourForm.valid) {
 
-      // this.newFeedback.name = this.tourForm.get('from').value;
-      // this.newFeedback.message = this.tourForm.get('message').value;
-      // this.newFeedback.base64Pic = this.imageBase64;
-      // this.newFeedback.date =  new Date();
-
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
         newTourData.set(field, control.value);
       });
 
-      console.log(newTourData);
+      if (this.tourForm.controls.cb0.value) {this.featuresArr.push(1)};
+      if (this.tourForm.controls.cb1.value) {this.featuresArr.push(2)};
+      if (this.tourForm.controls.cb2.value) {this.featuresArr.push(3)};
+      if (this.tourForm.controls.cb3.value) {this.featuresArr.push(4)};
+      if (this.tourForm.controls.cb4.value) {this.featuresArr.push(5)};
 
-      this.apiCall.postData('api/trips/create?featureIds=1', newTourData)
+      this.apiCall.postData('api/trips/create?featureIds=' + this.featuresArr.toString(), newTourData)
       .subscribe(
         success => {
           this.onSuccess();
@@ -117,11 +118,12 @@ export class NewTourComponent implements OnInit {
         title: '',
         startDate: '',
         finishDate: '',
-        price: ''
-        // cb1: true,
-        // cb2: false,
-        // cb3: false,
-        // cb4: false
+        price: '',
+        cb0: true,
+        cb1: false,
+        cb2: false,
+        cb3: false,
+        cb4: false
     });
 
     this.imageBase64 = '';
