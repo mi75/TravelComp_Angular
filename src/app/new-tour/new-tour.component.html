@@ -62,8 +62,8 @@
                 <input type="text" formControlName="price" class="field">
                 <!-- <validator-message [field]="tourForm.get('price')"></validator-message> -->
             </div>
-          <label *ngFor="let feature of tripFeatures; let i=index;">
-            <input type="checkbox"  formControlName="cb{{i}}" checked>
+          <label formArrayName="featureCheckboxes" *ngFor="let feature of tripFeatures; let i=index;">
+            <input type="checkbox" [formControlName]="i" checked>
             <span class="pseudocheckbox">{{feature.Description}}</span>
           </label>
           <!-- <label>

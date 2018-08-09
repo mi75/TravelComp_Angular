@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, AbstractControl, FormArray  } from '@angular/forms';
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { FeedbackFormat } from "../feedback-format";
@@ -21,6 +21,12 @@ export class NewTourComponent implements OnInit {
     private apiCall: ApiCallerService,
     private _fb: FormBuilder
   ) {
+
+    this.apiCall.getData('api/trips/features').subscribe( res => {
+      this.tripFeatures = res;
+      this.tourForm.controls['featureCheckboxes'] = this._fb.array(this.createFeatureCheckboxes());
+    });
+
     this.tourForm = this._fb.group({
       program: this._fb.control('', [
         // valid.messageValidator()
@@ -41,18 +47,21 @@ export class NewTourComponent implements OnInit {
       price: this._fb.control('', [
         // valid.notEmptyValidator()
       ]),
-      cb0: this._fb.control(true),
-      cb1: this._fb.control(false),
-      cb2: this._fb.control(false),
-      cb3: this._fb.control(false),
-      cb4: this._fb.control(false)
-    });
+
+      featureCheckboxes: []
+    }); 
+
    }
 
   ngOnInit() {
-    this.apiCall.getData('api/trips/features').subscribe( res => {
-      this.tripFeatures = res;
-    });
+
+  }
+
+  createFeatureCheckboxes(): FormControl[] {
+    
+    var features = this.tripFeatures.map(c => new FormControl(false));
+    features[0].setValue(true);
+    return features;
   }
 
 // @Output() sendingNewTour = new EventEmitter();
@@ -93,11 +102,14 @@ export class NewTourComponent implements OnInit {
         newTourData.set(field, control.value);
       });
 
-      if (this.tourForm.controls.cb0.value) {this.featuresArr.push(1)};
-      if (this.tourForm.controls.cb1.value) {this.featuresArr.push(2)};
-      if (this.tourForm.controls.cb2.value) {this.featuresArr.push(3)};
-      if (this.tourForm.controls.cb3.value) {this.featuresArr.push(4)};
-      if (this.tourForm.controls.cb4.value) {this.featuresArr.push(5)};
+      var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
+
+       for (let i = 0; i < this.tripFeatures.length; i++) {
+         var feature = this.tripFeatures[i];
+         if (checkboxes[i].value){
+          this.featuresArr.push(feature["id"]);
+         }         
+       }
 
       this.apiCall.postData('api/trips/create?featureIds=' + this.featuresArr.toString(), newTourData)
       .subscribe(
