@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { FormControl, FormGroup, FormBuilder, AbstractControl, FormArray  } from '@angular/forms';
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
-import { FeedbackFormat } from "../feedback-format";
+import { tripFeaturesFormat } from "../tripfeatures-format";
 
 @Component({
   selector: 'new-tour',
@@ -12,7 +12,7 @@ import { FeedbackFormat } from "../feedback-format";
 })
 export class NewTourComponent implements OnInit {
 
-  tripFeatures:object[];
+  tripFeatures:tripFeaturesFormat[];
   public tourForm: FormGroup;
   featuresArr = [];
 
@@ -47,24 +47,19 @@ export class NewTourComponent implements OnInit {
       price: this._fb.control('', [
         // valid.notEmptyValidator()
       ]),
-
       featureCheckboxes: []
     }); 
 
    }
 
   ngOnInit() {
-
   }
 
   createFeatureCheckboxes(): FormControl[] {
-    
     var features = this.tripFeatures.map(c => new FormControl(false));
     features[0].setValue(true);
     return features;
   }
-
-// @Output() sendingNewTour = new EventEmitter();
 
   imageBase64: any;
   imageUpload(e) {
@@ -103,26 +98,28 @@ export class NewTourComponent implements OnInit {
       });
 
       var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
-
-       for (let i = 0; i < this.tripFeatures.length; i++) {
-         var feature = this.tripFeatures[i];
+      for (let i = 0; i < this.tripFeatures.length; i++) {
          if (checkboxes[i].value){
-          this.featuresArr.push(feature["id"]);
-         }         
-       }
+          this.featuresArr.push(this.tripFeatures[i].id);
+         }
+      };
+      newTourData.set('featureIds', this.featuresArr.toString());
 
-      this.apiCall.postData('api/trips/create?featureIds=' + this.featuresArr.toString(), newTourData)
+      if (!newTourData.get('featureIds')) {
+        alert('Check feature!');
+      } else {
+      this.apiCall.postData('api/trips/create', newTourData)
       .subscribe(
         success => {
           this.onSuccess();
         },
         error => {alert('Sending Error')}
       );
+      }
     }
   }
 
   onSuccess() {
-    // this.sendingNewTour.emit(this.newFeedback);
     this.tourForm.reset({
       displ: true,
         program: '',
@@ -131,11 +128,7 @@ export class NewTourComponent implements OnInit {
         startDate: '',
         finishDate: '',
         price: '',
-        cb0: true,
-        cb1: false,
-        cb2: false,
-        cb3: false,
-        cb4: false
+        featureCheckboxes: true
     });
 
     this.imageBase64 = '';

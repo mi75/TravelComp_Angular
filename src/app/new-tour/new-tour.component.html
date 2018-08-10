@@ -1,7 +1,3 @@
-<p>
-  new-tour works!
-</p>
-
 <div class="newtrip_form">
   <h2>Готовим новую поездку</h2>
   <form [formGroup]="tourForm" (ngSubmit)="sendNewTour(tourForm.value)">
@@ -35,7 +31,6 @@
                   <input type="text" formControlName="finishDate" class="field">
                   <!-- <validator-message [field]="tourForm.get('finishDate')"></validator-message> -->
               </div>
-              
           </div>
       </div>
       <div class="row">
@@ -63,21 +58,9 @@
                 <!-- <validator-message [field]="tourForm.get('price')"></validator-message> -->
             </div>
           <label formArrayName="featureCheckboxes" *ngFor="let feature of tripFeatures; let i=index;">
-            <input type="checkbox" [formControlName]="i" checked>
+            <input type="checkbox" [formControlName]="i">
             <span class="pseudocheckbox">{{feature.Description}}</span>
           </label>
-          <!-- <label>
-              <input type="checkbox"  formControlName="cb2">
-              <span class="pseudocheckbox">Проезд на комфортабельном автобусе</span>
-          </label>
-          <label>
-              <input type="checkbox"  formControlName="cb3">
-              <span class="pseudocheckbox">Проживание в 3/4* отеле</span>
-          </label>
-          <label>
-              <input type="checkbox"  formControlName="cb4">
-              <span class="pseudocheckbox">Сопровождение организатора</span>
-          </label> -->
         </div>
     </div>
       <div class="go">

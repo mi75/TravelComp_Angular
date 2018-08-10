@@ -103,7 +103,7 @@ apiRouter.route("/trips/create")
             program: req.body.program
         };
 
-        var featureIds = req.query.featureIds.split(',');
+        var featureIds = req.body.featureIds.split(',');
 
         dbOperations.addTrip(trip, featureIds, (function(err) {
         if (err) {
