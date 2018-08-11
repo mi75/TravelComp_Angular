@@ -22,9 +22,7 @@ export class AdminToursComponent implements OnInit {
   }
 
   delTrip(id, index) {
-    confirm('Are you shure?');
-    // let dataToDel = new FormData();
-    // dataToDel.set('rowId', id);
+    confirm('Уверены, что хотите удалить поездку?');
     this.load.postData('api/trips/delete?rowId=' + id, null)
       .subscribe(
         success => {

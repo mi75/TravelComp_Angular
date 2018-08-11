@@ -14,8 +14,7 @@ export class NewTourComponent implements OnInit {
 
   tripFeatures:tripFeaturesFormat[];
   public tourForm: FormGroup;
-  featuresArr = [];
-
+  
   constructor(
     private valid: CommonValidatorService,
     private apiCall: ApiCallerService,
@@ -97,13 +96,15 @@ export class NewTourComponent implements OnInit {
         newTourData.set(field, control.value);
       });
 
-      var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
+      var featuresArr = [];
+
+      var checkboxes = (this.tourForm.controls.featureCheckboxes as FormArray).controls;
       for (let i = 0; i < this.tripFeatures.length; i++) {
          if (checkboxes[i].value){
-          this.featuresArr.push(this.tripFeatures[i].id);
+          featuresArr.push(this.tripFeatures[i].id);
          }
       };
-      newTourData.set('featureIds', this.featuresArr.toString());
+      newTourData.set('featureIds', featuresArr.toString());
 
       if (!newTourData.get('featureIds')) {
         alert('Check feature!');
@@ -127,9 +128,15 @@ export class NewTourComponent implements OnInit {
         title: '',
         startDate: '',
         finishDate: '',
-        price: '',
-        featureCheckboxes: true
+        price: ''
     });
+
+    
+    var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
+    checkboxes.forEach(checkbox => {
+      checkbox.setValue(false);
+    });
+    checkboxes[0].setValue(true);
 
     this.imageBase64 = '';
     this.fileInput.nativeElement.value = '';

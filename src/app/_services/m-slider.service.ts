@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {SLIDES} from '../SLIDES';
-import { element } from 'protractor';
 import { Slide } from '../slide';
-
 import { ApiCallerService } from '../_services/api-caller.service';
 
 
@@ -18,50 +15,25 @@ export class MSliderService {
   currentSlide:number = 0;
   animation:NodeJS.Timer;
   knobs:boolean[] = [];
-
-  // public getSlides(): Slide[] {
-  //   for (let i=0; i<SLIDES.length; i++) {
-  //     if (SLIDES[i].showing) {
-  //       this.currentSlide = i;
-  //     }
-  //   }
-  //   return SLIDES;
-	// }
-
-	// public static readonly sliderPicAddr = '/assets/images/bodycmp/';
 	mainSlides:Slide[] = [];
 	
-	// public getSlides(): Slide[] {
-  //   this.load.getData('api/trips/display').subscribe( res => {
-	// 		for (let i=0; i<res.length; i++) {
-	// 			var newSlide:Slide;
-	// 			newSlide.title = res[i].title;
-	// 			if (i=0) {
-	// 				newSlide.showing = true;
-	// 			}  else {newSlide.showing = false};
-	// 			newSlide.pic = '/assets/images/bodycmp/' + res[i].picFile;
-	// 			this.mainSlides.push(newSlide);
-	// 		}
-	// 	});
-
-	// 	for (let i=0; i<this.mainSlides.length; i++) {
-  //     if (this.mainSlides[i].showing) {
-  //       this.currentSlide = i;
-  //     }
-  //   }
-  //   return this.mainSlides;
-	// }
-	
 	public getSlides(): Slide[] {
+		console.log('getSlides');
     this.load.getData('api/trips/display').subscribe( res => {
 			for (let i=0; i<res.length; i++) {
-				this.mainSlides.push(SLIDES[i]);
-				this.mainSlides[i].title = res[i].title;
-				this.mainSlides[i].pic = '/assets/images/bodycmp/' + res[i].picFile;
+				var newSlide:Slide = new Slide();
+				newSlide.title = res[i].title;
+				if (i==0) {
+					newSlide.showing = true;
+				}  else {newSlide.showing = false};
+				newSlide.pic = '/assets/images/bodycmp/' + res[i].picFile;
+				this.mainSlides.push(newSlide);
 			}
 		});
-    return this.mainSlides;
-  }
+
+		this.currentSlide = 0;
+		return this.mainSlides;
+	}
 
 	getKnobs() {
 		for (let i=0; i<this.mainSlides.length; i++) {
