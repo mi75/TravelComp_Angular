@@ -11,6 +11,7 @@
           <tr>
               <th>№</th>
               <th>title</th>
+              <th>tripName</th>
               <th>picName</th>
               <th>picFile</th>
               <th>onMain</th>
@@ -27,6 +28,7 @@
           <tr *ngFor="let tour of tours; let i=index;">
               <td>{{i+1}}</td>
               <td>{{tour.title}}</td>
+              <td>{{tour.fullTripName}}</td>
               <td>{{tour.picName}}</td>
               <td>{{tour.picFile}}</td>
               <td>{{tour.onMain}}</td>

@@ -70,6 +70,16 @@ export class CommonValidatorService {
 
   };
 
+  public titleValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+      if (!this.validator.validate(control.value, this.validator.rules.notEmpty)) {
+          return {custom: 'oтсутствует текст'};
+        } else {
+              return (this.validator.validate(control.value, this.validator.rules.charsCount, 50)) ? null : {custom: 'максимум 50 символов'};
+          }
+    };
+  }
+
   public messageValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
       if (!this.validator.validate(control.value, this.validator.rules.notEmpty)) {
@@ -116,7 +126,7 @@ export class CommonValidatorService {
 
   public notEmptyValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
-        return (control.value) ? null : {custom: 'yкажите источник'};
+        return (control.value) ? null : {custom: 'заполните поле'};
     };
   }
 

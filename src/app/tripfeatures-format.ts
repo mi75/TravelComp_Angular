@@ -1,5 +1,5 @@
 export class tripFeaturesFormat {
   id: string;
-  Description: string;
+  description: string;
   pic: string;
 }

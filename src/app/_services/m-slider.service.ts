@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Slide } from '../slide';
 import { ApiCallerService } from '../_services/api-caller.service';
+import { element } from 'protractor'; // nesessary for NodeJS.Timer
 
 
 @Injectable({

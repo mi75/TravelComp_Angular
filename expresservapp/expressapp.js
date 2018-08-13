@@ -93,11 +93,12 @@ apiRouter.route("/trips/create")
 
         var trip = {
             title: req.body.title,
+            fullTripName: req.body.fullTripName,
             picName: (!req.file) ? null : req.file.originalname,
             picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
-            startDate: req.body.start,
-            finishDate: req.body.finish,
+            startDate: req.body.startDate,
+            finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
             program: req.body.program
@@ -121,11 +122,12 @@ apiRouter.route("/trips/edit")
 
         var trip = {
             title: req.body.title,
+            fullTripName: req.body.fullTripName,
             picName: (!req.file) ? null : req.file.originalname,
             picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
-            startDate: req.body.start,
-            finishDate: req.body.finish,
+            startDate: req.body.startDate,
+            finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
             program: req.body.program

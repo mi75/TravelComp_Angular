@@ -28,14 +28,17 @@ export class NewTourComponent implements OnInit {
 
     this.tourForm = this._fb.group({
       program: this._fb.control('', [
-        // valid.messageValidator()
+        valid.messageValidator()
       ]),
       characteristics: this._fb.control('', [
-        // valid.messageValidator()
+        valid.messageValidator()
       ]),
       displ: this._fb.control(true),
       title: this._fb.control('', [
-        // valid.userNameValidator()
+        valid.titleValidator()
+      ]),
+      fullTripName: this._fb.control('', [
+        valid.messageValidator()
       ]),
       startDate: this._fb.control('', [
         // valid.mailValidator()
@@ -44,7 +47,7 @@ export class NewTourComponent implements OnInit {
         // valid.phoneValidator()
       ]),
       price: this._fb.control('', [
-        // valid.notEmptyValidator()
+        valid.notEmptyValidator()
       ]),
       featureCheckboxes: []
     }); 
@@ -107,13 +110,13 @@ export class NewTourComponent implements OnInit {
       newTourData.set('featureIds', featuresArr.toString());
 
       if (!newTourData.get('featureIds')) {
-        alert('Check feature!');
-      } else {
+        alert('Обязательно отметьте, что включено!');
+      } else { 
       this.apiCall.postData('api/trips/create', newTourData)
       .subscribe(
         success => {
           this.onSuccess();
-        },
+        }, 
         error => {alert('Sending Error')}
       );
       }
@@ -123,12 +126,13 @@ export class NewTourComponent implements OnInit {
   onSuccess() {
     this.tourForm.reset({
       displ: true,
-        program: '',
-        characteristics: '',
-        title: '',
-        startDate: '',
-        finishDate: '',
-        price: ''
+      program: '',
+      characteristics: '',
+      title: '',
+      fullTripName: '',
+      startDate: '',
+      finishDate: '',
+      price: ''
     });
 
     
