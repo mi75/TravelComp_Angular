@@ -41,10 +41,10 @@ export class NewTourComponent implements OnInit {
         valid.messageValidator()
       ]),
       startDate: this._fb.control('', [
-        // valid.mailValidator()
+        valid.notEmptyValidator()
       ]),
       finishDate: this._fb.control('', [
-        // valid.phoneValidator()
+        valid.notEmptyValidator()
       ]),
       price: this._fb.control('', [
         valid.notEmptyValidator()
@@ -92,7 +92,7 @@ export class NewTourComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    if (this.tourForm.valid) {
+    if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);

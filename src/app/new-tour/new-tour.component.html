@@ -29,12 +29,12 @@
               <div class="f-row">
                   <label for="startDate">Start date<span class="req">*</span>:</label><br />
                   <input type="date" formControlName="startDate" class="field">
-                  <!-- <validator-message [field]="tourForm.get('startDate')"></validator-message> -->
+                  <validator-message [field]="tourForm.get('startDate')"></validator-message>
               </div>
               <div class="f-row">
                   <label for="finishDate">Finish date<span class="req">*</span>:</label><br />
                   <input type="date" formControlName="finishDate" class="field">
-                  <!-- <validator-message [field]="tourForm.get('finishDate')"></validator-message> -->
+                  <validator-message [field]="tourForm.get('finishDate')"></validator-message>
               </div>
           </div>
       </div>
@@ -52,7 +52,7 @@
                 <label class="btn btn-primary" for="my-file-selector">
               <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
               (change)="imageUpload($event)">
-              New trip photo:
+              New trip photo<span class="req">*</span>:
           </label>
                 <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                 <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
@@ -62,6 +62,7 @@
                 <input type="text" formControlName="price" class="field">
                 <validator-message [field]="tourForm.get('price')"></validator-message>
             </div>
+            <p class="note">Минимум 1 опция должна быть включена:</p>
           <label formArrayName="featureCheckboxes" *ngFor="let feature of tripFeatures; let i=index;">
             <input type="checkbox" [formControlName]="i">
             <span class="pseudocheckbox">{{feature.description}}</span>
