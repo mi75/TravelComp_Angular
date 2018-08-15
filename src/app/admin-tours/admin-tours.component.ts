@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
+import { tripFormat } from "../trip-format";
 
 @Component({
   selector: 'admin-tours',
@@ -30,6 +31,10 @@ export class AdminToursComponent implements OnInit {
         },
         error => {alert('Sending Error')}
       );
+  }
+
+  insertTrip(thisTour:tripFormat) {
+    
   }
 
 }

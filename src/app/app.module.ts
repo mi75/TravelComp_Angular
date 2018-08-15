@@ -16,6 +16,7 @@ import { ValidatorMessageComponent } from './validator-message/validator-message
 import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-form.component';
 import { AdminToursComponent } from './admin-tours/admin-tours.component';
 import { NewTourComponent } from './new-tour/new-tour.component';
+import { ModalTripFormComponent } from './modal-trip-form/modal-trip-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NewTourComponent } from './new-tour/new-tour.component';
     ValidatorMessageComponent,
     ModalReviewsFormComponent,
     AdminToursComponent,
-    NewTourComponent
+    NewTourComponent,
+    ModalTripFormComponent
   ],
   imports: [
     BrowserModule,

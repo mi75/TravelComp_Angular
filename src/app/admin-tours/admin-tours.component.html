@@ -39,7 +39,13 @@
               <td>{{tour.program}}</td>
               <td>{{tour.features}}</td>
               <input type="button" (click)="delTrip(tour.id, i)" value="del"/>
+              <input type="button" (click)="modal.show(tour.id, i)" value="edit"/>
           </tr>
       </tbody>
   </table>
 </div>
+
+<!-- Modal -->
+<modal-trip-form #modal (sendingTrip)="insertTrip( $event )">
+
+</modal-trip-form>
