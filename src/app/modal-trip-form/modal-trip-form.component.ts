@@ -69,8 +69,14 @@ export class ModalTripFormComponent implements OnInit {
     setTimeout(() => this.visibleAnimate = true, 100);
     document.body.className += ' modal-open';
 
-    console.log(this.thisTour.title);
-    // this.tourForm.setValue({title: this.thisTour.title});
+    this.tourForm.controls['program'].setValue(this.thisTour.program);
+    this.tourForm.controls['characteristics'].setValue(this.thisTour.characteristics);
+    this.tourForm.controls['title'].setValue(this.thisTour.title);
+    this.tourForm.controls['fullTripName'].setValue(this.thisTour.fullTripName);
+    this.tourForm.controls['startDate'].setValue(this.thisTour.startDate);
+    this.tourForm.controls['finishDate'].setValue(this.thisTour.finishDate);
+    this.tourForm.controls['price'].setValue(this.thisTour.price);
+    
   }
 
   public hide(): void {
@@ -125,9 +131,13 @@ export class ModalTripFormComponent implements OnInit {
 
     if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
-      // this.thisTour.id = this.editedTripId;
       this.thisTour.title = this.tourForm.get('title').value;
       this.thisTour.fullTripName = this.tourForm.get('fullTripName').value;
+      this.thisTour.program = this.tourForm.get('program').value;
+      this.thisTour.characteristics = this.tourForm.get('characteristics').value;
+      this.thisTour.startDate = this.tourForm.get('startDate').value;
+      this.thisTour.finishDate = this.tourForm.get('finishDate').value;
+      this.thisTour.price = this.tourForm.get('price').value;
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
