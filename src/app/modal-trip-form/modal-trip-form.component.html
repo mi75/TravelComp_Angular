@@ -3,7 +3,7 @@
       <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" (click)="hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">New trip edition</h4>
+              <h4 class="modal-title" id="myModalLabel">Trip edition</h4>
           </div>
           <div class="modal-body">
             <form [formGroup]="tourForm" (ngSubmit)="sendNewTour(tourForm.value)">
@@ -75,9 +75,9 @@
                   </label>
                 </div>
             </div>
-              <div class="go">
+              <!-- <div class="go">
                   <button type="submit" class="go-button">SUBMIT</button>
-              </div>
+              </div> -->
           </form>
           </div>
           <div class="modal-footer">

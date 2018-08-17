@@ -61,10 +61,16 @@ export class ModalTripFormComponent implements OnInit {
   public visible = false;
   public visibleAnimate = false;
 
-  public show(id, index): void {
+  public thisTour:tripFormat = new tripFormat();
+
+  public show(tourForEdit): void {
+    this.thisTour = tourForEdit;
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
     document.body.className += ' modal-open';
+
+    console.log(this.thisTour.title);
+    // this.tourForm.setValue({title: this.thisTour.title});
   }
 
   public hide(): void {
@@ -100,7 +106,7 @@ export class ModalTripFormComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  public thisTour:tripFormat = new tripFormat();
+  
 
   sendThisTour(): void {
 
@@ -119,6 +125,7 @@ export class ModalTripFormComponent implements OnInit {
 
     if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
+      // this.thisTour.id = this.editedTripId;
       this.thisTour.title = this.tourForm.get('title').value;
       this.thisTour.fullTripName = this.tourForm.get('fullTripName').value;
 

@@ -10,7 +10,7 @@ import { tripFormat } from "../trip-format";
 })
 export class AdminToursComponent implements OnInit {
 
-  tours:object[];
+  tours:tripFormat[];
 
   constructor(
     private load: ApiCallerService
@@ -34,7 +34,12 @@ export class AdminToursComponent implements OnInit {
   }
 
   insertTrip(thisTour:tripFormat) {
-    
+    // console.log(thisTour);
+    for (let i=0; i<this.tours.length; i++) {
+      if (this.tours[i].id == thisTour.id) {
+        this.tours[i] = thisTour;
+      };
+    };
   }
 
 }
