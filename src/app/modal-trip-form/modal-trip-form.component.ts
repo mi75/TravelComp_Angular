@@ -33,7 +33,7 @@ export class ModalTripFormComponent implements OnInit {
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control(true),
+      displ: this._fb.control(false),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -131,6 +131,7 @@ export class ModalTripFormComponent implements OnInit {
 
     if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
+      this.thisTour.onMain = this.tourForm.get('displ').value;
       this.thisTour.title = this.tourForm.get('title').value;
       this.thisTour.fullTripName = this.tourForm.get('fullTripName').value;
       this.thisTour.program = this.tourForm.get('program').value;
@@ -138,6 +139,7 @@ export class ModalTripFormComponent implements OnInit {
       this.thisTour.startDate = this.tourForm.get('startDate').value;
       this.thisTour.finishDate = this.tourForm.get('finishDate').value;
       this.thisTour.price = this.tourForm.get('price').value;
+      this.thisTour.picName = fi.files[0].name;
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -157,6 +159,10 @@ export class ModalTripFormComponent implements OnInit {
       if (!newTourData.get('featureIds')) {
         alert('Обязательно отметьте, что включено!');
       } else { 
+        
+        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
+          alert('Для публиикации на сайте необходима картинка!');
+        } else { 
         // this.apiCall.postData('api/trips/edit?rowId=' + id, newTourData)
         // .subscribe(
         //   success => {
@@ -165,6 +171,7 @@ export class ModalTripFormComponent implements OnInit {
         //   error => {alert('Sending Error')}
         // );
         this.onSuccess();
+        }
       }
     }
   }
@@ -191,6 +198,8 @@ export class ModalTripFormComponent implements OnInit {
 
     this.imageBase64 = '';
     this.fileInput.nativeElement.value = '';
+
+    this.hide();
   }
 
 

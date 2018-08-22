@@ -33,7 +33,7 @@ export class NewTourComponent implements OnInit {
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control(true),
+      displ: this._fb.control(false),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -112,15 +112,19 @@ export class NewTourComponent implements OnInit {
       if (!newTourData.get('featureIds')) {
         alert('Обязательно отметьте, что включено!');
       } else { 
-      this.apiCall.postData('api/trips/create', newTourData)
-      .subscribe(
-        success => {
-          this.onSuccess();
-        }, 
-        error => {alert('Sending Error')}
-      );
+        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
+          alert('Для публиикации на сайте необходима картинка!');
+        } else { 
+          this.apiCall.postData('api/trips/create', newTourData)
+          .subscribe(
+            success => {
+              this.onSuccess();
+            }, 
+            error => {alert('Sending Error')} 
+          );
+        }
       }
-    }
+    } 
   }
 
   onSuccess() {
