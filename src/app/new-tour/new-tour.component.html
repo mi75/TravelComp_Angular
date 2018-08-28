@@ -55,7 +55,7 @@
               New trip photo<span class="req">*</span>:
           </label>
                 <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
-                <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
+                <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
             </div>
             <div class="f-row">
                 <label for="price">Trip's price<span class="req">*</span>:</label><br />

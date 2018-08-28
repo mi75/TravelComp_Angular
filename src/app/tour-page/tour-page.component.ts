@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'tour-page',
@@ -7,13 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TourPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) {}
 
+  private id: string;
+  
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('tourId');
+    console.log("id = " + this.id);
   }
 
-  getTrip(title) {
-    alert(title);
-  }
+  
 
 }

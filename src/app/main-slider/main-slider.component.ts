@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MSliderService } from '../_services/m-slider.service';
 import { Slide } from '../slide';
 
@@ -30,10 +30,5 @@ export class MainSliderComponent implements OnInit, OnDestroy {
     this.sls.goToPic(p);
   }
 
-  @Output() showTrip = new EventEmitter();
-
-  goToTrip(title) {
-    this.showTrip.emit(title);
-  }
 
 }

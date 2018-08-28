@@ -63,7 +63,7 @@ import { TourPageComponent } from './tour-page/tour-page.component';
         component: NewTourComponent
       },
       {
-        path: 'tourpage',
+        path: 'tourpage/:tourId',
         component: TourPageComponent
       }
     ])

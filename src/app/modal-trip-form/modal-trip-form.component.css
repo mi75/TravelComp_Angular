@@ -150,7 +150,7 @@ form .field {
     color: red;
 }
 
-/* .customer-photo {
+.preview-photo {
     float: left;
-    width: 27%;
-} */
+    max-width: 100px;
+}

@@ -11,4 +11,5 @@ export class tripFormat {
   characteristics: string;
   program: string;
   features: string;
+  selectedFeatures: string;
 }

@@ -6,7 +6,7 @@
               <h4 class="modal-title" id="myModalLabel">Trip edition</h4>
           </div>
           <div class="modal-body">
-            <form [formGroup]="tourForm" (ngSubmit)="sendNewTour(tourForm.value)">
+            <form [formGroup]="tourForm">
               <p class="note"><span class="req">*</span> Для публиикации на сайте поля со звездочкой должны быть заполнены</p>
               <div class="row">
                   <div class="col-sm-0 col-md-2"></div>
@@ -61,7 +61,7 @@
                       New trip photo<span class="req">*</span>:
                   </label>
                         <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
-                        <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
+                        <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
                     </div>
                     <div class="f-row">
                         <label for="price">Trip's price<span class="req">*</span>:</label><br />

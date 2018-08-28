@@ -19,10 +19,10 @@ export class MSliderService {
 	mainSlides:Slide[] = [];
 	
 	public getSlides(): Slide[] {
-		console.log('getSlides');
     this.load.getData('api/trips/display').subscribe( res => {
 			for (let i=0; i<res.length; i++) {
 				var newSlide:Slide = new Slide();
+				newSlide.id = res[i].id;
 				newSlide.title = res[i].title;
 				if (i==0) {
 					newSlide.showing = true;

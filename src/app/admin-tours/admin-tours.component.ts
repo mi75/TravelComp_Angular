@@ -17,9 +17,7 @@ export class AdminToursComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.load.getData('api/trips/all').subscribe( res => {
-      this.tours = res;
-    });
+    this.reloadTrips();
   }
 
   delTrip(id, index) {
@@ -33,13 +31,10 @@ export class AdminToursComponent implements OnInit {
       );
   }
 
-  insertTrip(thisTour:tripFormat) {
-    // console.log(thisTour);
-    for (let i=0; i<this.tours.length; i++) {
-      if (this.tours[i].id == thisTour.id) {
-        this.tours[i] = thisTour;
-      };
-    };
+  reloadTrips() {
+    this.load.getData('api/trips/all').subscribe( res => {
+      this.tours = res;
+    });
   }
 
 }

@@ -133,8 +133,8 @@ apiRouter.route("/trips/edit")
             program: req.body.program
         };
 
-        var editTripId = parseInt(req.query.rowId);
-        var featureIds = req.query.featureIds.split(',');
+        var editTripId = req.body.id;
+        var featureIds = req.body.featureIds.split(',');
 
         dbOperations.writeTripAfterEdit(trip, editTripId, featureIds, (function(err) {
         if (err) {

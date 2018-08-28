@@ -4,6 +4,7 @@ import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
 import { tripFormat } from "../trip-format";
+import { isRegExp } from 'util';
 
 @Component({
   selector: 'modal-trip-form',
@@ -60,22 +61,50 @@ export class ModalTripFormComponent implements OnInit {
   
   public visible = false;
   public visibleAnimate = false;
+  private editionTourId;
+  
 
-  public thisTour:tripFormat = new tripFormat();
+  public show(tourForEdit : tripFormat): void {
 
-  public show(tourForEdit): void {
-    this.thisTour = tourForEdit;
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
     document.body.className += ' modal-open';
 
-    this.tourForm.controls['program'].setValue(this.thisTour.program);
-    this.tourForm.controls['characteristics'].setValue(this.thisTour.characteristics);
-    this.tourForm.controls['title'].setValue(this.thisTour.title);
-    this.tourForm.controls['fullTripName'].setValue(this.thisTour.fullTripName);
-    this.tourForm.controls['startDate'].setValue(this.thisTour.startDate);
-    this.tourForm.controls['finishDate'].setValue(this.thisTour.finishDate);
-    this.tourForm.controls['price'].setValue(this.thisTour.price);
+    this.editionTourId = tourForEdit.id;
+
+    this.tourForm.controls['program'].setValue(tourForEdit.program);
+    this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
+    this.tourForm.controls['title'].setValue(tourForEdit.title);
+    this.tourForm.controls['fullTripName'].setValue(tourForEdit.fullTripName);
+    this.tourForm.controls['startDate'].setValue(tourForEdit.startDate);
+    this.tourForm.controls['finishDate'].setValue(tourForEdit.finishDate);
+    this.tourForm.controls['price'].setValue(tourForEdit.price);
+
+    // this.fileInput.nativeElement.value = tourForEdit.picFile;
+
+    var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
+    // var i=0;
+    // this.tripFeatures.forEach(feature => {
+    //   if (tourForEdit.selectedFeatures.contains(feature.id)){
+    //     checkboxes[i++].setValue(true);
+    //   }
+    // });
+
+    function contains(arr, element) {
+      for (var i = 0; i < arr.length; i++) {
+          if (arr[i] == element) {
+              return true;
+          }
+      }
+      return false;
+    }
+
+    this.tripFeatures.forEach(feature => {
+      if (contains(tourForEdit.selectedFeatures.split(','), feature.id)){
+        let i:any = feature.id;
+        checkboxes[i-1].setValue(true);
+      }
+    });
     
   }
 
@@ -94,7 +123,6 @@ export class ModalTripFormComponent implements OnInit {
 
   createFeatureCheckboxes(): FormControl[] {
     var features = this.tripFeatures.map(c => new FormControl(false));
-    features[0].setValue(true);
     return features;
   }
 
@@ -117,6 +145,7 @@ export class ModalTripFormComponent implements OnInit {
   sendThisTour(): void {
 
     let newTourData = new FormData();
+    newTourData.set('id', this.editionTourId);
 
     let fi = this.fileInput.nativeElement;
     if (fi.files && fi.files[0]) {
@@ -130,16 +159,6 @@ export class ModalTripFormComponent implements OnInit {
     });
 
     if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
-
-      this.thisTour.onMain = this.tourForm.get('displ').value;
-      this.thisTour.title = this.tourForm.get('title').value;
-      this.thisTour.fullTripName = this.tourForm.get('fullTripName').value;
-      this.thisTour.program = this.tourForm.get('program').value;
-      this.thisTour.characteristics = this.tourForm.get('characteristics').value;
-      this.thisTour.startDate = this.tourForm.get('startDate').value;
-      this.thisTour.finishDate = this.tourForm.get('finishDate').value;
-      this.thisTour.price = this.tourForm.get('price').value;
-      this.thisTour.picName = fi.files[0].name;
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -162,14 +181,14 @@ export class ModalTripFormComponent implements OnInit {
         
         if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
           alert('Для публиикации на сайте необходима картинка!');
-        } else { 
-        // this.apiCall.postData('api/trips/edit?rowId=' + id, newTourData)
-        // .subscribe(
-        //   success => {
-        //     this.onSuccess();
-        //   }, 
-        //   error => {alert('Sending Error')}
-        // );
+        } else {
+        this.apiCall.postData('api/trips/edit', newTourData)
+        .subscribe(
+          success => {
+            this.onSuccess();
+          }, 
+          error => {alert('Sending Error')}
+        );
         this.onSuccess();
         }
       }
@@ -177,7 +196,7 @@ export class ModalTripFormComponent implements OnInit {
   }
 
   onSuccess() {
-    this.sendingTrip.emit(this.thisTour);
+    this.sendingTrip.emit();
 
     this.tourForm.reset({
       displ: true,
