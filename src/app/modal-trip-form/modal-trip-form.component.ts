@@ -72,6 +72,7 @@ export class ModalTripFormComponent implements OnInit {
 
     this.editionTourId = tourForEdit.id;
 
+    this.tourForm.controls['displ'].setValue(tourForEdit.onMain);
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
     this.tourForm.controls['title'].setValue(tourForEdit.title);
@@ -199,7 +200,7 @@ export class ModalTripFormComponent implements OnInit {
     this.sendingTrip.emit();
 
     this.tourForm.reset({
-      displ: true,
+      displ: false,
       program: '',
       characteristics: '',
       title: '',
