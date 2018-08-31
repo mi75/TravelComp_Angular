@@ -1,5 +1,11 @@
-
+<!-- <div class="bigboard" *ngFor="let tour of tours" [style.background-image]="'url('/assets/images/bodycmp/' + ' + tour.picFile + ')'"> -->
+<div *ngIf="loaded" class="bigboard" [style.background-image]="'url(/assets/images/bodycmp/' + tour.picFile + ')'">
 <p>
-  tour-page works! {{id}}
+  tour-page works! {{tour.title}}
 </p>
-
+<h3>{{tour.fullTripName}}</h3>
+</div>
+<div *ngFor="let feature of features; let i=index;">{{feature}}</div>
+<div *ngFor="let featuresPic of featuresPics; let i=index;">
+    <img [src]="'/assets/images/bodycmp/' + featuresPic" />
+</div>

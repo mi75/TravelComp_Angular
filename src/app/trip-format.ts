@@ -13,3 +13,7 @@ export class tripFormat {
   features: string;
   selectedFeatures: string;
 }
+
+export class tripFormatFull extends tripFormat{
+  featuresPics: string;
+}

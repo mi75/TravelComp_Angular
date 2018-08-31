@@ -104,11 +104,11 @@ module.exports = {
         });
     },
 
-    readTripForEdit: function(editRowId, callback) {
-        connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.id) AS features\
+    readTripToPage: function(tripId, callback) {
+        connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.description) AS features, GROUP_CONCAT(trip_features_1.pic) AS featuresPics\
                         FROM trips_1 JOIN trips_trip_features_1 ON trips_1.id=trips_trip_features_1.trip_id\
                         JOIN trip_features_1 ON trips_trip_features_1.feature_id=trip_features_1.id WHERE trips_1.id = ?\
-                        GROUP BY trips_1.id', editRowId, function(err, result) {
+                        GROUP BY trips_1.id', tripId, function(err, result) {
             if (err) {
                 callback(err, null);
             } else {

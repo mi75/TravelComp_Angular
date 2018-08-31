@@ -1,24 +1,53 @@
-import { Input, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ApiCallerService } from '../_services/api-caller.service';
+import { tripFormatFull } from "../trip-format";
 
 @Component({
   selector: 'tour-page',
   templateUrl: './tour-page.component.html',
-  styleUrls: ['./tour-page.component.css']
+  styleUrls: ['./tour-page.component.css'],
+  providers: [ApiCallerService]
 })
+
 export class TourPageComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute
-  ) {}
+  tour:tripFormatFull = new tripFormatFull();
+  loaded: boolean = false;
+  features:string[];
+  featuresPics:string[];
 
-  private id: string;
+  constructor(
+    private route: ActivatedRoute,
+    private load: ApiCallerService
+  ) {}
+  
   
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('tourId');
-    console.log("id = " + this.id);
+
+        let selectedTour = this.route.snapshot.paramMap.get('tourId');
+    this.load.getData('api/trips/tourPage?tripId=' + selectedTour).subscribe( res => {
+      this.tour = res[0];
+      this.features = res[0].features.split(',');
+      this.featuresPics = res[0].featuresPics.split(',');
+      this.loaded = true;
+    });
+
+    // GET tourPage by tripId
+
+    // var key = "tour" + tripId;
+    // if (Cache.ContainsKey()){ //tour16
+    //   return Cache.Get(key);
+    // } else {
+    //   var trip = DBOperations.Get....;
+    //   Cache.Set(key, trip);
+    //   return trip;
+    // }
+
+    // /////////////
+    // Edit trip.
+    // Cache.invalidate(key);
+
   }
-
-  
-
 }
+

@@ -65,7 +65,7 @@ export class ModalTripFormComponent implements OnInit {
   
 
   public show(tourForEdit : tripFormat): void {
-
+  
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
     document.body.className += ' modal-open';
@@ -81,7 +81,7 @@ export class ModalTripFormComponent implements OnInit {
     this.tourForm.controls['finishDate'].setValue(tourForEdit.finishDate);
     this.tourForm.controls['price'].setValue(tourForEdit.price);
 
-    // this.fileInput.nativeElement.value = tourForEdit.picFile;
+    // this.fileInput.nativeElement.files[0] = tourForEdit.picFile;
 
     var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
     // var i=0;
@@ -101,9 +101,11 @@ export class ModalTripFormComponent implements OnInit {
     }
 
     this.tripFeatures.forEach(feature => {
+      let i:any = feature.id;
       if (contains(tourForEdit.selectedFeatures.split(','), feature.id)){
-        let i:any = feature.id;
         checkboxes[i-1].setValue(true);
+      } else {
+        checkboxes[i-1].setValue(false);
       }
     });
     

@@ -59,10 +59,10 @@ apiRouter.route("/trips/all")
         });
     });
 
-apiRouter.route("/trips/edit")
+apiRouter.route("/trips/tourPage")
     .get(function(req, res) {
-        var editRowId = parseInt(req.query.rowId);
-        dbOperations.readTripForEdit(editRowId, function(err, result) {
+        var tripId = parseInt(req.query.tripId);
+        dbOperations.readTripToPage(tripId, function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
