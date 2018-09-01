@@ -18,6 +18,7 @@ import { AdminToursComponent } from './admin-tours/admin-tours.component';
 import { NewTourComponent } from './new-tour/new-tour.component';
 import { ModalTripFormComponent } from './modal-trip-form/modal-trip-form.component';
 import { TourPageComponent } from './tour-page/tour-page.component';
+import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TourPageComponent } from './tour-page/tour-page.component';
     AdminToursComponent,
     NewTourComponent,
     ModalTripFormComponent,
-    TourPageComponent
+    TourPageComponent,
+    TripsFeaturesListComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,10 @@ import { TourPageComponent } from './tour-page/tour-page.component';
       {
         path: 'tourpage/:tourId',
         component: TourPageComponent
+      },
+      {
+        path: 'featureslist',
+        component: TripsFeaturesListComponent
       }
     ])
   ],

@@ -1,0 +1,36 @@
+<p>
+  Trip's feature's listing:
+</p>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-striped table-bordered table-hover">
+      <caption>
+          It is all features
+      </caption>
+      <thead>
+          <tr>
+              <th>№</th>
+              <th>feature</th>
+              <th>picName</th>
+              <th>pic</th>
+              <th>CRUD</th>
+          </tr>
+      </thead>
+      <tbody id='dbtab'>
+          <tr *ngFor="let feature of features; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{feature.title}}</td>
+              <td>{{feature.picName}}</td>
+              <td>{{Base64pic}}</td>
+              <input type="button" (click)="delFeature(feature.id, i)" value="del"/>
+              <input type="button" (click)="modal.show(feature)" value="edit"/>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<modal-feature-form #modal (sendingFeature)="reloadFeatures()">
+
+</modal-feature-form>
+
