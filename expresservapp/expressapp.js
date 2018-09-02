@@ -59,6 +59,20 @@ apiRouter.route("/trips/all")
         });
     });
 
+apiRouter.route("/trips/allfeatures")
+    .get(function(req, res) {
+        dbOperations.readTripsFeaturesForAdmin(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
 apiRouter.route("/trips/tourPage")
     .get(function(req, res) {
         var tripId = parseInt(req.query.tripId);

@@ -2,6 +2,10 @@
   Trip's feature's listing:
 </p>
 
+<div>
+    <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/newfeature">+Добавить стандартную услугу</button>
+</div>
+
 <div class="table-responsive">
   <table class="table table-condensed table-striped table-bordered table-hover">
       <caption>
@@ -19,18 +23,18 @@
       <tbody id='dbtab'>
           <tr *ngFor="let feature of features; let i=index;">
               <td>{{i+1}}</td>
-              <td>{{feature.title}}</td>
-              <td>{{feature.picName}}</td>
-              <td>{{Base64pic}}</td>
-              <input type="button" (click)="delFeature(feature.id, i)" value="del"/>
-              <input type="button" (click)="modal.show(feature)" value="edit"/>
+              <td>{{feature.description}}</td>
+              <td>{{feature.pic}}</td>
+              <td><img [src]="'/assets/images/bodycmp/' + feature.pic" /></td>
+              <!-- <input type="button" (click)="delFeature(feature.id, i)" value="del"/>
+              <input type="button" (click)="modal.show(feature)" value="edit"/> -->
           </tr>
       </tbody>
   </table>
 </div>
 
 <!-- Modal -->
-<modal-feature-form #modal (sendingFeature)="reloadFeatures()">
+<!-- <modal-feature-form #modal (sendingFeature)="reloadFeatures()">
 
-</modal-feature-form>
+</modal-feature-form> -->
 

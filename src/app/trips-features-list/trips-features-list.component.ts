@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
-import { tripFormat } from "../trip-format";
+import { tripFeaturesFormat } from "../tripfeatures-format";
 
 @Component({
   selector: 'trips-features-list',
@@ -10,14 +10,14 @@ import { tripFormat } from "../trip-format";
 })
 export class TripsFeaturesListComponent implements OnInit {
 
-  tours:tripFormat[];
+  features:tripFeaturesFormat[];
 
   constructor(
     private load: ApiCallerService
   ) { }
 
   ngOnInit() {
-    this.reloadTrips();
+    this.reloadFeatures();
   }
 
   // delTrip(id, index) {
@@ -25,15 +25,15 @@ export class TripsFeaturesListComponent implements OnInit {
   //   this.load.postData('api/trips/delete?rowId=' + id, null)
   //     .subscribe(
   //       success => {
-  //         this.tours.splice(index, 1);
+  //         this.features.splice(index, 1);
   //       },
   //       error => {alert('Sending Error')}
   //     );
   // }
 
-  reloadTrips() {
-    this.load.getData('api/trips/all').subscribe( res => {
-      this.tours = res;
+  reloadFeatures() {
+    this.load.getData('api/trips/allfeatures').subscribe( res => {
+      this.features = res;
     });
   }
 

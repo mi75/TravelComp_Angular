@@ -19,6 +19,7 @@ import { NewTourComponent } from './new-tour/new-tour.component';
 import { ModalTripFormComponent } from './modal-trip-form/modal-trip-form.component';
 import { TourPageComponent } from './tour-page/tour-page.component';
 import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
+import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TripsFeaturesListComponent } from './trips-features-list/trips-features
     NewTourComponent,
     ModalTripFormComponent,
     TourPageComponent,
-    TripsFeaturesListComponent
+    TripsFeaturesListComponent,
+    NewToursFeatureComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,10 @@ import { TripsFeaturesListComponent } from './trips-features-list/trips-features
       {
         path: 'featureslist',
         component: TripsFeaturesListComponent
+      },
+      {
+        path: 'newfeature',
+        component: NewToursFeatureComponent
       }
     ])
   ],

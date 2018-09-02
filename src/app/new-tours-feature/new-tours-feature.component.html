@@ -1,0 +1,29 @@
+<div class="newtrip_form">
+    <h2>Готовим новую поездку</h2>
+    <form [formGroup]="tourForm" (ngSubmit)="sendNewTour(tourForm.value)">
+        <p class="note"><span class="req">*</span> Для публиикации на сайте поля со звездочкой должны быть заполнены</p>
+        <div class="row">
+            <div class="col-sm-0 col-md-2"></div>
+            <div class="col-sm-6 col-md-4">
+                <div class="f-row">
+                    <label for="title">Full trip name<span class="req">*</span>:</label><br />
+                    <input type="text" formControlName="fullTripName" class="field">
+                    <validator-message [field]="tourForm.get('fullTripName')"></validator-message>
+                </div>
+                <div class="f-row">
+                    <label class="btn btn-primary" for="my-file-selector">
+                    <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                    (change)="imageUpload($event)">
+                    New trip photo<span class="req">*</span>:
+                    </label>
+                    <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
+                    <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
+                </div>
+                </div>
+                </div>
+                <div class="go">
+                    <button type="submit" class="go-button">SUBMIT</button>
+                </div>
+                </form>
+                </div>
+
