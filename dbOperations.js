@@ -201,7 +201,18 @@ module.exports = {
             });
             }
         });
+    },
+
+    addTripsFeature: function(feature, callback) {
+        connection.query('INSERT INTO trip_features_1 SET ?', feature, function(err, result) {
+            if (err) {
+                callback(err);
+            }  else{
+                callback();
+            }
+        });
     }
+
 }
 
 // insertion's data: console.log(query.sql);

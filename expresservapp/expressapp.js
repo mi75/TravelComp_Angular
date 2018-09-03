@@ -131,6 +131,26 @@ apiRouter.route("/trips/create")
         }));
     });
 
+apiRouter.route("/trips/createtripsfeature")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var feature = {
+            description: req.body.featureName,
+            // picName: (!req.file) ? null : req.file.originalname,
+            pic: (!req.file) ? null : req.file.filename
+        };
+
+        dbOperations.addTripsFeature(feature, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
 apiRouter.route("/trips/edit")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
