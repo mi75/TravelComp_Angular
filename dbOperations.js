@@ -104,16 +104,6 @@ module.exports = {
         });
     },
 
-    readTripsFeaturesForAdmin: function(callback) {
-        connection.query('SELECT * FROM trip_features_1', function(err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, result);
-            }
-        });
-    },
-
     readTripToPage: function(tripId, callback) {
         connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.description) AS features, GROUP_CONCAT(trip_features_1.pic) AS featuresPics\
                         FROM trips_1 JOIN trips_trip_features_1 ON trips_1.id=trips_trip_features_1.trip_id\

@@ -11,6 +11,7 @@ import { tripFeaturesFormat } from "../tripfeatures-format";
 export class TripsFeaturesListComponent implements OnInit {
 
   features:tripFeaturesFormat[];
+  getImgPath:string = ApiCallerService.webAdddr + 'api/images?useBodyPath=true&id=';
 
   constructor(
     private load: ApiCallerService
@@ -32,7 +33,7 @@ export class TripsFeaturesListComponent implements OnInit {
   // }
 
   reloadFeatures() {
-    this.load.getData('api/trips/allfeatures').subscribe( res => {
+    this.load.getData('api/trips/features').subscribe( res => {
       this.features = res;
     });
   }

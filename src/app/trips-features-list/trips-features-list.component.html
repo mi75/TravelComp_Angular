@@ -25,7 +25,7 @@
               <td>{{i+1}}</td>
               <td>{{feature.description}}</td>
               <td>{{feature.pic}}</td>
-              <td><img [src]="'/assets/images/bodycmp/' + feature.pic" /></td>
+              <td><img [src]="getImgPath + feature.pic" /></td>
               <!-- <input type="button" (click)="delFeature(feature.id, i)" value="del"/>
               <input type="button" (click)="modal.show(feature)" value="edit"/> -->
           </tr>

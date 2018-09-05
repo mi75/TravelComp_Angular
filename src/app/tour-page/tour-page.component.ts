@@ -16,6 +16,7 @@ export class TourPageComponent implements OnInit {
   loaded: boolean = false;
   features:string[];
   featuresPics:string[];
+  getImgPath:string = ApiCallerService.webAdddr + 'api/images?useBodyPath=true&id=';
 
   constructor(
     private route: ActivatedRoute,

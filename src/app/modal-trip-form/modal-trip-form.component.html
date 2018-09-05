@@ -58,7 +58,7 @@
                         <label class="btn btn-primary" for="my-file-selector">
                       <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
                       (change)="imageUpload($event)">
-                      New trip photo<span class="req">*</span>:
+                      +Изменить картинку?
                   </label>
                         <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                         <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />

@@ -16,7 +16,7 @@ export class MSliderService {
   currentSlide:number = 0;
   animation:NodeJS.Timer;
   knobs:boolean[] = [];
-	mainSlides:Slide[] = [];
+  mainSlides:Slide[] = [];
 	
 	public getSlides(): Slide[] {
     this.load.getData('api/trips/display').subscribe( res => {
@@ -27,12 +27,15 @@ export class MSliderService {
 				if (i==0) {
 					newSlide.showing = true;
 				}  else {newSlide.showing = false};
-				newSlide.pic = '/assets/images/bodycmp/' + res[i].picFile;
+				newSlide.pic = res[i].picFile;
 				this.mainSlides.push(newSlide);
 			}
+			
+			this.getKnobs();
 		});
 
 		this.currentSlide = 0;
+		
 		return this.mainSlides;
 	}
 

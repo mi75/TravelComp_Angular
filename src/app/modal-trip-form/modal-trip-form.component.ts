@@ -182,9 +182,6 @@ export class ModalTripFormComponent implements OnInit {
         alert('Обязательно отметьте, что включено!');
       } else { 
         
-        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
-          alert('Для публиикации на сайте необходима картинка!');
-        } else {
         this.apiCall.postData('api/trips/edit', newTourData)
         .subscribe(
           success => {
@@ -193,7 +190,6 @@ export class ModalTripFormComponent implements OnInit {
           error => {alert('Sending Error')}
         );
         this.onSuccess();
-        }
       }
     }
   }

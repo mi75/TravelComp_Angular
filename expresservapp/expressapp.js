@@ -59,20 +59,6 @@ apiRouter.route("/trips/all")
         });
     });
 
-apiRouter.route("/trips/allfeatures")
-    .get(function(req, res) {
-        dbOperations.readTripsFeaturesForAdmin(function(err, result) {
-            if (err) {
-                res.status(500);
-                res.send(err.sqlMessage);
-            } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
-            }
-        });
-    });
-
 apiRouter.route("/trips/tourPage")
     .get(function(req, res) {
         var tripId = parseInt(req.query.tripId);
@@ -157,8 +143,6 @@ apiRouter.route("/trips/edit")
         var trip = {
             title: req.body.title,
             fullTripName: req.body.fullTripName,
-            picName: (!req.file) ? null : req.file.originalname,
-            picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
             startDate: req.body.startDate,
             finishDate: req.body.finishDate,
@@ -166,6 +150,11 @@ apiRouter.route("/trips/edit")
             characteristics: req.body.characteristics,
             program: req.body.program
         };
+
+        if (req.file){
+            trip.picFile = req.file.filename;
+            trip.picName =  req.file.originalname;
+        }        
 
         var editTripId = req.body.id;
         var featureIds = req.body.featureIds.split(',');
@@ -255,7 +244,9 @@ apiRouter.route("/feedback")
 
 apiRouter.route("/images")
     .get(function(req, res) {
-        var targetFileName = __dirname + "/../src/assets/images/upload/" + req.query.id;
+        
+        var targetFileName = __dirname + ( req.query.useBodyPath ? "/../src/assets/images/bodycmp/" : "/../src/assets/images/upload/")  + req.query.id;
+
         if (fs.existsSync(targetFileName)) {
             var data = fs.readFileSync(targetFileName);
             res.status(200, {});
