@@ -17,22 +17,22 @@
                   <span class="pseudocheckbox">Показывать на сайте?</span>
                 </label>
               <div class="f-row">
-                  <label for="title">Trip title<span class="req">*</span>:</label><br />
+                  <label for="title">Заглавие тура<span class="req">*</span>:</label><br />
                   <input type="text" formControlName="title" class="field">
                   <validator-message [field]="tourForm.get('title')"></validator-message>
               </div>
               <div class="f-row">
-                <label for="title">Full trip name<span class="req">*</span>:</label><br />
+                <label for="title">Полное название поездки<span class="req">*</span>:</label><br />
                 <input type="text" formControlName="fullTripName" class="field">
                 <validator-message [field]="tourForm.get('fullTripName')"></validator-message>
             </div>
               <div class="f-row">
-                  <label for="startDate">Start date<span class="req">*</span>:</label><br />
+                  <label for="startDate">дата отъезда<span class="req">*</span>:</label><br />
                   <input type="date" formControlName="startDate" class="field">
                   <validator-message [field]="tourForm.get('startDate')"></validator-message>
               </div>
               <div class="f-row">
-                  <label for="finishDate">Finish date<span class="req">*</span>:</label><br />
+                  <label for="finishDate">дата возвращения<span class="req">*</span>:</label><br />
                   <input type="date" formControlName="finishDate" class="field">
                   <validator-message [field]="tourForm.get('finishDate')"></validator-message>
               </div>
@@ -52,13 +52,13 @@
                 <label class="btn btn-primary" for="my-file-selector">
               <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
               (change)="imageUpload($event)">
-              New trip photo<span class="req">*</span>:
+              Главная картинка тура<span class="req">*</span>:
           </label>
                 <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                 <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
             </div>
             <div class="f-row">
-                <label for="price">Trip's price<span class="req">*</span>:</label><br />
+                <label for="price">Цена тура<span class="req">*</span>:</label><br />
                 <input type="text" formControlName="price" class="field">
                 <validator-message [field]="tourForm.get('price')"></validator-message>
             </div>
@@ -70,7 +70,7 @@
         </div>
     </div>
       <div class="go">
-          <button type="submit" class="go-button">SUBMIT</button>
+          <button type="submit" class="go-button">СОХРАНИТЬ</button>
       </div>
   </form>
 </div>

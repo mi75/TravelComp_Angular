@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, AbstractControl  } from '@angular/forms';
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
 
 @Component({
-  selector: 'new-tours-feature',
-  templateUrl: './new-tours-feature.component.html',
-  styleUrls: ['./new-tours-feature.component.css'],
+  selector: 'modal-feature-form',
+  templateUrl: './modal-feature-form.component.html',
+  styleUrls: ['./modal-feature-form.component.css'],
   providers: [CommonValidatorService, ApiCallerService]
 })
-export class NewToursFeatureComponent implements OnInit {
+export class ModalFeatureFormComponent implements OnInit {
 
   tripFeatures:tripFeaturesFormat[];
   public toursFeatureForm: FormGroup;
@@ -30,11 +30,43 @@ export class NewToursFeatureComponent implements OnInit {
   ngOnInit() {
   }
 
+  @Output() sendingFeature = new EventEmitter();
+
+  public visible = false;
+  public visibleAnimate = false;
+  private editionFeatureId;
+
+  public show(featureForEdit : tripFeaturesFormat): void {
+  
+    this.visible = true;
+    setTimeout(() => this.visibleAnimate = true, 100);
+    document.body.className += ' modal-open';
+
+    this.editionFeatureId = featureForEdit.id;
+
+    this.toursFeatureForm.controls['featureName'].setValue(featureForEdit.description);
+    
+  }
+
+  public hide(): void {
+    this.visibleAnimate = false;
+    setTimeout(() => this.visible = false, 300);
+    document.body.className = document.body.className.replace('modal-open', '');
+  }
+
+  public onContainerClicked(event: MouseEvent): void {
+    if ((<HTMLElement>event.target).classList.contains('modal')) {
+      this.hide();
+    }
+  }
+
   imageBase64: any;
   imageUpload(e) {
     let reader = new FileReader();
+    //get the selected file from event
     let file = e.target.files[0];
     reader.onloadend = () => {
+      //Assign the result to variable for setting the src of image element
       this.imageBase64 = reader.result;
     };
     reader.readAsDataURL(file);
@@ -42,9 +74,10 @@ export class NewToursFeatureComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  sendNewFeature(): void {
+  sendThisFeature(): void {
 
     let newFeatureData = new FormData();
+    newFeatureData.set('id', this.editionFeatureId);
 
     let fi = this.fileInput.nativeElement;
     if (fi.files && fi.files[0]) {
@@ -64,27 +97,27 @@ export class NewToursFeatureComponent implements OnInit {
         newFeatureData.set(field, control.value);
       });
 
-      if (!newFeatureData.get('picture')) {
-          alert('Для публиикации на сайте необходима картинка!');
-        } else { 
-          this.apiCall.postData('api/trips/createtripsfeature', newFeatureData)
+      this.apiCall.postData('api/trips/edittripsfeature', newFeatureData)
           .subscribe(
             success => {
               this.onSuccess();
             }, 
             error => {alert('Sending Error')} 
           );
-        }
     }
   }
 
   onSuccess() {
+    this.sendingFeature.emit();
+
     this.toursFeatureForm.reset({
       featureName: ''
     });
 
     this.imageBase64 = '';
     this.fileInput.nativeElement.value = '';
+
+    this.hide();
   }
 
 }

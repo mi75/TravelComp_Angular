@@ -3,8 +3,7 @@ import { FormControl, FormGroup, FormBuilder, AbstractControl, FormArray  } from
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
-import { tripFormat } from "../trip-format";
-import { isRegExp } from 'util';
+import { tripFormatFeaturesIds } from "../trip-format";
 
 @Component({
   selector: 'modal-trip-form',
@@ -64,7 +63,7 @@ export class ModalTripFormComponent implements OnInit {
   private editionTourId;
   
 
-  public show(tourForEdit : tripFormat): void {
+  public show(tourForEdit : tripFormatFeaturesIds): void {
   
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
@@ -81,15 +80,7 @@ export class ModalTripFormComponent implements OnInit {
     this.tourForm.controls['finishDate'].setValue(tourForEdit.finishDate);
     this.tourForm.controls['price'].setValue(tourForEdit.price);
 
-    // this.fileInput.nativeElement.files[0] = tourForEdit.picFile;
-
     var checkboxes =  (this.tourForm.controls.featureCheckboxes as FormArray).controls;
-    // var i=0;
-    // this.tripFeatures.forEach(feature => {
-    //   if (tourForEdit.selectedFeatures.contains(feature.id)){
-    //     checkboxes[i++].setValue(true);
-    //   }
-    // });
 
     function contains(arr, element) {
       for (var i = 0; i < arr.length; i++) {
@@ -122,7 +113,6 @@ export class ModalTripFormComponent implements OnInit {
       this.hide();
     }
   }
-
 
   createFeatureCheckboxes(): FormControl[] {
     var features = this.tripFeatures.map(c => new FormControl(false));

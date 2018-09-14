@@ -128,6 +128,7 @@ export class NewTourComponent implements OnInit {
   }
 
   onSuccess() {
+
     this.tourForm.reset({
       displ: true,
       program: '',

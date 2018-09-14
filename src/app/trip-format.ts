@@ -11,9 +11,12 @@ export class tripFormat {
   characteristics: string;
   program: string;
   features: string;
+}
+
+export class tripFormatFeaturesIds extends tripFormat{
   selectedFeatures: string;
 }
 
-export class tripFormatFull extends tripFormat{
+export class tripFormatFeaturesPics extends tripFormat{
   featuresPics: string;
 }

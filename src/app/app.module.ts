@@ -20,6 +20,7 @@ import { ModalTripFormComponent } from './modal-trip-form/modal-trip-form.compon
 import { TourPageComponent } from './tour-page/tour-page.component';
 import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
 import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
+import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.
     ModalTripFormComponent,
     TourPageComponent,
     TripsFeaturesListComponent,
-    NewToursFeatureComponent
+    NewToursFeatureComponent,
+    ModalFeatureFormComponent
   ],
   imports: [
     BrowserModule,

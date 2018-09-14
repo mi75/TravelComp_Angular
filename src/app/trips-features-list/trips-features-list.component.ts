@@ -21,16 +21,16 @@ export class TripsFeaturesListComponent implements OnInit {
     this.reloadFeatures();
   }
 
-  // delTrip(id, index) {
-  //   confirm('Уверены, что хотите удалить поездку?');
-  //   this.load.postData('api/trips/delete?rowId=' + id, null)
-  //     .subscribe(
-  //       success => {
-  //         this.features.splice(index, 1);
-  //       },
-  //       error => {alert('Sending Error')}
-  //     );
-  // }
+  delFeature(id, index) {
+    confirm('Уверены, что хотите удалить опцию?');
+    this.load.postData('api/trips/delfeature?rowId=' + id, null)
+      .subscribe(
+        success => {
+          this.features.splice(index, 1);
+        },
+        error => {alert('Sending Error')}
+      );
+  }
 
   reloadFeatures() {
     this.load.getData('api/trips/features').subscribe( res => {

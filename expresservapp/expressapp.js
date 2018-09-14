@@ -88,6 +88,20 @@ apiRouter.route("/trips/delete")
         });
     });
 
+apiRouter.route("/trips/delfeature")
+    .post(function(req, res) {
+        var delRowId = parseInt(req.query.rowId);
+        dbOperations.delFeature(delRowId, function(err) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.writeHead(200);
+                res.end();
+            }
+        });
+    });
+
 apiRouter.route("/trips/create")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
@@ -96,7 +110,7 @@ apiRouter.route("/trips/create")
             fullTripName: req.body.fullTripName,
             picName: (!req.file) ? null : req.file.originalname,
             picFile: (!req.file) ? null : req.file.filename,
-            onMain: req.body.displ == 'true' ? 1 : 0,
+            onMain: req.body.displ,
             startDate: req.body.startDate,
             finishDate: req.body.finishDate,
             price: req.body.price,
@@ -106,7 +120,7 @@ apiRouter.route("/trips/create")
 
         var featureIds = req.body.featureIds.split(',');
 
-        dbOperations.addTrip(trip, featureIds, (function(err) {
+        dbOperations.createTrip(trip, featureIds, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -122,11 +136,34 @@ apiRouter.route("/trips/createtripsfeature")
 
         var feature = {
             description: req.body.featureName,
-            // picName: (!req.file) ? null : req.file.originalname,
             pic: (!req.file) ? null : req.file.filename
         };
 
-        dbOperations.addTripsFeature(feature, (function(err) {
+        dbOperations.createTripsFeature(feature, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
+apiRouter.route("/trips/edittripsfeature")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var feature = {
+            description: req.body.featureName
+        };
+
+        if (req.file){
+            feature.pic = req.file.filename;
+        }
+
+        var featureId = req.body.id;
+
+        dbOperations.updateTripsFeature(feature, featureId, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -143,7 +180,7 @@ apiRouter.route("/trips/edit")
         var trip = {
             title: req.body.title,
             fullTripName: req.body.fullTripName,
-            onMain: req.body.displ == 'true' ? 1 : 0,
+            onMain: req.body.displ,
             startDate: req.body.startDate,
             finishDate: req.body.finishDate,
             price: req.body.price,
@@ -159,7 +196,7 @@ apiRouter.route("/trips/edit")
         var editTripId = req.body.id;
         var featureIds = req.body.featureIds.split(',');
 
-        dbOperations.writeTripAfterEdit(trip, editTripId, featureIds, (function(err) {
+        dbOperations.updateTrip(trip, editTripId, featureIds, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -180,9 +217,9 @@ apiRouter.route("/contacts")
             email: postData.mail,
             telephone: postData.phone,
             howHeard: postData.how,
-            keepMe: postData.cb == true ? 1 : 0
+            keepMe: postData.cb == true ? 'да' : 'нет'
         };
-        dbOperations.addContact(contact, (function(err) {
+        dbOperations.createContact(contact, (function(err) {
             if (err) {
                 res.status(501);
                 res.send(err.sqlMessage);
@@ -216,7 +253,7 @@ apiRouter.route("/feedback")
             date: new Date()
         };
 
-        dbOperations.addFeedback(contact, (function(err) {
+        dbOperations.createFeedback(contact, (function(err) {
             if (err) {
                 res.status(501);
                 res.send(err.sqlMessage);

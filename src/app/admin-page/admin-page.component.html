@@ -5,18 +5,15 @@
 
 <div class="table-responsive">
     <table class="table table-condensed table-striped table-bordered table-hover">
-        <caption>
-            Queries & suggestions
-        </caption>
         <thead>
             <tr>
                 <th>№</th>
-                <th>name</th>
+                <th>имя</th>
                 <th>email</th>
-                <th>telephone</th>
-                <th>howHeard</th>
-                <th>keepMe</th>
-                <th>message</th>
+                <th>телефон</th>
+                <th>как нас нашел</th>
+                <th>готов получать рассылки</th>
+                <th>сообщение</th>
             </tr>
         </thead>
         <tbody id='dbtab'>
@@ -25,7 +22,7 @@
                 <td>{{contact.name}}</td>
                 <td>{{contact.email}}</td>
                 <td>{{contact.telephone}}</td>
-                <td>{{contact.howHeard}}</td>
+                <td>{{contact.selectedSense}}</td>
                 <td>{{contact.keepMe}}</td>
                 <td>{{contact.message}}</td>
             </tr>

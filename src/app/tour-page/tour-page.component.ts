@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiCallerService } from '../_services/api-caller.service';
-import { tripFormatFull } from "../trip-format";
+import { tripFormatFeaturesPics } from "../trip-format";
 
 @Component({
   selector: 'tour-page',
@@ -12,7 +12,7 @@ import { tripFormatFull } from "../trip-format";
 
 export class TourPageComponent implements OnInit {
 
-  tour:tripFormatFull = new tripFormatFull();
+  tour:tripFormatFeaturesPics = new tripFormatFeaturesPics();
   loaded: boolean = false;
   features:string[];
   featuresPics:string[];

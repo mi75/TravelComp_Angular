@@ -15,7 +15,7 @@ connection.connect(function(err) {
 });
 
 module.exports = {
-    addContact: function(contact, callback) {
+    createContact: function(contact, callback) {
         connection.query('INSERT INTO contacts_1 SET ?', contact, function(err, result) {
             if (err) {
                 callback(err);
@@ -25,7 +25,7 @@ module.exports = {
         });
     },
 
-    addFeedback: function(contact, callback) {
+    createFeedback: function(contact, callback) {
         connection.query('INSERT INTO feedback_1 SET ?', contact, function(err, result) {
             if (err) {
                 callback(err);
@@ -36,7 +36,7 @@ module.exports = {
     },
 
     readContacts: function(callback) {
-        connection.query('SELECT * FROM contacts_1', function(err, result) {
+        connection.query('SELECT * FROM contacts_1 join howheard_from_form_1 on contacts_1.howHeard=howheard_from_form_1.selectedValue', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -82,7 +82,7 @@ module.exports = {
     },
 
     readTripsOnMainPage: function(callback) {
-        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onMain` = "1") ORDER BY id DESC', function(err, result) {
+        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onMain` = "true") ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -117,7 +117,7 @@ module.exports = {
         });
     },
 
-    writeTripAfterEdit: function(trip, editTripId, featureIds, callback) {
+    updateTrip: function(trip, editTripId, featureIds, callback) {
         let featureId;
         connection.query('UPDATE trips_1 SET ? WHERE id = ?', [trip, editTripId], function(err, result) {
             if (err) {
@@ -165,7 +165,23 @@ module.exports = {
         });
     },
 
-    addTrip: function(trip, featureIds, callback) {
+    delFeature: function(delRowId, callback) {
+        connection.query('DELETE FROM trips_trip_features_1 WHERE (`feature_id` = ?);', delRowId, function(err, result) {
+            if (err) {
+                callback(err);
+            } else {
+                connection.query('DELETE FROM trip_features_1 WHERE id = ?', delRowId, function(err, result) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });
+            }
+        });
+    },
+
+    createTrip: function(trip, featureIds, callback) {
         var featureId;
         connection.query('INSERT INTO trips_1 SET ?', trip, function(err, result) {
             if (err) {
@@ -193,8 +209,18 @@ module.exports = {
         });
     },
 
-    addTripsFeature: function(feature, callback) {
+    createTripsFeature: function(feature, callback) {
         connection.query('INSERT INTO trip_features_1 SET ?', feature, function(err, result) {
+            if (err) {
+                callback(err);
+            }  else{
+                callback();
+            }
+        });
+    },
+
+    updateTripsFeature: function(feature, featureId, callback) {
+        connection.query('UPDATE trip_features_1 SET ? WHERE id = ?', [feature, featureId], function(err, result) {
             if (err) {
                 callback(err);
             }  else{

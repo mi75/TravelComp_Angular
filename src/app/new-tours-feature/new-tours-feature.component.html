@@ -6,7 +6,7 @@
             <div class="col-sm-0 col-md-2"></div>
             <div class="col-sm-6 col-md-4">
                 <div class="f-row">
-                    <label for="title">Feature name<span class="req">*</span>:</label><br />
+                    <label for="title">Наименование услуги (до 50 символов)<span class="req">*</span>:</label><br />
                     <input type="text" formControlName="featureName" class="field">
                     <validator-message [field]="toursFeatureForm.get('featureName')"></validator-message>
                 </div>
@@ -14,7 +14,7 @@
                     <label class="btn btn-primary" for="my-file-selector">
                     <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
                     (change)="imageUpload($event)">
-                    Feature picture<span class="req">*</span>:
+                    Картинка-значок услуги<span class="req">*</span>:
                     </label>
                     <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                     <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
@@ -22,7 +22,7 @@
                 </div>
                 </div>
                 <div class="go">
-                    <button type="submit" class="go-button">SUBMIT</button>
+                    <button type="submit" class="go-button">СОХРАНИТЬ</button>
                 </div>
                 </form>
                 </div>

@@ -11,14 +11,14 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="f-row">
-                                <label for="message">Your story<span class="req">*</span>:</label><br />
+                                <label for="message">Что запомнилось?<span class="req">*</span>:</label><br />
                                 <textarea formControlName="message" class="field" rows="13"></textarea>
                                 <validator-message [field]="feedbackForm.get('message')"></validator-message>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="f-row">
-                                <label for="from">Your full name<span class="req">*</span>:</label><br />
+                                <label for="from">Ваше имя<span class="req">*</span>:</label><br />
                                 <input type="text" formControlName="from" class="field">
                                 <validator-message [field]="feedbackForm.get('from')"></validator-message>
                             </div>
@@ -26,7 +26,7 @@
                                 <label class="btn btn-primary" for="my-file-selector">
                               <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
                               (change)="imageUpload($event)">
-                              Load file with your photo:
+                              Загрузите Ваше фото:
                           </label>
                                 <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
                                 <img class="customer-photo rounded-circle" *ngIf="fileInput.value" [src]="imageBase64" />
@@ -36,8 +36,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="sendMyReview()">Save changes</button>
+                <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" (click)="sendMyReview()">СОХРАНИТЬ</button>
             </div>
         </div>
     </div>
