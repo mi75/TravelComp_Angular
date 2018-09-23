@@ -42,14 +42,14 @@
     <tbody>
       <tr *ngFor="let tripFeature of tripFeatures; let i=index;">
           <td><img [src]="getImgPath + tripFeature.pic" /></td>
-          <td>{{tripFeature.description}}</td>
+          <td class="feature">{{tripFeature.description}}</td>
       </tr>
     </tbody>
   </table>
   </div>
   <div class="col-sm-0 col-md-4"></div>
 </div>
-<div class="textblock">
+<div class="textblock specials">
   <h3>Особенности тура</h3>
   <p>{{tour.characteristics}}</p>
 </div>

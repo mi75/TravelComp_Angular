@@ -45,6 +45,11 @@
     padding: 20px;
 }
 
+.specials p {
+    color: blue;
+    text-align: center;
+}
+
 h3 {
     text-align: center;
 }
@@ -55,4 +60,14 @@ td {
 
 .row {
     width: 100%;
+}
+
+.feature {
+    background: #5d7bdf;
+    color: white;
+}
+
+img {
+    max-width: 50px;
+    max-height: 50px;
 }
