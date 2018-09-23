@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFormatFeaturesPics } from "../trip-format";
+import { tripFeaturesFormat } from "../tripfeatures-format";
 
 @Component({
   selector: 'tour-page',
@@ -16,6 +17,7 @@ export class TourPageComponent implements OnInit {
   loaded: boolean = false;
   features:string[];
   featuresPics:string[];
+  tripFeatures:tripFeaturesFormat[] = [];
   getImgPath:string = ApiCallerService.webAdddr + 'api/images?useBodyPath=true&id=';
 
   constructor(
@@ -26,28 +28,19 @@ export class TourPageComponent implements OnInit {
   
   ngOnInit() {
 
-        let selectedTour = this.route.snapshot.paramMap.get('tourId');
+    let selectedTour = this.route.snapshot.paramMap.get('tourId');
     this.load.getData('api/trips/tourPage?tripId=' + selectedTour).subscribe( res => {
       this.tour = res[0];
       this.features = res[0].features.split(',');
       this.featuresPics = res[0].featuresPics.split(',');
-      this.loaded = true;
+      for (let i=0; i<this.features.length; i++){
+        this.tripFeatures[i] = new tripFeaturesFormat();
+        this.tripFeatures[i].description = this.features[i];
+        this.tripFeatures[i].pic = this.featuresPics[i];
+      };
+      this.loaded = true; // for displaying only after load end
     });
 
-    // GET tourPage by tripId
-
-    // var key = "tour" + tripId;
-    // if (Cache.ContainsKey()){ //tour16
-    //   return Cache.Get(key);
-    // } else {
-    //   var trip = DBOperations.Get....;
-    //   Cache.Set(key, trip);
-    //   return trip;
-    // }
-
-    // /////////////
-    // Edit trip.
-    // Cache.invalidate(key);
 
   }
 }
