@@ -39,6 +39,7 @@ export class ContactsPageComponent implements OnInit {
    }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
   }
 
   sendMySuggestion(data: FormGroup): void {

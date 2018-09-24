@@ -39,6 +39,7 @@ export class TourPageComponent implements OnInit {
         this.tripFeatures[i].pic = this.featuresPics[i];
       };
       this.loaded = true; // for displaying only after load end
+      window.scrollTo(0, 0);
     });
 
 
