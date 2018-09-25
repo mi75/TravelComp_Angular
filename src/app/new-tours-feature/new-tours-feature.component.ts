@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, AbstractControl  } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
@@ -18,7 +19,8 @@ export class NewToursFeatureComponent implements OnInit {
   constructor(
     private valid: CommonValidatorService,
     private apiCall: ApiCallerService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private router: Router
   ) {
     this.toursFeatureForm = this._fb.group({
       featureName: this._fb.control('', [
@@ -85,6 +87,7 @@ export class NewToursFeatureComponent implements OnInit {
 
     this.imageBase64 = '';
     this.fileInput.nativeElement.value = '';
+    this.router.navigate(['./featureslist']);
   }
 
 }
