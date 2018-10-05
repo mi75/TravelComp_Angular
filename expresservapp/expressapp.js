@@ -75,9 +75,8 @@ apiRouter.route("/trips/tourPage")
     });
 
 apiRouter.route("/trips/delete")
-    .post(function(req, res) {
-        var delRowId = parseInt(req.query.rowId);
-        dbOperations.delTrip(delRowId, function(err) {
+    .post(jsonParser, function(req, res) {
+        dbOperations.delTrip(req.body.id, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -89,9 +88,8 @@ apiRouter.route("/trips/delete")
     });
 
 apiRouter.route("/trips/delfeature")
-    .post(function(req, res) {
-        var delRowId = parseInt(req.query.rowId);
-        dbOperations.delFeature(delRowId, function(err) {
+    .post(jsonParser, function(req, res) {
+        dbOperations.delFeature(req.body.id, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);

@@ -23,7 +23,7 @@ export class TripsFeaturesListComponent implements OnInit {
 
   delFeature(id, index) {
     confirm('Уверены, что хотите удалить опцию?');
-    this.load.postData('api/trips/delfeature?rowId=' + id, null)
+    this.load.postData('api/trips/delfeature',  {"id": id})
       .subscribe(
         success => {
           this.features.splice(index, 1);

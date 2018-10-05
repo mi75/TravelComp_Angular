@@ -24,7 +24,6 @@
               <th>дата возвращения</th>
               <th>цена тура</th>
               <th>особенности</th>
-              <th>программа</th>
               <th>что включено</th>
               <th>удалить или редактировать</th>
           </tr>
@@ -41,7 +40,6 @@
               <td>{{tour.finishDate | date:'d.MM.y'}}</td>
               <td>{{tour.price}}</td>
               <td>{{tour.characteristics}}</td>
-              <td>{{tour.program}}</td>
               <td>{{tour.features}}</td>
               <input type="button" (click)="delTrip(tour.id, i)" value="del"/>
               <input type="button" (click)="modal.show(tour)" value="edit"/>
