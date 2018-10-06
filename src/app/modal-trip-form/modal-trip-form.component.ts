@@ -72,6 +72,7 @@ export class ModalTripFormComponent implements OnInit {
     this.editionTourId = tourForEdit.id;
 
     this.tourForm.controls['displ'].setValue(tourForEdit.onMain);
+    // this.tourForm.controls['displ'].setValue((tourForEdit.onMain === 'true'));
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
     this.tourForm.controls['title'].setValue(tourForEdit.title);
@@ -91,14 +92,11 @@ export class ModalTripFormComponent implements OnInit {
       return false;
     }
 
-    this.tripFeatures.forEach(feature => {
-      let i:any = feature.id;
-      if (contains(tourForEdit.selectedFeatures.split(','), feature.id)){
-        checkboxes[i-1].setValue(true);
-      } else {
-        checkboxes[i-1].setValue(false);
-      }
-    });
+    var checkboxIndex = 0;
+    var selectedFeatures = tourForEdit.selectedFeatures.split(',');
+    checkboxes.forEach(cb => {
+      cb.setValue(contains(selectedFeatures,this.tripFeatures[checkboxIndex++].id));
+    }); // checking checkbox (setting "true"), if "his" feature's id is in tour's features array, and "false" if not
     
   }
 
