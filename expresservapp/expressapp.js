@@ -76,7 +76,8 @@ apiRouter.route("/trips/tourPage")
 
 apiRouter.route("/trips/delete")
     .post(jsonParser, function(req, res) {
-        dbOperations.delTrip(req.body.id, function(err) {
+        let dateOfDel =  new Date();
+        dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -89,7 +90,8 @@ apiRouter.route("/trips/delete")
 
 apiRouter.route("/trips/delfeature")
     .post(jsonParser, function(req, res) {
-        dbOperations.delFeature(req.body.id, function(err) {
+        let dateOfDel =  new Date();
+        dbOperations.delFeature(req.body.id, dateOfDel, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);

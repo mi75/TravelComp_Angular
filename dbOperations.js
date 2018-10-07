@@ -72,7 +72,7 @@ module.exports = {
     },
 
     readTripFeaturesTable: function(callback) {
-        connection.query('SELECT * FROM trip_features_1', function(err, result) {
+        connection.query('SELECT * FROM trip_features_1 WHERE (`dateOfDel` IS NULL)', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -94,7 +94,7 @@ module.exports = {
     readTripsForAdmin: function(callback) {
         connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.description) AS features, GROUP_CONCAT(trip_features_1.id) AS selectedFeatures\
                         FROM trips_1 JOIN trips_trip_features_1 ON trips_1.id=trips_trip_features_1.trip_id\
-                        JOIN trip_features_1 ON trips_trip_features_1.feature_id=trip_features_1.id\
+                        JOIN trip_features_1 ON trips_trip_features_1.feature_id=trip_features_1.id WHERE trips_1.dateOfDel IS NULL\
                         GROUP BY trips_1.id', function(err, result) {
             if (err) {
                 callback(err, null);
@@ -149,12 +149,12 @@ module.exports = {
         });
     },
 
-    delTrip: function(delRowId, callback) {
+    delTrip: function(delRowId, dateOfDel, callback) {
         connection.query('DELETE FROM trips_trip_features_1 WHERE (`trip_id` = ?);', delRowId, function(err, result) {
             if (err) {
                 callback(err);
             } else {
-                connection.query('DELETE FROM trips_1 WHERE id = ?', delRowId, function(err, result) {
+                connection.query('UPDATE trips_1 SET `onMain` = "false", `dateOfDel` = ? WHERE id = ?', [dateOfDel, delRowId], function(err, result) {
                     if (err) {
                         callback(err);
                     } else {
@@ -165,12 +165,12 @@ module.exports = {
         });
     },
 
-    delFeature: function(delRowId, callback) {
+    delFeature: function(delRowId, dateOfDel, callback) {
         connection.query('DELETE FROM trips_trip_features_1 WHERE (`feature_id` = ?);', delRowId, function(err, result) {
             if (err) {
                 callback(err);
             } else {
-                connection.query('DELETE FROM trip_features_1 WHERE id = ?', delRowId, function(err, result) {
+                connection.query('UPDATE trip_features_1 SET `dateOfDel` = ? WHERE id = ?', [dateOfDel, delRowId], function(err, result) {
                     if (err) {
                         callback(err);
                     } else {
