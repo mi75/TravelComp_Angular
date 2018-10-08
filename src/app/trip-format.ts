@@ -17,10 +17,6 @@ export class tripFormatFeaturesIds extends tripFormat{
   selectedFeatures: string;
 }
 
-export class tripFormatAdminTable extends tripFormat{
-  showOnMain: string;
-}
-
 export class tripFormatFeaturesPics extends tripFormat{
   featuresPics: string;
 }

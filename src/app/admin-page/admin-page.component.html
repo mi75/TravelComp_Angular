@@ -23,7 +23,8 @@
                 <td>{{contact.email}}</td>
                 <td>{{contact.telephone}}</td>
                 <td>{{contact.selectedSense}}</td>
-                <td>{{contact.keepMe}}</td>
+                <td *ngIf="contact.keepMe ==1; else writeNo">да</td>
+                    <ng-template #writeNo><td>нет</td></ng-template>
                 <td>{{contact.message}}</td>
             </tr>
         </tbody>

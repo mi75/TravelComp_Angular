@@ -18,13 +18,6 @@ export class AdminPageComponent implements OnInit {
   ngOnInit() {
     this.load.getData('api/admin').subscribe( res => {
       this.contacts = res;
-      for (let i = 0; i < this.contacts.length; i++) {
-        if (this.contacts[i].keepMe == 1) {
-          this.contacts[i].keepMe = 'да';
-        } else {
-          this.contacts[i].keepMe = 'нет';
-        }
-      }
     });
   }
 
