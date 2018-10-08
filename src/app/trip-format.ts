@@ -4,7 +4,7 @@ export class tripFormat {
   fullTripName: string;
   picName: string;
   picFile: string;
-  onMain: boolean;
+  onMain: number;
   startDate: string;
   finishDate: string;
   price: string;
@@ -15,6 +15,10 @@ export class tripFormat {
 
 export class tripFormatFeaturesIds extends tripFormat{
   selectedFeatures: string;
+}
+
+export class tripFormatAdminTable extends tripFormat{
+  showOnMain: string;
 }
 
 export class tripFormatFeaturesPics extends tripFormat{

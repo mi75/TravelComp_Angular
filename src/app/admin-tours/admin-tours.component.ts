@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
-import { tripFormat } from "../trip-format";
+import { tripFormatAdminTable } from "../trip-format";
 
 @Component({
   selector: 'admin-tours',
@@ -10,7 +10,7 @@ import { tripFormat } from "../trip-format";
 })
 export class AdminToursComponent implements OnInit {
 
-  tours:tripFormat[];
+  tours:tripFormatAdminTable[];
 
   constructor(
     private load: ApiCallerService
@@ -34,6 +34,13 @@ export class AdminToursComponent implements OnInit {
   reloadTrips() {
     this.load.getData('api/trips/all').subscribe( res => {
       this.tours = res;
+      for (let i = 0; i < this.tours.length; i++) {
+        if (this.tours[i].onMain == 1) {
+          this.tours[i].showOnMain = 'да';
+        } else {
+          this.tours[i].showOnMain = 'нет';
+        }
+      }
     });
   }
 

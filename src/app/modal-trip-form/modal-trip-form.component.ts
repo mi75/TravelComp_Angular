@@ -71,8 +71,7 @@ export class ModalTripFormComponent implements OnInit {
 
     this.editionTourId = tourForEdit.id;
 
-    this.tourForm.controls['displ'].setValue(tourForEdit.onMain);
-    // this.tourForm.controls['displ'].setValue((tourForEdit.onMain === 'true'));
+    this.tourForm.controls['displ'].setValue((tourForEdit.onMain === 1));
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
     this.tourForm.controls['title'].setValue(tourForEdit.title);

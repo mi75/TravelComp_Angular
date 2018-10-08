@@ -9,7 +9,7 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class AdminPageComponent implements OnInit {
 
-  contacts:object;
+  contacts:any[];
 
   constructor(
     private load: ApiCallerService
@@ -18,6 +18,13 @@ export class AdminPageComponent implements OnInit {
   ngOnInit() {
     this.load.getData('api/admin').subscribe( res => {
       this.contacts = res;
+      for (let i = 0; i < this.contacts.length; i++) {
+        if (this.contacts[i].keepMe == 1) {
+          this.contacts[i].keepMe = 'да';
+        } else {
+          this.contacts[i].keepMe = 'нет';
+        }
+      }
     });
   }
 
