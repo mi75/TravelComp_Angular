@@ -21,14 +21,15 @@ export class AdminToursComponent implements OnInit {
   }
 
   delTrip(id, index) {
-    confirm('Уверены, что хотите удалить поездку?');
-    this.load.postData('api/trips/delete', {"id": id})
+    if (confirm('Уверены, что хотите удалить поездку?')) {
+      this.load.postData('api/trips/delete', {"id": id})
       .subscribe(
         success => {
           this.tours.splice(index, 1);
         },
         error => {alert('Sending Error')}
       );
+    }
   }
 
   reloadTrips() {
