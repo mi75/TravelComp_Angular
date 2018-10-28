@@ -1,0 +1,110 @@
+.newfeature_form {
+    margin: 0;
+    padding: 15px 5px;
+    min-height: 400px;
+    width: 100%;
+    background: #f1f7fa;
+    font-family: 'Oxygen', sans-serif;
+    text-align: center;
+}
+
+.row {
+    width: 100%;
+}
+
+form .f-row {
+    padding: 5px 8px;
+    margin-bottom: 5px;
+}
+
+form .f-row:hover {
+    background: #f1e7fa;
+}
+
+form label {
+    font-size: 1em;
+    font-weight: bold;
+    width: 100%;
+    padding: 6px 0;
+    color: #464646;
+    vertical-align: top;
+}
+
+form .req {
+    color: #ca5354;
+}
+
+form .note {
+    font-size: 0.8em;
+    line-height: 1.33em;
+    font-weight: normal;
+    padding: 2px 7px;
+    margin-bottom: 10px;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+}
+
+form .field {
+    padding: 8px 9px;
+    width: 100%;
+    font-size: 1em;
+    font-weight: normal;
+    color: #898989;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+.pseudocheckbox::before {
+    content: "\00A0";
+    display: inline-block;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border: 2px solid #B0B0B0;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    line-height: 20px;
+    font-weight: bold;
+    color: #0000FF;
+}
+
+input[type=checkbox]+.pseudocheckbox {
+    cursor: pointer;
+}
+
+input[type=checkbox]:checked+.pseudocheckbox::before {
+    content: "\2713";
+}
+
+.go-button {
+    width: 180px;
+    height: 40px;
+    border-radius: 2%;
+    cursor: pointer;
+}
+
+.error input,
+.error textarea,
+.error select {
+    border: 1px solid red;
+}
+
+.error span {
+    font-size: 0.8em;
+    color: red;
+}
+
+.preview-photo {
+    float: left;
+    max-width: 100px;
+}

@@ -1,7 +1,7 @@
 <div class="main-slider">
     <ul id="slides">
-        <li class="slide" *ngFor="let slide of slides" [class.showing]="slide.showing" [style.background-image]="'url(' + slide.pic + ')'">
-            <button class="btn-sl">{{slide.title}}</button>
+        <li class="slide" *ngFor="let slide of slides" [class.showing]="slide.showing" [style.background-image]="'url(' + tourImgPath + slide.pic + ')'">
+            <button class="btn-sl" routerLink="tourpage/{{slide.id}}">{{slide.title}}</button>
         </li>
     </ul>
     <div id="sl-k" class="slider-knobs">

@@ -1,0 +1,86 @@
+<div (click)="onContainerClicked($event)" class="modal fade bs-example-modal-lg" [ngClass]="{'show': visibleAnimate}" [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Редактирование тура</h4>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="tourForm">
+              <p class="note"><span class="req">*</span> Для публиикации на сайте поля со звездочкой должны быть заполнены</p>
+              <div class="row">
+                  <div class="col-sm-0 col-md-2"></div>
+                  <div class="col-sm-6 col-md-4">
+                      <div class="f-row">
+                          <label for="program">Программа поездки<span class="req">*</span>:</label><br />
+                          <textarea formControlName="program" class="field" rows="13"></textarea>
+                          <validator-message [field]="tourForm.get('program')"></validator-message>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                      <label>
+                          <input type="checkbox"  formControlName="displ">
+                          <span class="pseudocheckbox">Показывать на сайте?</span>
+                        </label>
+                      <div class="f-row">
+                          <label for="title">Заглавие тура<span class="req">*</span>:</label><br />
+                          <input type="text" formControlName="title" class="field">
+                          <validator-message [field]="tourForm.get('title')"></validator-message>
+                      </div>
+                      <div class="f-row">
+                        <label for="title">Полное название поездки<span class="req">*</span>:</label><br />
+                        <input type="text" formControlName="fullTripName" class="field">
+                        <validator-message [field]="tourForm.get('fullTripName')"></validator-message>
+                    </div>
+                      <div class="f-row">
+                          <label for="startDate">дата отъезда<span class="req">*</span>:</label><br />
+                          <input type="date" formControlName="startDate" class="field">
+                          <validator-message [field]="tourForm.get('startDate')"></validator-message>
+                      </div>
+                      <div class="f-row">
+                          <label for="finishDate">дата возвращения<span class="req">*</span>:</label><br />
+                          <input type="date" formControlName="finishDate" class="field">
+                          <validator-message [field]="tourForm.get('finishDate')"></validator-message>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-0 col-md-2"></div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="f-row">
+                        <label for="characteristics">Особенности поездки<span class="req">*</span>:</label><br />
+                        <textarea formControlName="characteristics" class="field" rows="13"></textarea>
+                        <validator-message [field]="tourForm.get('characteristics')"></validator-message>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="f-row">
+                        <label class="btn btn-primary" for="my-file-selector">
+                      <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                      (change)="imageUpload($event)">
+                      +Изменить картинку?
+                  </label>
+                        <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
+                        <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
+                    </div>
+                    <div class="f-row">
+                        <label for="price">Цена тура<span class="req">*</span>:</label><br />
+                        <input type="text" formControlName="price" class="field">
+                        <validator-message [field]="tourForm.get('price')"></validator-message>
+                    </div>
+                    <p class="note">Минимум 1 опция должна быть включена:</p>
+                  <label formArrayName="featureCheckboxes" *ngFor="let feature of tripFeatures; let i=index;">
+                    <input type="checkbox" [formControlName]="i">
+                    <span class="pseudocheckbox">{{feature.description}}</span>
+                  </label>
+                </div>
+            </div>
+          </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary" (click)="sendThisTour()">Сохранить изменения</button>
+          </div>
+      </div>
+  </div>
+</div>

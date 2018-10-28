@@ -1,0 +1,40 @@
+<div (click)="onContainerClicked($event)" class="modal fade bs-example-modal-lg" [ngClass]="{'show': visibleAnimate}" [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Редактирование стандартных услуг</h4>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="toursFeatureForm">
+              <p class="note"><span class="req">*</span> Для публиикации на сайте поля со звездочкой должны быть заполнены</p>
+              <div class="row">
+                  <div class="col-sm-12 col-md-10">
+                      <div class="f-row">
+                          <label for="title">Наименование услуги (до 50 символов)<span class="req">*</span>:</label><br />
+                          <input type="text" formControlName="featureName" class="field">
+                          <validator-message [field]="toursFeatureForm.get('featureName')"></validator-message>
+                      </div>
+                  </div>
+                <div class="col-sm-12 col-md-10">
+                    <div class="f-row">
+                        <label class="btn btn-primary" for="my-file-selector">
+                      <input id="my-file-selector" type="file" #fileInput accept="image/png,image/jpeg" style="display:none"
+                      (change)="imageUpload($event)">
+                      +Изменить картинку?
+                  </label>
+                        <span class='label label-info' id="upload-file-info">{{fileInput.value}}</span>
+                        <img class="preview-photo" *ngIf="fileInput.value" [src]="imageBase64" />
+                    </div>
+                </div>
+            </div>
+          </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" (click)="hide()" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary" (click)="sendThisFeature()">Сохранить изменения</button>
+          </div>
+      </div>
+  </div>
+</div>
+

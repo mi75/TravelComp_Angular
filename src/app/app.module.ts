@@ -14,6 +14,13 @@ import { MainSliderComponent } from './main-slider/main-slider.component';
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { ValidatorMessageComponent } from './validator-message/validator-message.component';
 import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-form.component';
+import { AdminToursComponent } from './admin-tours/admin-tours.component';
+import { NewTourComponent } from './new-tour/new-tour.component';
+import { ModalTripFormComponent } from './modal-trip-form/modal-trip-form.component';
+import { TourPageComponent } from './tour-page/tour-page.component';
+import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
+import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
+import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +33,14 @@ import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-fo
     MainSliderComponent,
     ContactsPageComponent,
     ValidatorMessageComponent,
-    ModalReviewsFormComponent
+    ModalReviewsFormComponent,
+    AdminToursComponent,
+    NewTourComponent,
+    ModalTripFormComponent,
+    TourPageComponent,
+    TripsFeaturesListComponent,
+    NewToursFeatureComponent,
+    ModalFeatureFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +59,26 @@ import { ModalReviewsFormComponent } from './modal-reviews-form/modal-reviews-fo
       {
         path: 'admin',
         component: AdminPageComponent
+      },
+      {
+        path: 'alltours',
+        component: AdminToursComponent
+      },
+      {
+        path: 'newtour',
+        component: NewTourComponent
+      },
+      {
+        path: 'tourpage/:tourId',
+        component: TourPageComponent
+      },
+      {
+        path: 'featureslist',
+        component: TripsFeaturesListComponent
+      },
+      {
+        path: 'newfeature',
+        component: NewToursFeatureComponent
       }
     ])
   ],

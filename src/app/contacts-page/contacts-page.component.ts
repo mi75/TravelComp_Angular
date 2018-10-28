@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 
@@ -16,7 +17,8 @@ export class ContactsPageComponent implements OnInit {
   constructor(
     private valid: CommonValidatorService,
     private send: ApiCallerService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private router: Router
   ) {
     this.contactForm = this._fb.group({
       message: this._fb.control('', [
@@ -39,6 +41,7 @@ export class ContactsPageComponent implements OnInit {
    }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
   }
 
   sendMySuggestion(data: FormGroup): void {
@@ -61,6 +64,8 @@ export class ContactsPageComponent implements OnInit {
         how: '',
         cb: true
       });
+      alert ('Спасибо, информация получена!');
+      this.router.navigate(['']);
     }
   }
 

@@ -1,0 +1,55 @@
+
+<div *ngIf="loaded" class="bigboard" [style.background-image]="'url(' + getImgPath + tour.picFile + ')'">
+  <h3 class="title plate">{{tour.fullTripName}}</h3>
+  <div class="date plate">
+        <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  Дата отъезда
+                </th>
+                <th>
+                  Дата возвращения
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    {{tour.startDate | date:'d.MM.y'}}
+                </td>
+                <td>
+                    {{tour.finishDate | date:'d.MM.y'}}
+                </td>
+              </tr>
+            </tbody>
+      </table>
+  </div>
+  <div class="price plate">
+      <p>Цена тура</p>
+      {{tour.price}}
+  </div>
+</div>
+<div class="textblock">
+  <h3>Программа тура</h3>
+  <p>{{tour.program}}</p>
+</div>
+<div class="row">
+  <div class="col-sm-0 col-md-4"></div>
+  <div class="col-sm-12 col-md-4">
+  <h3>Что включено в тур</h3>
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let tripFeature of tripFeatures; let i=index;">
+          <td><img [src]="getImgPath + tripFeature.pic" /></td>
+          <td class="feature">{{tripFeature.description}}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="col-sm-0 col-md-4"></div>
+</div>
+<div class="textblock specials">
+  <h3>Особенности тура</h3>
+  <p>{{tour.characteristics}}</p>
+</div>

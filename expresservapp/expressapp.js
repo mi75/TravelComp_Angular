@@ -17,6 +17,20 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
+apiRouter.route("/trips/features")
+    .get(function(req, res) {
+        dbOperations.readTripFeaturesTable(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
 apiRouter.route("/trips/display")
     .get(function(req, res) {
         dbOperations.readTripsOnMainPage(function(err, result) {
@@ -45,10 +59,10 @@ apiRouter.route("/trips/all")
         });
     });
 
-apiRouter.route("/trips/edit")
+apiRouter.route("/trips/tourPage")
     .get(function(req, res) {
-        var editRowId = parseInt(req.query.rowId);
-        dbOperations.readTripForEdit(editRowId, function(err, result) {
+        var tripId = parseInt(req.query.tripId);
+        dbOperations.readTripToPage(tripId, function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
@@ -61,16 +75,29 @@ apiRouter.route("/trips/edit")
     });
 
 apiRouter.route("/trips/delete")
-    .post(function(req, res) {
-        var delRowId = parseInt(req.query.rowId);
-        dbOperations.delTrip(delRowId, function(err, result) {
+    .post(jsonParser, function(req, res) {
+        let dateOfDel =  new Date();
+        dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
             } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
+                res.writeHead(200);
+                res.end();
+            }
+        });
+    });
+
+apiRouter.route("/trips/delfeature")
+    .post(jsonParser, function(req, res) {
+        let dateOfDel =  new Date();
+        dbOperations.delFeature(req.body.id, dateOfDel, function(err) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.writeHead(200);
+                res.end();
             }
         });
     });
@@ -80,19 +107,63 @@ apiRouter.route("/trips/create")
 
         var trip = {
             title: req.body.title,
+            fullTripName: req.body.fullTripName,
             picName: (!req.file) ? null : req.file.originalname,
             picFile: (!req.file) ? null : req.file.filename,
             onMain: req.body.displ == 'true' ? 1 : 0,
-            startDate: req.body.start,
-            finishDate: req.body.finish,
+            startDate: req.body.startDate,
+            finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
             program: req.body.program
         };
 
-        var featureIds = req.query.featureIds.split(',');
+        var featureIds = req.body.featureIds.split(',');
 
-        dbOperations.addTrip(trip, featureIds, (function(err) {
+        dbOperations.createTrip(trip, featureIds, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
+apiRouter.route("/trips/createtripsfeature")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var feature = {
+            description: req.body.featureName,
+            pic: (!req.file) ? null : req.file.filename
+        };
+
+        dbOperations.createTripsFeature(feature, (function(err) {
+        if (err) {
+            res.status(501);
+            res.send(err.sqlMessage);
+        } else {
+            res.writeHead(200);
+            res.end();
+        }
+        }));
+    });
+
+apiRouter.route("/trips/edittripsfeature")
+    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+
+        var feature = {
+            description: req.body.featureName
+        };
+
+        if (req.file){
+            feature.pic = req.file.filename;
+        }
+
+        var featureId = req.body.id;
+
+        dbOperations.updateTripsFeature(feature, featureId, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -108,20 +179,24 @@ apiRouter.route("/trips/edit")
 
         var trip = {
             title: req.body.title,
-            picName: (!req.file) ? null : req.file.originalname,
-            picFile: (!req.file) ? null : req.file.filename,
+            fullTripName: req.body.fullTripName,
             onMain: req.body.displ == 'true' ? 1 : 0,
-            startDate: req.body.start,
-            finishDate: req.body.finish,
+            startDate: req.body.startDate,
+            finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
             program: req.body.program
         };
 
-        var editTripId = parseInt(req.query.rowId);
-        var featureIds = req.query.featureIds.split(',');
+        if (req.file){
+            trip.picFile = req.file.filename;
+            trip.picName =  req.file.originalname;
+        }        
 
-        dbOperations.writeTripAfterEdit(trip, editTripId, featureIds, (function(err) {
+        var editTripId = req.body.id;
+        var featureIds = req.body.featureIds.split(',');
+
+        dbOperations.updateTrip(trip, editTripId, featureIds, (function(err) {
         if (err) {
             res.status(501);
             res.send(err.sqlMessage);
@@ -144,7 +219,7 @@ apiRouter.route("/contacts")
             howHeard: postData.how,
             keepMe: postData.cb == true ? 1 : 0
         };
-        dbOperations.addContact(contact, (function(err) {
+        dbOperations.createContact(contact, (function(err) {
             if (err) {
                 res.status(501);
                 res.send(err.sqlMessage);
@@ -178,7 +253,7 @@ apiRouter.route("/feedback")
             date: new Date()
         };
 
-        dbOperations.addFeedback(contact, (function(err) {
+        dbOperations.createFeedback(contact, (function(err) {
             if (err) {
                 res.status(501);
                 res.send(err.sqlMessage);
@@ -206,7 +281,9 @@ apiRouter.route("/feedback")
 
 apiRouter.route("/images")
     .get(function(req, res) {
-        var targetFileName = __dirname + "/../src/assets/images/upload/" + req.query.id;
+        
+        var targetFileName = __dirname + ( req.query.useBodyPath ? "/../src/assets/images/bodycmp/" : "/../src/assets/images/upload/")  + req.query.id;
+
         if (fs.existsSync(targetFileName)) {
             var data = fs.readFileSync(targetFileName);
             res.status(200, {});

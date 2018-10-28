@@ -1,21 +1,19 @@
 <div>
     <h2>Hi, admin!..</h2>
+    <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/alltours">Список поездок</button>
 </div>
 
 <div class="table-responsive">
     <table class="table table-condensed table-striped table-bordered table-hover">
-        <caption>
-            Queries & suggestions
-        </caption>
         <thead>
             <tr>
                 <th>№</th>
-                <th>name</th>
-                <th>email</th>
-                <th>telephone</th>
-                <th>howHeard</th>
-                <th>keepMe</th>
-                <th>message</th>
+                <th>Имя</th>
+                <th>Еmail</th>
+                <th>Телефон</th>
+                <th>Как нас нашел</th>
+                <th>Готов получать рассылки</th>
+                <th>Сообщение</th>
             </tr>
         </thead>
         <tbody id='dbtab'>
@@ -24,8 +22,9 @@
                 <td>{{contact.name}}</td>
                 <td>{{contact.email}}</td>
                 <td>{{contact.telephone}}</td>
-                <td>{{contact.howHeard}}</td>
-                <td>{{contact.keepMe}}</td>
+                <td>{{contact.selectedSense}}</td>
+                <td *ngIf="contact.keepMe ==1; else writeNo">да</td>
+                    <ng-template #writeNo><td>нет</td></ng-template>
                 <td>{{contact.message}}</td>
             </tr>
         </tbody>

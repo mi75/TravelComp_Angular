@@ -1,0 +1,77 @@
+.btn {
+    cursor: pointer;
+}
+
+.modal {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.row {
+    width: 100%;
+}
+
+form .f-row {
+    padding: 5px 8px;
+    margin-bottom: 5px;
+}
+
+form .f-row:hover {
+    background: #f1e7fa;
+}
+
+form label {
+    font-size: 1em;
+    font-weight: bold;
+    width: 100%;
+    padding: 6px 0;
+    color: #464646;
+    vertical-align: top;
+}
+
+form .req {
+    color: #ca5354;
+}
+
+form .note {
+    font-size: 0.8em;
+    line-height: 1.33em;
+    font-weight: normal;
+    padding: 2px 7px;
+    margin-bottom: 10px;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+}
+
+form .field {
+    padding: 8px 9px;
+    width: 100%;
+    font-size: 1em;
+    font-weight: normal;
+    color: #898989;
+}
+
+.go-button {
+    width: 180px;
+    height: 40px;
+    border-radius: 2%;
+    cursor: pointer;
+}
+
+.error input,
+.error textarea,
+.error select {
+    border: 1px solid red;
+}
+
+.error span {
+    font-size: 0.8em;
+    color: red;
+}
+
+.preview-photo {
+    float: left;
+    max-width: 100px;
+}

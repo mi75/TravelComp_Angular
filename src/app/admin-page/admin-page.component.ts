@@ -9,7 +9,7 @@ import { ApiCallerService } from '../_services/api-caller.service';
 })
 export class AdminPageComponent implements OnInit {
 
-  contacts:object;
+  contacts:any[];
 
   constructor(
     private load: ApiCallerService

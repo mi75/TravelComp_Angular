@@ -1,31 +1,47 @@
 import { Injectable } from '@angular/core';
-import {SLIDES} from '../SLIDES';
-import { element } from 'protractor';
 import { Slide } from '../slide';
+import { ApiCallerService } from '../_services/api-caller.service';
+import { element } from 'protractor'; // nesessary for NodeJS.Timer
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MSliderService {
 
-  constructor() { }
+  constructor(
+		private load: ApiCallerService
+	) { }
 
   currentSlide:number = 0;
   animation:NodeJS.Timer;
   knobs:boolean[] = [];
+  mainSlides:Slide[] = [];
+	
+	public getSlides(): Slide[] {
+    this.load.getData('api/trips/display').subscribe( res => {
+			for (let i=0; i<res.length; i++) {
+				var newSlide:Slide = new Slide();
+				newSlide.id = res[i].id;
+				newSlide.title = res[i].title;
+				if (i==0) {
+					newSlide.showing = true;
+				}  else {newSlide.showing = false};
+				newSlide.pic = res[i].picFile;
+				this.mainSlides.push(newSlide);
+			}
+			
+			this.getKnobs();
+		});
 
-  public getSlides(): Slide[] {
-    for (let i=0; i<SLIDES.length; i++) {
-      if (SLIDES[i].showing) {
-        this.currentSlide = i;
-      }
-    }
-    return SLIDES;
-  }
+		this.currentSlide = 0;
+		
+		return this.mainSlides;
+	}
 
 	getKnobs() {
-		for (let i=0; i<SLIDES.length; i++) {
-			this.knobs.push(SLIDES[i].showing);
+		for (let i=0; i<this.mainSlides.length; i++) {
+			this.knobs.push(this.mainSlides[i].showing);
 		}
 		return this.knobs;
 	}
@@ -41,10 +57,10 @@ export class MSliderService {
 	}
 
 	goToSlide() {
-		SLIDES[this.currentSlide].showing = false;
+		this.mainSlides[this.currentSlide].showing = false;
 		this.knobs[this.currentSlide] = false;
-		this.currentSlide = (this.currentSlide + 1 + SLIDES.length) % SLIDES.length;
-		SLIDES[this.currentSlide].showing = true;
+		this.currentSlide = (this.currentSlide + 1 + this.mainSlides.length) % this.mainSlides.length;
+		this.mainSlides[this.currentSlide].showing = true;
 		this.knobs[this.currentSlide] = true;
 	}
 
@@ -53,10 +69,10 @@ export class MSliderService {
 		for (let i=0; i<this.knobs.length; i++) {
 			this.knobs[i] = false;
 		}
-		SLIDES.forEach(element => {
+		this.mainSlides.forEach(element => {
 			element.showing = false;
 		});
-		SLIDES[pic].showing = true;
+		this.mainSlides[pic].showing = true;
 		this.knobs[pic] = true;
 		this.currentSlide = pic;
 		this.animation = setInterval(() => {

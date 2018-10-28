@@ -1,0 +1,77 @@
+
+.bigboard {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    min-height: 800px;
+    position: relative;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.plate {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.title {
+    position: absolute;
+    top: 30px;
+}
+
+.date {
+    position: absolute;
+    top: 300px;
+}
+
+.date th {
+    min-width: 120px;
+    text-align: center;
+}
+
+.date table {
+    margin-bottom: 0;
+}
+
+.price {
+    position: absolute;
+    top: 480px;
+}
+
+.textblock {
+    margin-bottom: 20px;
+    background-color: rgb(242, 242, 242);
+    padding: 20px;
+}
+
+.specials p {
+    color: blue;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.row {
+    width: 100%;
+}
+
+.feature {
+    background: #5d7bdf;
+    color: white;
+}
+
+img {
+    max-width: 50px;
+    max-height: 50px;
+}

@@ -1,0 +1,55 @@
+<p>
+  Актуальные поездки:
+</p>
+
+<div>
+    <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/newtour">+Добавить поездку</button>
+    <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/featureslist">Возможные включаемые услуги</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-striped table-bordered table-hover">
+      <caption>
+          It is all trips
+      </caption>
+      <thead>
+          <tr>
+              <th>№</th>
+              <th>Заглавие тура</th>
+              <th>Полное название поездки</th>
+              <th>Файл-источник картинки</th>
+              <th>Имя файла картинки на сайте</th>
+              <th>Отображать на сайте?</th>
+              <th>Дата отъезда</th>
+              <th>Дата возвращения</th>
+              <th>Цена тура</th>
+              <th>Особенности</th>
+              <th>Что включено</th>
+              <th>Удалить или редактировать</th>
+          </tr>
+      </thead>
+      <tbody id='dbtab'>
+          <tr *ngFor="let tour of tours; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{tour.title}}</td>
+              <td>{{tour.fullTripName}}</td>
+              <td>{{tour.picName}}</td>
+              <td>{{tour.picFile}}</td>
+              <td *ngIf="tour.onMain ==1; else writeNo">да</td>
+                <ng-template #writeNo><td>нет</td></ng-template>
+              <td>{{tour.startDate | date:'d.MM.y'}}</td>
+              <td>{{tour.finishDate | date:'d.MM.y'}}</td>
+              <td>{{tour.price}}</td>
+              <td>{{tour.characteristics}}</td>
+              <td>{{tour.features}}</td>
+              <input type="button" (click)="delTrip(tour.id, i)" value="del"/>
+              <input type="button" (click)="modal.show(tour)" value="edit"/>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<modal-trip-form #modal (sendingTrip)="reloadTrips()">
+
+</modal-trip-form>
