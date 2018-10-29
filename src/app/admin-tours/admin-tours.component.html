@@ -35,8 +35,7 @@
               <td>{{tour.fullTripName}}</td>
               <td>{{tour.picName}}</td>
               <td>{{tour.picFile}}</td>
-              <td *ngIf="tour.onMain ==1; else writeNo">да</td>
-                <ng-template #writeNo><td>нет</td></ng-template>
+              <td>{{tour.onMain}}</td>
               <td>{{tour.startDate | date:'d.MM.y'}}</td>
               <td>{{tour.finishDate | date:'d.MM.y'}}</td>
               <td>{{tour.price}}</td>
