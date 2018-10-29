@@ -21,6 +21,7 @@ import { TourPageComponent } from './tour-page/tour-page.component';
 import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
 import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
 import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-form.component';
+import { AllTripsComponent } from './all-trips/all-trips.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-fo
     TourPageComponent,
     TripsFeaturesListComponent,
     NewToursFeatureComponent,
-    ModalFeatureFormComponent
+    ModalFeatureFormComponent,
+    AllTripsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,10 @@ import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-fo
       {
         path: 'alltours',
         component: AdminToursComponent
+      },
+      {
+        path: 'allTrips',
+        component: AllTripsComponent
       },
       {
         path: 'newtour',
