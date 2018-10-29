@@ -19,7 +19,7 @@ export class AllTripsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.load.getData('api/trips/display').subscribe( res => {
+    this.load.getData('api/trips/allDisplayingTrips').subscribe( res => {
       this.tours = res;
     });
   }
