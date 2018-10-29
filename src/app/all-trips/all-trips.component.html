@@ -1,3 +1,16 @@
-<p>
-  all-trips works!
-</p>
+
+<div class="all-tours">
+  <h5>Что у Вас было по географии?..)</h5>
+  <h2>Все туры нашей компании:</h2>
+  <div class="row">
+      <div class="tour-card col-sm-4" *ngFor="let tour of tours; let i=index;" [style.background-image]="'url(' + tourImgPath + tour.picFile + ')'">
+          <a routerLink="/tourpage/{{tour.id}}">
+              <h5>{{tour.title}}</h5>
+              <div class="tour-overlay">
+                  <p class="tour-them">{{tour.fullTripName}}</p>
+                  <p class="tour-button" aria-hidden="true" tabindex="-1">Подробнее</p>
+              </div>
+          </a>
+      </div>
+  </div>
+</div>

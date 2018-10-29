@@ -82,7 +82,7 @@ module.exports = {
     },
 
     readTripsOnMainPage: function(callback) {
-        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onMain` = "1") ORDER BY id DESC', function(err, result) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onMain` = "в слайдере на главной") ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
