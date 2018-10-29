@@ -115,6 +115,7 @@ apiRouter.route("/trips/create")
             finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
+            notInclude: req.body.notInclude,
             program: req.body.program
         };
 
@@ -185,6 +186,7 @@ apiRouter.route("/trips/edit")
             finishDate: req.body.finishDate,
             price: req.body.price,
             characteristics: req.body.characteristics,
+            notInclude: req.body.notInclude,
             program: req.body.program
         };
 
