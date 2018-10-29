@@ -25,6 +25,7 @@
               <th>Цена тура</th>
               <th>Особенности</th>
               <th>Что включено</th>
+              <th>Что не включено</th>
               <th>Удалить или редактировать</th>
           </tr>
       </thead>
@@ -41,6 +42,7 @@
               <td>{{tour.price}}</td>
               <td>{{tour.characteristics}}</td>
               <td>{{tour.features}}</td>
+              <td>{{tour.notInclude}}</td>
               <input type="button" (click)="delTrip(tour.id, i)" value="del"/>
               <input type="button" (click)="modal.show(tour)" value="edit"/>
           </tr>

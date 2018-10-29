@@ -33,6 +33,9 @@ export class ModalTripFormComponent implements OnInit {
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
+      notInclude: this._fb.control('', [
+        valid.messageValidator()
+      ]),
       displ: this._fb.control('', [
         valid.notEmptyValidator()
       ]),
@@ -76,6 +79,7 @@ export class ModalTripFormComponent implements OnInit {
     this.tourForm.controls['displ'].setValue(tourForEdit.onMain);
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
+    this.tourForm.controls['notInclude'].setValue(tourForEdit.notInclude);
     this.tourForm.controls['title'].setValue(tourForEdit.title);
     this.tourForm.controls['fullTripName'].setValue(tourForEdit.fullTripName);
     this.tourForm.controls['startDate'].setValue(tourForEdit.startDate);
@@ -190,6 +194,7 @@ export class ModalTripFormComponent implements OnInit {
       displ: '',
       program: '',
       characteristics: '',
+      notInclude: '',
       title: '',
       fullTripName: '',
       startDate: '',

@@ -9,6 +9,7 @@ export class tripFormat {
   finishDate: string;
   price: string;
   characteristics: string;
+  notInclude: string;
   program: string;
   features: string;
 }

@@ -35,6 +35,9 @@ export class NewTourComponent implements OnInit {
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
+      notInclude: this._fb.control('', [
+        valid.messageValidator()
+      ]),
       displ: this._fb.control('', [
         valid.notEmptyValidator()
       ]),
@@ -137,6 +140,7 @@ export class NewTourComponent implements OnInit {
       displ: '',
       program: '',
       characteristics: '',
+      notInclude: '',
       title: '',
       fullTripName: '',
       startDate: '',
