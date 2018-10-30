@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiCallerService } from '../_services/api-caller.service';
+import { tripFormat } from "../trip-format";
 
 @Component({
   selector: 'main-page',
@@ -7,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  tourImgPath:string = ApiCallerService.webAdddr + 'api/images?useBodyPath=true&id=';
+
+  tours:tripFormat[];
+
+  constructor(
+    private load: ApiCallerService
+  ) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
+    this.load.getData('api/trips/popular').subscribe( res => {
+      this.tours = res;
+    });
   }
 
 }

@@ -14,37 +14,12 @@
     background-color: rgb(242, 242, 242);
 }
 
-.tour-card1 {
+.tour-card {
     opacity: 1;
     margin: 0;
     padding-top: 20px;
     min-height: 280px;
     width: 100%;
-    background-image: url(/assets/images/bodycmp/cp1.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-}
-
-.tour-card2 {
-    opacity: 1;
-    margin: 0;
-    padding-top: 20px;
-    min-height: 280px;
-    width: 100%;
-    background-image: url(/assets/images/bodycmp/pic-1.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-}
-
-.tour-card3 {
-    opacity: 1;
-    margin: 0;
-    padding-top: 20px;
-    min-height: 280px;
-    width: 100%;
-    background-image: url(/assets/images/bodycmp/cp3.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
@@ -53,6 +28,13 @@
 .up-tours a {
     text-decoration: none;
     color: #000;
+}
+
+.tour-card h5 {
+    background: rgba(0, 0, 0, 0.45);
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: rgb(247, 248, 210);
 }
 
 .tour-overlay {
@@ -71,6 +53,8 @@
 
 .tour-them {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 0 20px;
     background: rgba(0, 0, 0, 0.45);
     color: white;

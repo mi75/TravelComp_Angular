@@ -91,6 +91,16 @@ module.exports = {
         });
     },
 
+    readPopularTrips: function(callback) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onMain` = "в блоке популярные") ORDER BY id DESC LIMIT 3', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
     readOnAllTripsPage: function(callback) {
         connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onMain` != "нет (не готов)") ORDER BY id DESC', function(err, result) {
             if (err) {
