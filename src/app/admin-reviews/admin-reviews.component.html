@@ -1,3 +1,23 @@
 <p>
-  admin-reviews works!
+    Список отзывов:
 </p>
+<div class="table-responsive">
+    <table class="table table-condensed table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>Дата отзыва</th>
+                <th>Удалить</th>
+            </tr>
+        </thead>
+        <tbody id='dbtab'>
+            <tr *ngFor="let feedback of feedbacks; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{feedback.name}}</td>
+                <td>{{feedback.date | date:'d.MM.y H:mm:ss'}}</td>
+                <input type="button" (click)="delFeedback(feedback.id, i)" value="del"/>
+            </tr>
+        </tbody>
+    </table>
+  </div>

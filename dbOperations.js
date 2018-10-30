@@ -71,6 +71,16 @@ module.exports = {
         });
     },
 
+    readFeedbacksForAdmin: function(callback) {
+        connection.query('SELECT id, name, date FROM feedback_1 ORDER BY date DESC', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
     readTripFeaturesTable: function(callback) {
         connection.query('SELECT * FROM trip_features_1 WHERE (`dateOfDel` IS NULL)', function(err, result) {
             if (err) {
