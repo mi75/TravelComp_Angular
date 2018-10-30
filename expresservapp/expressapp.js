@@ -293,6 +293,20 @@ apiRouter.route("/allFeedbacks")
         });
     });
 
+apiRouter.route("/delFeedback")
+    .post(jsonParser, function(req, res) {
+        let dateOfDel =  new Date();
+        dbOperations.delFeedback(req.body.id, dateOfDel, function(err) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.writeHead(200);
+                res.end();
+            }
+        });
+    });
+
 apiRouter.route("/images")
     .get(function(req, res) {
         

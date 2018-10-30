@@ -49,7 +49,7 @@ module.exports = {
 
         var count;
 
-        connection.query('SELECT COUNT(*) as count FROM feedback_1', function(err, result) {
+        connection.query('SELECT COUNT(*) as count FROM feedback_1 WHERE (`dateOfDel` IS NULL)', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -57,7 +57,7 @@ module.exports = {
             }
         });
 
-        connection.query('SELECT * FROM feedback_1 ORDER BY date DESC LIMIT ?, 3', startRow, function(err, result) {
+        connection.query('SELECT * FROM feedback_1 WHERE (`dateOfDel` IS NULL) ORDER BY date DESC LIMIT ?, 3', startRow, function(err, result) {
             var dataModel;
             if (err) {
                 callback(err, null);
@@ -72,13 +72,23 @@ module.exports = {
     },
 
     readFeedbacksForAdmin: function(callback) {
-        connection.query('SELECT id, name, date FROM feedback_1 ORDER BY date DESC', function(err, result) {
+        connection.query('SELECT id, name, date FROM feedback_1 WHERE (`dateOfDel` IS NULL) ORDER BY date DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
                 callback(null, result);
             }
         });
+    },
+
+    delFeedback: function(delRowId, dateOfDel, callback) {
+                connection.query('UPDATE feedback_1 SET `dateOfDel` = ? WHERE id = ?', [dateOfDel, delRowId], function(err, result) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });
     },
 
     readTripFeaturesTable: function(callback) {
