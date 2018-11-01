@@ -36,9 +36,7 @@ export class ModalTripFormComponent implements OnInit {
       notInclude: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control('', [
-        valid.notEmptyValidator()
-      ]),
+      displ: this._fb.control(false),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -76,7 +74,7 @@ export class ModalTripFormComponent implements OnInit {
 
     this.editionTourId = tourForEdit.id;
 
-    this.tourForm.controls['displ'].setValue(tourForEdit.onMain);
+    this.tourForm.controls['displ'].setValue((tourForEdit.onMain === 1));
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
     this.tourForm.controls['notInclude'].setValue(tourForEdit.notInclude);
@@ -154,7 +152,7 @@ export class ModalTripFormComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    if (this.tourForm.valid || (this.tourForm.controls.displ.value == 'нет (не готов)')) {
+    if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -191,7 +189,7 @@ export class ModalTripFormComponent implements OnInit {
     this.sendingTrip.emit();
 
     this.tourForm.reset({
-      displ: '',
+      displ: false,
       program: '',
       characteristics: '',
       notInclude: '',

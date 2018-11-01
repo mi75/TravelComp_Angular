@@ -110,7 +110,7 @@ apiRouter.route("/trips/create")
             fullTripName: req.body.fullTripName,
             picName: (!req.file) ? null : req.file.originalname,
             picFile: (!req.file) ? null : req.file.filename,
-            onMain: req.body.displ,
+            onMain: req.body.displ == 'true' ? 1 : 0,
             startDate: req.body.startDate,
             finishDate: req.body.finishDate,
             price: req.body.price,
@@ -181,7 +181,7 @@ apiRouter.route("/trips/edit")
         var trip = {
             title: req.body.title,
             fullTripName: req.body.fullTripName,
-            onMain: req.body.displ,
+            onMain: req.body.displ == 'true' ? 1 : 0,
             startDate: req.body.startDate,
             finishDate: req.body.finishDate,
             price: req.body.price,

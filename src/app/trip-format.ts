@@ -4,7 +4,7 @@ export class tripFormat {
   fullTripName: string;
   picName: string;
   picFile: string;
-  onMain: string;
+  onMain: number;
   startDate: string;
   finishDate: string;
   price: string;

@@ -38,9 +38,7 @@ export class NewTourComponent implements OnInit {
       notInclude: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control('', [
-        valid.notEmptyValidator()
-      ]),
+      displ: this._fb.control(false),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -99,7 +97,7 @@ export class NewTourComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    if (this.tourForm.valid || (this.tourForm.controls.displ.value == 'нет (не готов)')) {
+    if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -119,8 +117,8 @@ export class NewTourComponent implements OnInit {
       if (!newTourData.get('featureIds')) {
         alert('Обязательно отметьте, что включено!');
       } else { 
-        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value !== 'нет (не готов)')) {
-          alert('Для публикации на сайте необходима картинка!');
+        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
+          alert('Для публиикации на сайте необходима картинка!');
         } else { 
           this.apiCall.postData('api/trips/create', newTourData)
           .subscribe(
@@ -137,7 +135,7 @@ export class NewTourComponent implements OnInit {
   onSuccess() {
 
     this.tourForm.reset({
-      displ: '',
+      displ: true,
       program: '',
       characteristics: '',
       notInclude: '',

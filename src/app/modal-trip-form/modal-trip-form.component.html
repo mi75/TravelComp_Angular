@@ -18,18 +18,10 @@
                       </div>
                   </div>
                   <div class="col-sm-6 col-md-4">
-                    <div class="f-row">
-                        <label for="displ">Отображать на сайте?<span class="req">*</span>:</label><br />
-                        <select formControlName="displ" class="field">
-                          <option></option>
-                          <option value="нет (не готов)">нет (не готов)</option>
-                          <option value="только в общем перечне">только в общем перечне</option>
-                          <option value="в слайдере на главной">в слайдере на главной</option>
-                          <option value="в блоке популярные">в блоке "популярные"</option>
-                          <!-- <option value="в слайдере и в популярных">в слайдере и в популярных</option> -->
-                      </select>
-                        <validator-message [field]="tourForm.get('displ')"></validator-message>
-                    </div>
+                      <label>
+                          <input type="checkbox"  formControlName="displ">
+                          <span class="pseudocheckbox">Показывать на сайте?</span>
+                        </label>
                       <div class="f-row">
                           <label for="title">Заглавие тура<span class="req">*</span>:</label><br />
                           <input type="text" formControlName="title" class="field">
