@@ -19,13 +19,21 @@
                   </div>
                   <div class="col-sm-6 col-md-4">
                       <label>
-                          <input type="checkbox"  formControlName="displ">
-                          <span class="pseudocheckbox">Показывать на сайте?</span>
-                        </label>
+                        <input type="checkbox"  formControlName="onCommon" checked>
+                        <span class="pseudocheckbox">Отображать на сайте?</span>
+                      </label>
+                      <label>
+                        <input type="checkbox"  formControlName="onSlider" checked>
+                        <span class="pseudocheckbox">Показ в слайдере?</span>
+                      </label>
+                      <label>
+                        <input type="checkbox"  formControlName="onPopular" checked>
+                        <span class="pseudocheckbox">В блоке популярных?</span>
+                      </label>
                       <div class="f-row">
-                          <label for="title">Заглавие тура<span class="req">*</span>:</label><br />
-                          <input type="text" formControlName="title" class="field">
-                          <validator-message [field]="tourForm.get('title')"></validator-message>
+                        <label for="title">Заглавие тура<span class="req">*</span>:</label><br />
+                        <input type="text" formControlName="title" class="field">
+                        <validator-message [field]="tourForm.get('title')"></validator-message>
                       </div>
                       <div class="f-row">
                         <label for="title">Полное название поездки<span class="req">*</span>:</label><br />
