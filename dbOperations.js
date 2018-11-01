@@ -82,7 +82,7 @@ module.exports = {
     },
 
     readTripsOnSlider: function(callback) {
-        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onSlider` = "1") ORDER BY id DESC', function(err, result) {
+        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onSlider` = "1" and `dateOfDel` IS NULL) ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {

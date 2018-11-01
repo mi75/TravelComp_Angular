@@ -138,7 +138,18 @@ export class ModalTripFormComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  
+  uncheckAll(e) {
+    if (!e.target.checked) {
+      this.tourForm.controls['onSlider'].setValue(false);
+      this.tourForm.controls['onPopular'].setValue(false);
+    }
+  }
+
+  setOnCommon(e) {
+    if (e.target.checked) {
+      this.tourForm.controls['onCommon'].setValue(true);
+    }
+  }
 
   sendThisTour(): void {
 

@@ -19,15 +19,15 @@
                   </div>
                   <div class="col-sm-6 col-md-4">
                       <label>
-                        <input type="checkbox"  formControlName="onCommon" checked>
+                        <input type="checkbox" (change)="uncheckAll($event)" formControlName="onCommon">
                         <span class="pseudocheckbox">Отображать на сайте?</span>
                       </label>
                       <label>
-                        <input type="checkbox"  formControlName="onSlider" checked>
+                        <input type="checkbox" (change)="setOnCommon($event)" formControlName="onSlider">
                         <span class="pseudocheckbox">Показ в слайдере?</span>
                       </label>
                       <label>
-                        <input type="checkbox"  formControlName="onPopular" checked>
+                        <input type="checkbox" (change)="setOnCommon($event)" formControlName="onPopular">
                         <span class="pseudocheckbox">В блоке популярных?</span>
                       </label>
                       <div class="f-row">

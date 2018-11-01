@@ -82,6 +82,19 @@ export class NewTourComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  uncheckAll(e) {
+    if (!e.target.checked) {
+      this.tourForm.controls['onSlider'].setValue(false);
+      this.tourForm.controls['onPopular'].setValue(false);
+    }
+  }
+
+  setOnCommon(e) {
+    if (e.target.checked) {
+      this.tourForm.controls['onCommon'].setValue(true);
+    }
+  }
+
   @ViewChild("fileInput") fileInput;
 
   sendNewTour(): void {
