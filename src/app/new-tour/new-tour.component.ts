@@ -29,13 +29,18 @@ export class NewTourComponent implements OnInit {
     });
 
     this.tourForm = this._fb.group({
+      onCommon: this._fb.control(false),
+      onSlider: this._fb.control(false),
+      onPopular: this._fb.control(false),
       program: this._fb.control('', [
         valid.messageValidator()
       ]),
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control(false),
+      notInclude: this._fb.control('', [
+        valid.messageValidator()
+      ]),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -77,6 +82,19 @@ export class NewTourComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  uncheckAll(e) {
+    if (!e.target.checked) {
+      this.tourForm.controls['onSlider'].setValue(false);
+      this.tourForm.controls['onPopular'].setValue(false);
+    }
+  }
+
+  setOnCommon(e) {
+    if (e.target.checked) {
+      this.tourForm.controls['onCommon'].setValue(true);
+    }
+  }
+
   @ViewChild("fileInput") fileInput;
 
   sendNewTour(): void {
@@ -94,7 +112,7 @@ export class NewTourComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
+    if (this.tourForm.valid || (!this.tourForm.controls.onCommon.value)) {
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -114,7 +132,7 @@ export class NewTourComponent implements OnInit {
       if (!newTourData.get('featureIds')) {
         alert('Обязательно отметьте, что включено!');
       } else { 
-        if (!newTourData.get('picture') && (this.tourForm.controls.displ.value)) {
+        if (!newTourData.get('picture') && (this.tourForm.controls.onCommon.value)) {
           alert('Для публиикации на сайте необходима картинка!');
         } else { 
           this.apiCall.postData('api/trips/create', newTourData)
@@ -132,9 +150,10 @@ export class NewTourComponent implements OnInit {
   onSuccess() {
 
     this.tourForm.reset({
-      displ: true,
+      onCommon: false,
       program: '',
       characteristics: '',
+      notInclude: '',
       title: '',
       fullTripName: '',
       startDate: '',
