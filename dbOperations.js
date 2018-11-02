@@ -81,8 +81,8 @@ module.exports = {
         });
     },
 
-    readTripsOnMainPage: function(callback) {
-        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onMain` = "в слайдере на главной") ORDER BY id DESC', function(err, result) {
+    readTripsOnSlider: function(callback) {
+        connection.query('SELECT id, title, picFile FROM trips_1 WHERE (`onSlider` = "1" and `dateOfDel` IS NULL) ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -92,7 +92,7 @@ module.exports = {
     },
 
     readPopularTrips: function(callback) {
-        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onMain` = "в блоке популярные") ORDER BY id DESC LIMIT 3', function(err, result) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onPopular` = "1") ORDER BY id DESC LIMIT 3', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -102,7 +102,7 @@ module.exports = {
     },
 
     readOnAllTripsPage: function(callback) {
-        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onMain` != "нет (не готов)") ORDER BY id DESC', function(err, result) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onCommon` = "1") ORDER BY id DESC', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
@@ -174,7 +174,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                connection.query('UPDATE trips_1 SET `onMain` = "false", `dateOfDel` = ? WHERE id = ?', [dateOfDel, delRowId], function(err, result) {
+                connection.query('UPDATE trips_1 SET `onCommon` = "0", `dateOfDel` = ? WHERE id = ?', [dateOfDel, delRowId], function(err, result) {
                     if (err) {
                         callback(err);
                     } else {

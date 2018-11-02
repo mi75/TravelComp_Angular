@@ -27,13 +27,18 @@ export class ModalTripFormComponent implements OnInit {
     });
 
     this.tourForm = this._fb.group({
+      onCommon: this._fb.control(false),
+      onSlider: this._fb.control(false),
+      onPopular: this._fb.control(false),
       program: this._fb.control('', [
         valid.messageValidator()
       ]),
       characteristics: this._fb.control('', [
         valid.messageValidator()
       ]),
-      displ: this._fb.control(false),
+      notInclude: this._fb.control('', [
+        valid.messageValidator()
+      ]),
       title: this._fb.control('', [
         valid.titleValidator()
       ]),
@@ -71,9 +76,12 @@ export class ModalTripFormComponent implements OnInit {
 
     this.editionTourId = tourForEdit.id;
 
-    this.tourForm.controls['displ'].setValue((tourForEdit.onMain === 1));
+    this.tourForm.controls['onCommon'].setValue((tourForEdit.onCommon === 1));
+    this.tourForm.controls['onSlider'].setValue((tourForEdit.onSlider === 1));
+    this.tourForm.controls['onPopular'].setValue((tourForEdit.onPopular === 1));
     this.tourForm.controls['program'].setValue(tourForEdit.program);
     this.tourForm.controls['characteristics'].setValue(tourForEdit.characteristics);
+    this.tourForm.controls['notInclude'].setValue(tourForEdit.notInclude);
     this.tourForm.controls['title'].setValue(tourForEdit.title);
     this.tourForm.controls['fullTripName'].setValue(tourForEdit.fullTripName);
     this.tourForm.controls['startDate'].setValue(tourForEdit.startDate);
@@ -130,7 +138,18 @@ export class ModalTripFormComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  
+  uncheckAll(e) {
+    if (!e.target.checked) {
+      this.tourForm.controls['onSlider'].setValue(false);
+      this.tourForm.controls['onPopular'].setValue(false);
+    }
+  }
+
+  setOnCommon(e) {
+    if (e.target.checked) {
+      this.tourForm.controls['onCommon'].setValue(true);
+    }
+  }
 
   sendThisTour(): void {
 
@@ -148,7 +167,7 @@ export class ModalTripFormComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    if (this.tourForm.valid || (!this.tourForm.controls.displ.value)) {
+    if (this.tourForm.valid || (!this.tourForm.controls.onCommon.value)) {
 
       Object.keys(this.tourForm.controls).forEach(field => {
         const control = this.tourForm.get(field);
@@ -185,9 +204,10 @@ export class ModalTripFormComponent implements OnInit {
     this.sendingTrip.emit();
 
     this.tourForm.reset({
-      displ: false,
+      onCommon: false,
       program: '',
       characteristics: '',
+      notInclude: '',
       title: '',
       fullTripName: '',
       startDate: '',

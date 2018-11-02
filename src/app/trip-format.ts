@@ -4,11 +4,14 @@ export class tripFormat {
   fullTripName: string;
   picName: string;
   picFile: string;
-  onMain: number;
+  onCommon: number;
+  onSlider: number;
+  onPopular: number;
   startDate: string;
   finishDate: string;
   price: string;
   characteristics: string;
+  notInclude: string;
   program: string;
   features: string;
 }

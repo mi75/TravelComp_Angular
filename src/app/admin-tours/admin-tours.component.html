@@ -18,13 +18,16 @@
               <th>Заглавие тура</th>
               <th>Полное название поездки</th>
               <th>Файл-источник картинки</th>
-              <th>Имя файла картинки на сайте</th>
+              <!-- <th>Имя файла картинки на сайте</th> -->
               <th>Отображать на сайте?</th>
+              <th>Показ в слайдере?</th>
+              <th>В блоке популярных?</th>
               <th>Дата отъезда</th>
               <th>Дата возвращения</th>
               <th>Цена тура</th>
               <th>Особенности</th>
               <th>Что включено</th>
+              <th>Что не включено</th>
               <th>Удалить или редактировать</th>
           </tr>
       </thead>
@@ -34,14 +37,17 @@
               <td>{{tour.title}}</td>
               <td>{{tour.fullTripName}}</td>
               <td>{{tour.picName}}</td>
-              <td>{{tour.picFile}}</td>
-              <td *ngIf="tour.onMain ==1; else writeNo">да</td>
+              <!-- <td>{{tour.picFile}}</td> -->
+              <td *ngIf="tour.onCommon ==1; else writeNo">да</td>
+              <td *ngIf="tour.onSlider ==1; else writeNo">да</td>
+              <td *ngIf="tour.onPopular ==1; else writeNo">да</td>
                 <ng-template #writeNo><td>нет</td></ng-template>
               <td>{{tour.startDate | date:'d.MM.y'}}</td>
               <td>{{tour.finishDate | date:'d.MM.y'}}</td>
               <td>{{tour.price}}</td>
               <td>{{tour.characteristics}}</td>
               <td>{{tour.features}}</td>
+              <td>{{tour.notInclude}}</td>
               <input type="button" (click)="delTrip(tour.id, i)" value="del"/>
               <input type="button" (click)="modal.show(tour)" value="edit"/>
           </tr>
