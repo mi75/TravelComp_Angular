@@ -22,6 +22,7 @@ import { TripsFeaturesListComponent } from './trips-features-list/trips-features
 import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
 import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-form.component';
 import { AllTripsComponent } from './all-trips/all-trips.component';
+import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AllTripsComponent } from './all-trips/all-trips.component';
     TripsFeaturesListComponent,
     NewToursFeatureComponent,
     ModalFeatureFormComponent,
-    AllTripsComponent
+    AllTripsComponent,
+    AdminReviewsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +63,10 @@ import { AllTripsComponent } from './all-trips/all-trips.component';
       {
         path: 'admin',
         component: AdminPageComponent
+      },
+      {
+        path: 'allreviews',
+        component: AdminReviewsComponent
       },
       {
         path: 'alltours',

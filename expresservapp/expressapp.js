@@ -313,6 +313,34 @@ apiRouter.route("/feedback")
         });
     });
 
+apiRouter.route("/allFeedbacks")
+    .get(function(req, res) {
+        dbOperations.readFeedbacksForAdmin(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/delFeedback")
+    .post(jsonParser, function(req, res) {
+        let dateOfDel =  new Date();
+        dbOperations.delFeedback(req.body.id, dateOfDel, function(err) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.writeHead(200);
+                res.end();
+            }
+        });
+    });
+
 apiRouter.route("/images")
     .get(function(req, res) {
         
