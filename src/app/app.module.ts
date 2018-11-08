@@ -21,6 +21,7 @@ import { TourPageComponent } from './tour-page/tour-page.component';
 import { TripsFeaturesListComponent } from './trips-features-list/trips-features-list.component';
 import { NewToursFeatureComponent } from './new-tours-feature/new-tours-feature.component';
 import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-form.component';
+import { AllTripsComponent } from './all-trips/all-trips.component';
 import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
     TripsFeaturesListComponent,
     NewToursFeatureComponent,
     ModalFeatureFormComponent,
+    AllTripsComponent,
     AdminReviewsComponent
   ],
   imports: [
@@ -69,6 +71,10 @@ import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
       {
         path: 'alltours',
         component: AdminToursComponent
+      },
+      {
+        path: 'allTrips',
+        component: AllTripsComponent
       },
       {
         path: 'newtour',

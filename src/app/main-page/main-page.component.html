@@ -9,35 +9,17 @@
 <main-reviews></main-reviews>
 
 <div class="up-tours">
-    <h5>Where can our trips take you?</h5>
-    <h2>What's popular</h2>
+    <h5>Попробуем что-то новенькое, или еще раз по любимым местам?)</h5>
+    <h2>Наши самые популярные маршруты:</h2>
     <div class="row">
-        <div class="tour-card1 col-sm-4">
-            <a href="#">
-                <h4>Europe and Britain</h4>
-                <div class="tour-overlay">
-                    <p class="tour-them">A true cultural Smorgasbord, Europe is steeped in history and bursting with flavour and new horizons.</p>
-                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
-                </div>
-            </a>
-        </div>
-        <div class="tour-card2 col-sm-4">
-            <a href="#">
-                <h4>Australia and New Zealand</h4>
-                <div class="tour-overlay">
-                    <p class="tour-them">Discover natural wonders in the South Pacific, where roaring oceans meet pristine beaches, tumbling glaciers and the deep, dusty outback.</p>
-                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
-                </div>
-            </a>
-        </div>
-        <div class="tour-card3 col-sm-4">
-            <a href="#">
-                <h4>South America</h4>
-                <div class="tour-overlay">
-                    <p class="tour-them">Awaken your senses, exploring ancient civilisations, vibrant rainforests and buzzing cities. Enjoy the colours and cultures of South America.</p>
-                    <p class="tour-button" aria-hidden="true" tabindex="-1">View Deal</p>
-                </div>
-            </a>
-        </div>
+            <div class="tour-card col-sm-4" *ngFor="let tour of tours; let i=index;" [style.background-image]="'url(' + tourImgPath + tour.picFile + ')'">
+                    <a routerLink="/tourpage/{{tour.id}}">
+                        <h5>{{tour.title}}</h5>
+                        <div class="tour-overlay">
+                            <p class="tour-them">{{tour.fullTripName}}</p>
+                            <p class="tour-button" aria-hidden="true" tabindex="-1">Подробнее</p>
+                        </div>
+                    </a>
+            </div>
     </div>
 </div>

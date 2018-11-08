@@ -111,6 +111,26 @@ module.exports = {
         });
     },
 
+    readPopularTrips: function(callback) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onPopular` = "1") ORDER BY id DESC LIMIT 3', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
+    readOnAllTripsPage: function(callback) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onCommon` = "1") ORDER BY id DESC', function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
     readTripsForAdmin: function(callback) {
         connection.query('SELECT trips_1.*, GROUP_CONCAT(trip_features_1.description) AS features, GROUP_CONCAT(trip_features_1.id) AS selectedFeatures\
                         FROM trips_1 JOIN trips_trip_features_1 ON trips_1.id=trips_trip_features_1.trip_id\

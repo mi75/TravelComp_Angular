@@ -1,14 +1,4 @@
-.btn {
-    cursor: pointer;
-}
-
-.about-us {
-    padding: 20px;
-    text-align: center;
-    background-color: rgb(242, 242, 242);
-}
-
-.up-tours {
+.all-tours {
     padding: 20px;
     text-align: center;
     background-color: rgb(242, 242, 242);
@@ -25,9 +15,9 @@
     background-position: 50% 50%;
 }
 
-.up-tours a {
+.all-tours a {
     text-decoration: none;
-    color: #000;
+    color: rgb(0, 0, 0);
 }
 
 .tour-card h5 {

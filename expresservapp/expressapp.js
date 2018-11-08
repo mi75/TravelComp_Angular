@@ -31,6 +31,20 @@ apiRouter.route("/trips/features")
         });
     });
 
+apiRouter.route("/trips/allDisplayingTrips")
+    .get(function(req, res) {
+        dbOperations.readOnAllTripsPage(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
 apiRouter.route("/trips/display")
     .get(function(req, res) {
         dbOperations.readTripsOnSlider(function(err, result) {
@@ -48,6 +62,20 @@ apiRouter.route("/trips/display")
 apiRouter.route("/trips/all")
     .get(function(req, res) {
         dbOperations.readTripsForAdmin(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                var list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+apiRouter.route("/trips/popular")
+    .get(function(req, res) {
+        dbOperations.readPopularTrips(function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err.sqlMessage);
