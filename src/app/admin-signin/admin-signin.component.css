@@ -1,0 +1,14 @@
+.signinform {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 300px;
+    position: relative;
+    text-align: center;
+}
+
+form {
+    width: 240px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
