@@ -7,7 +7,7 @@ var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
 var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-
+var session = require('express-session');
 
 var dbOperations = require('../dbOperations');
 
@@ -17,37 +17,55 @@ serverApp.use(cors());
 serverApp.use(passport.initialize());
 serverApp.use(passport.session());
 
+passport.serializeUser(function(user, cb) {
+    cb(null, 'writeToCookie');
+  });
+  
+passport.deserializeUser(function(id, cb) {
+    cb(null, user)
+  });
+
 var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
-apiRouter.route("/login")
-    .post(jsonParser, function(req, res) {
-        console.log(req.body.login);
-        console.log(req.body.password);
+const user = {
+    username: 'mi75@i.ua',
+    password: 'qwerty',
+    id: 1
+}
 
-        const user = {
-            username: 'mi75@i.ua',
-            password: 'qwerty',
-            id: 1
+passport.use('local', new LocalStrategy(
+    function(username, password, done) {
+        if (username !== user.username ) {
+            console.log('Invalid Username');
+            return done(null, false);
         }
+        if (password !== user.password ) {
+            console.log('Invalid Password');
+            return done(null, false);
+        }
+        console.log('authorization OK');
+        return done(null, user);
+    }
+));
 
-        passport.use(new LocalStrategy(
-            function(username, password, done) {
-                findUser(username, function (err, user) {
-                    if (err) {
-                        return done(err)
-                    }
-                    if (!user) {
-                        return done(null, false)
-                    }
-                    if (password !== user.password ) {
-                        return done(null, false)
-                    }
-                    return done(null, user)
-                })
-            }
-        ))
+apiRouter.route("/login")
+    .post(jsonParser, passport.authenticate('local'), function(req, res) {
+        
+        // console.log(req.body.password);
+
+        console.log(req.session.passport.user);
+        // res.redirect(301, "http://localhost:4200/admin");
+
+        if (!req.session.passport.user) {
+            res.setHeader("Content-type", "text/html; charset=utf-8");
+            res.send('authorization NO');
+        } else {
+            var userOk = JSON.stringify(user);
+            res.send(userOk);
+        }
+        
         // dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
         //     if (err) {
         //         res.status(500);

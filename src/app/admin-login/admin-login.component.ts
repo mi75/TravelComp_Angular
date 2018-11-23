@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiCallerService } from '../_services/api-caller.service';
 
 @Component({
@@ -11,16 +12,19 @@ import { ApiCallerService } from '../_services/api-caller.service';
 export class AdminLoginComponent implements OnInit {
 
   constructor(
-    private send: ApiCallerService
+    private send: ApiCallerService,
+    private router: Router
   ) { }
 
   ngOnInit() {
   }
 
+
   onSubmit(loginForm: NgForm) {
     this.send.postData('api/login', loginForm)
       .subscribe(
-        error => alert(error)
+        (data) => this.router.navigate(['admin']),
+        error => { alert(error); this.router.navigate(['']) }
       );
   }
 
