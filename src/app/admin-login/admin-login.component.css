@@ -12,3 +12,8 @@ form {
     left: 50%;
     transform: translateX(-50%);
 }
+
+.alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

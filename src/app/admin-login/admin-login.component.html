@@ -10,6 +10,10 @@
   
     <br/>
     
-    <input type="submit" [disabled]="loginForm.invalid" class="btn btn-outline-primary btn-lg" value="Submit" />
+    <input type="submit" [disabled]="loginForm.invalid" class="btn btn-outline-primary btn-lg" value="Submit" /><br/>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      Autorization Error
+    </div>
   </form>
 </div>

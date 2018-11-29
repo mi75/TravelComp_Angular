@@ -19,12 +19,13 @@ export class AdminLoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  private errorMessage:boolean = false;
 
   onSubmit(loginForm: NgForm) {
     this.send.postData('api/login', loginForm)
       .subscribe(
-        (data) => this.router.navigate(['admin']),
-        error => { alert(error); this.router.navigate(['']) }
+        (data) => { console.log(data); this.router.navigate(['admin']) },
+        error => { error.status=='401' ? this.errorMessage=true : alert(error.status); }
       );
   }
 

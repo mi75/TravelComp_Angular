@@ -17,13 +17,14 @@ serverApp.use(cors());
 serverApp.use(passport.initialize());
 serverApp.use(passport.session());
 
-passport.serializeUser(function(user, cb) {
-    cb(null, 'writeToCookie');
-  });
-  
-passport.deserializeUser(function(id, cb) {
-    cb(null, user)
-  });
+
+// 1. Пользователь присылает логин-пароль
+// 2. Север их сверяет
+// 3. Всё ок - сервер генерирует след. связку - id253=вдылао2дл3ао23лад23оалдо и запоминает её в своей оперативной памяти (сессии сервера)
+// 4. Сервер отправляет Куки, след. вида - SessionID=вдылао2дл3ао23лад23оалдо, expirationDate=73hr
+// 5. Браузер запоминает Куки, и отправляет их при всех след. запросах
+// 6. Сервер принимает запрос, пытается считать Куки, если находит, то понимает что id пользователя = 253, затем берет его из БД, и смотрит его права, и то, какие ресурсы ему можно видеть
+
 
 var jsonParser = bodyParser.json();
 
@@ -38,43 +39,31 @@ const user = {
 passport.use('local', new LocalStrategy(
     function(username, password, done) {
         if (username !== user.username ) {
-            console.log('Invalid Username');
             return done(null, false);
         }
         if (password !== user.password ) {
-            console.log('Invalid Password');
             return done(null, false);
         }
-        console.log('authorization OK');
         return done(null, user);
     }
 ));
 
+passport.serializeUser(function(user, cb) {
+    cb(null, "sessionUserID");   // req.session.passport.user
+  });
+  
+passport.deserializeUser(function(id, cb) {
+    cb(null, user)
+  });
+
 apiRouter.route("/login")
     .post(jsonParser, passport.authenticate('local'), function(req, res) {
-        
-        // console.log(req.body.password);
 
-        console.log(req.session.passport.user);
-        // res.redirect(301, "http://localhost:4200/admin");
+        // var userOk = JSON.stringify(user);
+        // res.send(userOk);
 
-        if (!req.session.passport.user) {
-            res.setHeader("Content-type", "text/html; charset=utf-8");
-            res.send('authorization NO');
-        } else {
-            var userOk = JSON.stringify(user);
-            res.send(userOk);
-        }
-        
-        // dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
-        //     if (err) {
-        //         res.status(500);
-        //         res.send(err.sqlMessage);
-        //     } else {
-        //         res.writeHead(200);
-        //         res.end();
-        //     }
-        // });
+        res.end();
+
     });
 
 apiRouter.route("/trips/features")
