@@ -24,8 +24,8 @@ export class AdminLoginComponent implements OnInit {
   onSubmit(loginForm: NgForm) {
     this.send.postData('api/login', loginForm)
       .subscribe(
-        (data) => { console.log(data); this.router.navigate(['admin']) },
-        error => { error.status=='401' ? this.errorMessage=true : alert(error.status); }
+        data => this.router.navigate(['admin']),
+        error => error.status=='401' ? this.errorMessage=true : alert(error)
       );
   }
 

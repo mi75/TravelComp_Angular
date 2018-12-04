@@ -13,18 +13,11 @@ var dbOperations = require('../dbOperations');
 
 
 var serverApp = express();
-serverApp.use(cors());
+serverApp.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
+
+serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"127.0.0.1" }}));
 serverApp.use(passport.initialize());
 serverApp.use(passport.session());
-
-
-// 1. Пользователь присылает логин-пароль
-// 2. Север их сверяет
-// 3. Всё ок - сервер генерирует след. связку - id253=вдылао2дл3ао23лад23оалдо и запоминает её в своей оперативной памяти (сессии сервера)
-// 4. Сервер отправляет Куки, след. вида - SessionID=вдылао2дл3ао23лад23оалдо, expirationDate=73hr
-// 5. Браузер запоминает Куки, и отправляет их при всех след. запросах
-// 6. Сервер принимает запрос, пытается считать Куки, если находит, то понимает что id пользователя = 253, затем берет его из БД, и смотрит его права, и то, какие ресурсы ему можно видеть
-
 
 var jsonParser = bodyParser.json();
 
@@ -44,30 +37,37 @@ passport.use('local', new LocalStrategy(
         if (password !== user.password ) {
             return done(null, false);
         }
-        return done(null, user);
+        return done(null, user);        
     }
 ));
 
 passport.serializeUser(function(user, cb) {
-    cb(null, "sessionUserID");   // req.session.passport.user
+    cb(null, user.id);   // req.session.passport.user
   });
   
 passport.deserializeUser(function(id, cb) {
     cb(null, user)
   });
 
+//Нужно сделать мидлвейр, который будет проверять, аутентификацию пользователя, если её нет, возвращать 401, что должно обрабатываться на фронте, и перекидывать на логин страничку
+//Нужно сделать эндпоинт для логаута, кнопку для него на фронте 
+
 apiRouter.route("/login")
-    .post(jsonParser, passport.authenticate('local'), function(req, res) {
+    .post(jsonParser,  passport.authenticate('local'), function(req, res) {
+
+        console.log(req.isAuthenticated());
 
         // var userOk = JSON.stringify(user);
         // res.send(userOk);
 
         res.end();
-
     });
 
 apiRouter.route("/trips/features")
     .get(function(req, res) {
+        
+        console.log("/trips/features, auth = " + req.isAuthenticated());
+
         dbOperations.readTripFeaturesTable(function(err, result) {
             if (err) {
                 res.status(500);
