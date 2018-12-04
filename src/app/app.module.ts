@@ -67,6 +67,10 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
         component: AdminPageComponent
       },
       {
+        path: 'login',
+        component: AdminLoginComponent
+      },
+      {
         path: 'allreviews',
         component: AdminReviewsComponent
       },

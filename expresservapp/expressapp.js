@@ -46,28 +46,31 @@ passport.serializeUser(function(user, cb) {
   });
   
 passport.deserializeUser(function(id, cb) {
-    cb(null, user)
+    cb(null, user)       // from database to req.user
   });
 
-//Нужно сделать мидлвейр, который будет проверять, аутентификацию пользователя, если её нет, возвращать 401, что должно обрабатываться на фронте, и перекидывать на логин страничку
-//Нужно сделать эндпоинт для логаута, кнопку для него на фронте 
+apiRouter.get("/admin", function(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.status(401);
+        res.end();
+    }
+})
 
 apiRouter.route("/login")
     .post(jsonParser,  passport.authenticate('local'), function(req, res) {
-
-        console.log(req.isAuthenticated());
-
-        // var userOk = JSON.stringify(user);
-        // res.send(userOk);
-
         res.end();
+    });
+
+apiRouter.route("/logout")
+    .get(function(req, res) {
+        req.logout();
+        req.session.destroy(()=>res.end());
     });
 
 apiRouter.route("/trips/features")
     .get(function(req, res) {
-        
-        console.log("/trips/features, auth = " + req.isAuthenticated());
-
         dbOperations.readTripFeaturesTable(function(err, result) {
             if (err) {
                 res.status(500);
@@ -314,16 +317,16 @@ apiRouter.route("/contacts")
 
 apiRouter.route("/admin")
     .get(function(req, res) {
-        dbOperations.readContacts(function(err, result) {
-            if (err) {
-                res.status(500);
-                res.send(err.sqlMessage);
-            } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
-            }
-        });
+            dbOperations.readContacts(function(err, result) {
+                if (err) {
+                    res.status(500);
+                    res.send(err.sqlMessage);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.send(list);
+                }
+            });
     });
 
 apiRouter.route("/feedback")
