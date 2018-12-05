@@ -18,7 +18,7 @@ export class AdminPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.load.getData('api/admin')
+    this.load.getData('api/admin/adminStart')
     .subscribe(
       res => this.contacts = res,
       error => error.status=='401' ? this.router.navigate(['login']) : alert(error)
@@ -27,7 +27,7 @@ export class AdminPageComponent implements OnInit {
 
   delSession() {
     if (confirm('Уверены, что хотите logout?')) {
-      this.load.getData('api/logout');
+      this.load.getData('api/logout').subscribe();
       this.router.navigate(['login']);
     }
   }

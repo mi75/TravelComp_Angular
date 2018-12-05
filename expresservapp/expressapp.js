@@ -49,7 +49,7 @@ passport.deserializeUser(function(id, cb) {
     cb(null, user)       // from database to req.user
   });
 
-apiRouter.get("/admin", function(req, res, next) {
+apiRouter.get("/admin/*", function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -58,15 +58,14 @@ apiRouter.get("/admin", function(req, res, next) {
     }
 })
 
+apiRouter.get("/logout", function(req, res) {
+    req.logout();
+    req.session.destroy(()=>res.end());
+})
+
 apiRouter.route("/login")
     .post(jsonParser,  passport.authenticate('local'), function(req, res) {
         res.end();
-    });
-
-apiRouter.route("/logout")
-    .get(function(req, res) {
-        req.logout();
-        req.session.destroy(()=>res.end());
     });
 
 apiRouter.route("/trips/features")
@@ -315,7 +314,7 @@ apiRouter.route("/contacts")
         }));
     });
 
-apiRouter.route("/admin")
+apiRouter.route("/admin/adminStart")
     .get(function(req, res) {
             dbOperations.readContacts(function(err, result) {
                 if (err) {
