@@ -4,6 +4,7 @@ import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
 import { tripFormatFeaturesIds } from "../trip-format";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'modal-trip-form',
@@ -19,6 +20,7 @@ export class ModalTripFormComponent implements OnInit {
   constructor(
     private valid: CommonValidatorService,
     private apiCall: ApiCallerService,
+    private router: Router,
     private _fb: FormBuilder
   ) {
     this.apiCall.getData('api/trips/features').subscribe( res => {
@@ -186,14 +188,11 @@ export class ModalTripFormComponent implements OnInit {
 
       if (!newTourData.get('featureIds')) {
         alert('Обязательно отметьте, что включено!');
-      } else { 
-        
-        this.apiCall.postData('api/trips/edit', newTourData)
+      } else {
+        this.apiCall.postData('api/admin/editTrip', newTourData)
         .subscribe(
-          success => {
-            this.onSuccess();
-          }, 
-          error => {alert('Sending Error')}
+          success => this.onSuccess(),
+          error => error.status=='401' ? this.router.navigate(['login']) : alert('Sending Error')
         );
         this.onSuccess();
       }

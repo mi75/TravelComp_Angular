@@ -83,7 +83,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
         component: AllTripsComponent
       },
       {
-        path: 'newtour',
+        path: 'newTourCreation',
         component: NewTourComponent
       },
       {
@@ -97,10 +97,6 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
       {
         path: 'newfeature',
         component: NewToursFeatureComponent
-      },
-      {
-        path: 'administrator',
-        component: AdminLoginComponent
       }
     ])
   ],

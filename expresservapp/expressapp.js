@@ -23,11 +23,32 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
+//Plain text
 const user = {
     username: 'mi75@i.ua',
     password: 'qwerty',
     id: 1
 }
+
+//O@#RJOKLJElrkU*ASLKDJLKJ!LK@J!@E!@)E!@E)KSALDJLAKSJDLKjlkjLMN<#(@)()*$&YU(#!IOJK)
+
+//Регистрация
+//1. Пользователь открывает страничку в бр-ре, вводит свой логин-пароль, нажимает "отправить"
+//2. Сервер получает запрос, создаёт запись в таблице "Пользователи" вида -  логин:логин , пароль: хеш (пароля),
+// генерирует соль, и в открытом виде сохраняет её в базе, применив до этого к паролю
+//3. Создаётся сессия, браузеру отправляется куки (как правило), пользователь залогинен
+//Польз. вышел
+
+// Вход в систему:
+// Ползователь отправляет форму со своим логином-паролем
+// Сервер вытаскивает по логну объект пользователя из БД
+// После этого на тот пароль что прислал пользватель (плюс соль) наклывадется хеш-ф-ия, и свранивается с тем что лежит в БД
+// Если они совпадают, то всё ок
+
+
+// Пользователь:
+//Имя - Емейл - Пароль - Соль
+//Stas - stas@gmail.com - jkwehfk(*@#&()) - j39f02j
 
 passport.use('local', new LocalStrategy(
     function(username, password, done) {
@@ -49,7 +70,7 @@ passport.deserializeUser(function(id, cb) {
     cb(null, user)       // from database to req.user
   });
 
-apiRouter.get("/admin/*", function(req, res, next) {
+apiRouter.use("/admin/", function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -58,7 +79,7 @@ apiRouter.get("/admin/*", function(req, res, next) {
     }
 })
 
-apiRouter.get("/logout", function(req, res) {
+apiRouter.post("/logout", function(req, res) {
     req.logout();
     req.session.destroy(()=>res.end());
 })
@@ -110,7 +131,7 @@ apiRouter.route("/trips/display")
         });
     });
 
-apiRouter.route("/trips/all")
+apiRouter.route("/admin/allTrips")
     .get(function(req, res) {
         dbOperations.readTripsForAdmin(function(err, result) {
             if (err) {
@@ -153,7 +174,7 @@ apiRouter.route("/trips/tourPage")
         });
     });
 
-apiRouter.route("/trips/delete")
+apiRouter.route("/admin/deleteTrip")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
@@ -181,7 +202,7 @@ apiRouter.route("/trips/delfeature")
         });
     });
 
-apiRouter.route("/trips/create")
+apiRouter.route("/admin/createTrip")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
@@ -256,7 +277,7 @@ apiRouter.route("/trips/edittripsfeature")
         }));
     });
 
-apiRouter.route("/trips/edit")
+apiRouter.route("/admin/editTrip")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
@@ -364,7 +385,7 @@ apiRouter.route("/feedback")
         });
     });
 
-apiRouter.route("/allFeedbacks")
+apiRouter.route("/admin/allFeedbacks")
     .get(function(req, res) {
         dbOperations.readFeedbacksForAdmin(function(err, result) {
             if (err) {
@@ -378,7 +399,7 @@ apiRouter.route("/allFeedbacks")
         });
     });
 
-apiRouter.route("/delFeedback")
+apiRouter.route("/admin/delFeedback")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delFeedback(req.body.id, dateOfDel, function(err) {

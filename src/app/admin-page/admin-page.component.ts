@@ -13,22 +13,25 @@ export class AdminPageComponent implements OnInit {
   contacts:any[];
 
   constructor(
-    private load: ApiCallerService,
+    private toServer: ApiCallerService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.load.getData('api/admin/adminStart')
+    this.toServer.getData('api/admin/adminStart')
     .subscribe(
       res => this.contacts = res,
       error => error.status=='401' ? this.router.navigate(['login']) : alert(error)
     );
   }
 
-  delSession() {
-    if (confirm('Уверены, что хотите logout?')) {
-      this.load.getData('api/logout').subscribe();
-      this.router.navigate(['login']);
+  toLogout() {
+    if (confirm('Выйти из режима администрирования?')) {
+      this.toServer.postData('api/logout', null)
+      .subscribe(
+        success => this.router.navigate(['login']),
+        error => alert('Connection Error')
+      );
     }
   }
 
