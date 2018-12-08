@@ -89,7 +89,7 @@ apiRouter.route("/login")
         res.end();
     });
 
-apiRouter.route("/trips/features")
+apiRouter.route("/admin/tripsFeatures")
     .get(function(req, res) {
         dbOperations.readTripFeaturesTable(function(err, result) {
             if (err) {
@@ -188,7 +188,7 @@ apiRouter.route("/admin/deleteTrip")
         });
     });
 
-apiRouter.route("/trips/delfeature")
+apiRouter.route("/admin/delTripsFeature")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delFeature(req.body.id, dateOfDel, function(err) {
@@ -234,7 +234,7 @@ apiRouter.route("/admin/createTrip")
         }));
     });
 
-apiRouter.route("/trips/createtripsfeature")
+apiRouter.route("/admin/createTripsFeature")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var feature = {
@@ -253,7 +253,7 @@ apiRouter.route("/trips/createtripsfeature")
         }));
     });
 
-apiRouter.route("/trips/edittripsfeature")
+apiRouter.route("/admin/editTripsFeature")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var feature = {

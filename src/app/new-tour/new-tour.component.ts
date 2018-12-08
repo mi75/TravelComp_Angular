@@ -23,7 +23,7 @@ export class NewTourComponent implements OnInit {
     private router: Router
   ) {
 
-    this.apiCall.getData('api/trips/features').subscribe( res => {
+    this.apiCall.getData('api/admin/tripsFeatures').subscribe( res => {
       this.tripFeatures = res;
       this.tourForm.controls['featureCheckboxes'] = this._fb.array(this.createFeatureCheckboxes());
     });

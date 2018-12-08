@@ -23,7 +23,7 @@ export class ModalTripFormComponent implements OnInit {
     private router: Router,
     private _fb: FormBuilder
   ) {
-    this.apiCall.getData('api/trips/features').subscribe( res => {
+    this.apiCall.getData('api/admin/tripsFeatures').subscribe( res => {
       this.tripFeatures = res;
       this.tourForm.controls['featureCheckboxes'] = this._fb.array(this.createFeatureCheckboxes());
     });

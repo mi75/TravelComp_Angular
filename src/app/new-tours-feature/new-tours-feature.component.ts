@@ -69,12 +69,10 @@ export class NewToursFeatureComponent implements OnInit {
       if (!newFeatureData.get('picture')) {
           alert('Для публикации на сайте необходима картинка!');
         } else { 
-          this.apiCall.postData('api/trips/createtripsfeature', newFeatureData)
+          this.apiCall.postData('api/admin/createTripsFeature', newFeatureData)
           .subscribe(
-            success => {
-              this.onSuccess();
-            }, 
-            error => {alert('Sending Error')} 
+            success => this.onSuccess(),
+            error => error.status=='401' ? this.router.navigate(['login']) : alert('Sending Error') 
           );
         }
     }
