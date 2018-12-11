@@ -267,7 +267,17 @@ module.exports = {
                 callback();
             }
         });
-    }
+    },
+
+    readAdminUser: function(userlogin, callback) {
+        connection.query('SELECT * FROM adminusers_1 WHERE adminusers_1.email = ?', userlogin, function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
 
 }
 

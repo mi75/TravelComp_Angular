@@ -8,6 +8,7 @@ var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' 
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var session = require('express-session');
+var bcrypt = require('bcrypt');
 
 var dbOperations = require('../dbOperations');
 
@@ -23,11 +24,18 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
+// const saltRounds = 10
+// const myPlaintextPassword = 'qwerty'
+// const salt = bcrypt.genSaltSync(saltRounds)
+// const salt = '$2b$10$eqEdU1OpxwhwAbgIeyip2.'
+// const passwordHash = bcrypt.hashSync(myPlaintextPassword, salt)
+
 //Plain text
-const user = {
-    username: 'mi75@i.ua',
-    password: 'qwerty',
-    id: 1
+var user = {
+    username: '',
+    passwordFromDB: '',
+    salt: '',
+    id: ''
 }
 
 //O@#RJOKLJElrkU*ASLKDJLKJ!LK@J!@E!@)E!@E)KSALDJLAKSJDLKjlkjLMN<#(@)()*$&YU(#!IOJK)
@@ -50,27 +58,45 @@ const user = {
 //Имя - Емейл - Пароль - Соль
 //Stas - stas@gmail.com - jkwehfk(*@#&()) - j39f02j
 
+var findUser = function(username, cb) {
+    dbOperations.readAdminUser(username, function(err, result) {
+        if (err) {
+            return err.sqlMessage;
+        } else {
+            if (result) user = {salt: result[0].salt, passwordFromDB: result[0].password};
+            return cb(null, user);
+        }
+    });
+}
+
 passport.use('local', new LocalStrategy(
     function(username, password, done) {
-        if (username !== user.username ) {
-            return done(null, false);
-        }
-        if (password !== user.password ) {
-            return done(null, false);
-        }
-        return done(null, user);        
+        findUser(username, function (err, user) {
+            if (!user) {
+                return done(null, false);
+            } else {
+                let salt = user.salt;
+                passwordHash = bcrypt.hashSync(password, salt);
+                if (passwordHash !== user.passwordFromDB ) {
+                    return done(null, false);
+                } else {
+                    return done(null, user);
+                }    
+            }
+        })
+        process.nextTick(findUser);
     }
 ));
 
 passport.serializeUser(function(user, cb) {
-    cb(null, user.id);   // req.session.passport.user
+    cb(null, user.salt);   // req.session.passport.user
   });
   
 passport.deserializeUser(function(id, cb) {
     cb(null, user)       // from database to req.user
   });
 
-apiRouter.use("/admin/", function(req, res, next) {
+apiRouter.all("/admin/*", function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
