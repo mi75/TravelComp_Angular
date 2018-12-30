@@ -16,7 +16,9 @@ var dbOperations = require('../dbOperations');
 var serverApp = express();
 serverApp.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 
-serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"127.0.0.1" }}));
+serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"127.0.0.1"}, resave: true,
+saveUninitialized: true }));
+
 serverApp.use(passport.initialize());
 serverApp.use(passport.session());
 
@@ -24,46 +26,13 @@ var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
-// const saltRounds = 10
-// const myPlaintextPassword = 'qwerty'
-// const salt = bcrypt.genSaltSync(saltRounds)
-// const salt = '$2b$10$eqEdU1OpxwhwAbgIeyip2.'
-// const passwordHash = bcrypt.hashSync(myPlaintextPassword, salt)
-
-//Plain text
-var user = {
-    username: '',
-    passwordFromDB: '',
-    salt: '',
-    id: ''
-}
-
-//O@#RJOKLJElrkU*ASLKDJLKJ!LK@J!@E!@)E!@E)KSALDJLAKSJDLKjlkjLMN<#(@)()*$&YU(#!IOJK)
-
-//Регистрация
-//1. Пользователь открывает страничку в бр-ре, вводит свой логин-пароль, нажимает "отправить"
-//2. Сервер получает запрос, создаёт запись в таблице "Пользователи" вида -  логин:логин , пароль: хеш (пароля),
-// генерирует соль, и в открытом виде сохраняет её в базе, применив до этого к паролю
-//3. Создаётся сессия, браузеру отправляется куки (как правило), пользователь залогинен
-//Польз. вышел
-
-// Вход в систему:
-// Ползователь отправляет форму со своим логином-паролем
-// Сервер вытаскивает по логну объект пользователя из БД
-// После этого на тот пароль что прислал пользватель (плюс соль) наклывадется хеш-ф-ия, и свранивается с тем что лежит в БД
-// Если они совпадают, то всё ок
-
-
-// Пользователь:
-//Имя - Емейл - Пароль - Соль
-//Stas - stas@gmail.com - jkwehfk(*@#&()) - j39f02j
 
 var findUser = function(username, cb) {
     dbOperations.readAdminUser(username, function(err, result) {
         if (err) {
             return err.sqlMessage;
         } else {
-            if (result) user = {salt: result[0].salt, passwordFromDB: result[0].password};
+            if (result) user = {id: result[0].id, salt: result[0].salt, passwordFromDB: result[0].password};
             return cb(null, user);
         }
     });
@@ -84,16 +53,15 @@ passport.use('local', new LocalStrategy(
                 }    
             }
         })
-        process.nextTick(findUser);
     }
 ));
 
 passport.serializeUser(function(user, cb) {
-    cb(null, user.salt);   // req.session.passport.user
+    cb(null, user.id);   // req.session.passport.user
   });
   
 passport.deserializeUser(function(id, cb) {
-    cb(null, user)       // from database to req.user
+    cb(null, id);       // from database to req.user
   });
 
 apiRouter.all("/admin/*", function(req, res, next) {
