@@ -15,14 +15,13 @@ export class ApiCallerService {
   ) { }
 
   getData(addr) {
-    return this.http.get(ApiCallerService.webAdddr + addr).pipe(
-      map( item => {
-      return item.json();
-    } ));
+    return this.http.get(ApiCallerService.webAdddr + addr,  {  withCredentials: true  }).pipe(
+      map( item => item.json() )
+     );
   }
 
   postData(addr, data) {
-    return this.http.post(ApiCallerService.webAdddr + addr, data);
+    return this.http.post(ApiCallerService.webAdddr + addr, data, {  withCredentials: true  });
   }
 
 }

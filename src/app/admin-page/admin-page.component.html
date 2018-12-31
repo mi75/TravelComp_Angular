@@ -2,9 +2,11 @@
     <h2>Hi, admin!..</h2>
     <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/alltours">Список поездок</button>
     <button type="button" class="btn btn-outline-primary btn-lg" routerLink="/allreviews">Список отзывов</button>
+    <button type="button" class="btn btn-outline-primary btn-lg" (click)="toLogout()">Выйти</button>
 </div>
 
 <div class="table-responsive">
+    <h5>Данные обратной связи с клиентами:</h5>
     <table class="table table-condensed table-striped table-bordered table-hover">
         <thead>
             <tr>

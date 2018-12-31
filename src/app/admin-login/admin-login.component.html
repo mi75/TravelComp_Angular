@@ -1,0 +1,19 @@
+<div class="signinform">
+  <form class="form-signin" #loginForm="ngForm" novalidate (ngSubmit)="onSubmit(loginForm.value)" >
+    <h2 class="form-signin-heading">Please sign in</h2>
+  
+    <label for="username" class="sr-only">Email address</label>
+    <input type="email" class="form-control" placeholder="Email address" name="username" ngModel required email autofocus />
+  
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" class="form-control" placeholder="Password" name="password" ngModel required />
+  
+    <br/>
+    
+    <input type="submit" [disabled]="loginForm.invalid" class="btn btn-outline-primary btn-lg" value="Submit" /><br/>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      Autorization Error
+    </div>
+  </form>
+</div>

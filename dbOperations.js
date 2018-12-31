@@ -5,14 +5,10 @@ var connection = mysql.createConnection({
     host: '127.0.0.1',
     database: 'db_1',
     user: 'root',
-    password: 'casiopilot16!'
+    password: 'casiopilot16!',
+    port: 3306
 });
 
-connection.connect(function(err) {
-    if (err) {
-        console.log(err);
-    }
-});
 
 module.exports = {
     createContact: function(contact, callback) {
@@ -267,8 +263,29 @@ module.exports = {
                 callback();
             }
         });
-    }
+    },
+
+    createAdminUser: function(adminuser, callback) {
+        connection.query('INSERT INTO adminusers_1 SET ?', adminuser, function(err, result) {
+            if (err) {
+                callback(err);
+            }  else{
+                callback();
+            }
+        });
+    },
+
+    readAdminUser: function(userlogin, callback) {
+        connection.query('SELECT * FROM adminusers_1 WHERE adminusers_1.email = ? ORDER BY id DESC LIMIT 1', userlogin, function(err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
 
 }
+
 
 // insertion's data: console.log(query.sql);

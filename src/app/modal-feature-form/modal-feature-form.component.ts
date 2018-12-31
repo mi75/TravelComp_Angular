@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, AbstractControl  } from '@angular/
 import { CommonValidatorService } from '../_services/common-validator.service';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { tripFeaturesFormat } from "../tripfeatures-format";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'modal-feature-form',
@@ -18,6 +19,7 @@ export class ModalFeatureFormComponent implements OnInit {
   constructor(
     private valid: CommonValidatorService,
     private apiCall: ApiCallerService,
+    private router: Router,
     private _fb: FormBuilder
   ) {
     this.toursFeatureForm = this._fb.group({
@@ -97,12 +99,10 @@ export class ModalFeatureFormComponent implements OnInit {
         newFeatureData.set(field, control.value);
       });
 
-      this.apiCall.postData('api/trips/edittripsfeature', newFeatureData)
+      this.apiCall.postData('api/admin/editTripsFeature', newFeatureData)
           .subscribe(
-            success => {
-              this.onSuccess();
-            }, 
-            error => {alert('Sending Error')} 
+            success => this.onSuccess(),
+            error => error.status=='401' ? this.router.navigate(['login']) : alert('Sending Error') 
           );
     }
   }

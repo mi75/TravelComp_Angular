@@ -23,7 +23,7 @@ export class NewTourComponent implements OnInit {
     private router: Router
   ) {
 
-    this.apiCall.getData('api/trips/features').subscribe( res => {
+    this.apiCall.getData('api/admin/tripsFeatures').subscribe( res => {
       this.tripFeatures = res;
       this.tourForm.controls['featureCheckboxes'] = this._fb.array(this.createFeatureCheckboxes());
     });
@@ -135,12 +135,10 @@ export class NewTourComponent implements OnInit {
         if (!newTourData.get('picture') && (this.tourForm.controls.onCommon.value)) {
           alert('Для публиикации на сайте необходима картинка!');
         } else { 
-          this.apiCall.postData('api/trips/create', newTourData)
+          this.apiCall.postData('api/admin/createTrip', newTourData)
           .subscribe(
-            success => {
-              this.onSuccess();
-            }, 
-            error => {alert('Sending Error')} 
+            success => this.onSuccess(),
+            error => error.status=='401' ? this.router.navigate(['login']) : alert('Sending Error')
           );
         }
       }

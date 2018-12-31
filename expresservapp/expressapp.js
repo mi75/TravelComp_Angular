@@ -5,19 +5,85 @@ var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
 var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
 var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
-
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var session = require('express-session');
+var bcrypt = require('bcrypt');
 
 var dbOperations = require('../dbOperations');
 
 
 var serverApp = express();
-serverApp.use(cors());
+serverApp.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
+
+serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"127.0.0.1"}, resave: true,
+saveUninitialized: true }));
+
+serverApp.use(passport.initialize());
+serverApp.use(passport.session());
 
 var jsonParser = bodyParser.json();
 
 var apiRouter = express.Router();
 
-apiRouter.route("/trips/features")
+
+var findUser = function(username, cb) {
+    dbOperations.readAdminUser(username, function(err, result) {
+        if (err) {
+            return err.sqlMessage;
+        } else {
+            if (result) user = {id: result[0].id, salt: result[0].salt, passwordFromDB: result[0].password};
+            return cb(null, user);
+        }
+    });
+}
+
+passport.use('local', new LocalStrategy(
+    function(username, password, done) {
+        findUser(username, function (err, user) {
+            if (!user) {
+                return done(null, false);
+            } else {
+                let salt = user.salt;
+                passwordHash = bcrypt.hashSync(password, salt);
+                if (passwordHash !== user.passwordFromDB ) {
+                    return done(null, false);
+                } else {
+                    return done(null, user);
+                }    
+            }
+        })
+    }
+));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);   // req.session.passport.user
+  });
+  
+passport.deserializeUser(function(id, cb) {
+    cb(null, id);       // from database to req.user
+  });
+
+apiRouter.all("/admin/*", function(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.status(401);
+        res.end();
+    }
+})
+
+apiRouter.post("/logout", function(req, res) {
+    req.logout();
+    req.session.destroy(()=>res.end());
+})
+
+apiRouter.route("/login")
+    .post(jsonParser,  passport.authenticate('local'), function(req, res) {
+        res.end();
+    });
+
+apiRouter.route("/admin/tripsFeatures")
     .get(function(req, res) {
         dbOperations.readTripFeaturesTable(function(err, result) {
             if (err) {
@@ -59,7 +125,7 @@ apiRouter.route("/trips/display")
         });
     });
 
-apiRouter.route("/trips/all")
+apiRouter.route("/admin/allTrips")
     .get(function(req, res) {
         dbOperations.readTripsForAdmin(function(err, result) {
             if (err) {
@@ -102,7 +168,7 @@ apiRouter.route("/trips/tourPage")
         });
     });
 
-apiRouter.route("/trips/delete")
+apiRouter.route("/admin/deleteTrip")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delTrip(req.body.id, dateOfDel, function(err) {
@@ -116,7 +182,7 @@ apiRouter.route("/trips/delete")
         });
     });
 
-apiRouter.route("/trips/delfeature")
+apiRouter.route("/admin/delTripsFeature")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delFeature(req.body.id, dateOfDel, function(err) {
@@ -130,7 +196,7 @@ apiRouter.route("/trips/delfeature")
         });
     });
 
-apiRouter.route("/trips/create")
+apiRouter.route("/admin/createTrip")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
@@ -162,7 +228,7 @@ apiRouter.route("/trips/create")
         }));
     });
 
-apiRouter.route("/trips/createtripsfeature")
+apiRouter.route("/admin/createTripsFeature")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var feature = {
@@ -181,7 +247,7 @@ apiRouter.route("/trips/createtripsfeature")
         }));
     });
 
-apiRouter.route("/trips/edittripsfeature")
+apiRouter.route("/admin/editTripsFeature")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var feature = {
@@ -205,7 +271,7 @@ apiRouter.route("/trips/edittripsfeature")
         }));
     });
 
-apiRouter.route("/trips/edit")
+apiRouter.route("/admin/editTrip")
     .post(picsForSlider.single('picture'), function(req, res) { // multer's method
 
         var trip = {
@@ -263,18 +329,18 @@ apiRouter.route("/contacts")
         }));
     });
 
-apiRouter.route("/admin")
+apiRouter.route("/admin/adminStart")
     .get(function(req, res) {
-        dbOperations.readContacts(function(err, result) {
-            if (err) {
-                res.status(500);
-                res.send(err.sqlMessage);
-            } else {
-                var list = '';
-                if (result) list = JSON.stringify(result);
-                res.send(list);
-            }
-        });
+            dbOperations.readContacts(function(err, result) {
+                if (err) {
+                    res.status(500);
+                    res.send(err.sqlMessage);
+                } else {
+                    var list = '';
+                    if (result) list = JSON.stringify(result);
+                    res.send(list);
+                }
+            });
     });
 
 apiRouter.route("/feedback")
@@ -313,7 +379,7 @@ apiRouter.route("/feedback")
         });
     });
 
-apiRouter.route("/allFeedbacks")
+apiRouter.route("/admin/allFeedbacks")
     .get(function(req, res) {
         dbOperations.readFeedbacksForAdmin(function(err, result) {
             if (err) {
@@ -327,7 +393,7 @@ apiRouter.route("/allFeedbacks")
         });
     });
 
-apiRouter.route("/delFeedback")
+apiRouter.route("/admin/delFeedback")
     .post(jsonParser, function(req, res) {
         let dateOfDel =  new Date();
         dbOperations.delFeedback(req.body.id, dateOfDel, function(err) {
