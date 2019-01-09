@@ -24,6 +24,7 @@ import { ModalFeatureFormComponent } from './modal-feature-form/modal-feature-fo
 import { AllTripsComponent } from './all-trips/all-trips.component';
 import { AdminReviewsComponent } from './admin-reviews/admin-reviews.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { FromInstagramComponent } from './from-instagram/from-instagram.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     ModalFeatureFormComponent,
     AllTripsComponent,
     AdminReviewsComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    FromInstagramComponent
   ],
   imports: [
     BrowserModule,

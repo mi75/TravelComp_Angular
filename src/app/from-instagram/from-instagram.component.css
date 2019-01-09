@@ -1,0 +1,12 @@
+.from-insta {
+    padding: 20px;
+    text-align: center;
+    background-color: rgb(242, 242, 242);
+}
+
+.insta-card img {
+    margin: 0;
+    padding-top: 20px;
+    min-height: 280px;
+    width: 100%;
+}
