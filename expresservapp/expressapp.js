@@ -1,5 +1,4 @@
 var express = require("express");
-// var https = require("https");
 var requestify = require("requestify");
 var fs = require("fs");
 var bodyParser = require("body-parser");
@@ -14,10 +13,8 @@ var bcrypt = require('bcrypt');
 
 var dbOperations = require('../dbOperations');
 
-// var instagramOptions = {
-//     host: 'api.instagram.com',
-//     path: '/v1/users/self/media/recent/?access_token=10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a'
-// };
+var instagramUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=';
+var instagramAccessToken = '10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a';
 
 
 var serverApp = express();
@@ -417,14 +414,17 @@ apiRouter.route("/admin/delFeedback")
 apiRouter.route("/picsFromInstagram")
     .get(function(req, res) {
         var instaPicsUrls = [];
-        requestify.get('https://api.instagram.com/v1/users/self/media/recent/?access_token=10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a')
+        requestify.get(instagramUrl+instagramAccessToken)
         .then(function(response) {
             let instaDataArr = response.getBody().data;
             instaDataArr.forEach(function(item) {
                 instaPicsUrls.push(item.images.standard_resolution.url);
             });
-            console.log(instaPicsUrls);
             res.send(instaPicsUrls);
+        })
+        .fail(function(response) {
+            res.status(404);
+            res.send('No Instagram Connection:' + response.getCode());
         });
     });
 
