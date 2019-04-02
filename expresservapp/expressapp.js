@@ -36,8 +36,12 @@ var findUser = function(username, cb) {
         if (err) {
             return err.sqlMessage;
         } else {
-            if (result) user = {id: result[0].id, salt: result[0].salt, passwordFromDB: result[0].password};
-            return cb(null, user);
+            if (!result[0]) {
+                return cb(null, null);
+            } else {
+                user = {id: result[0].id, salt: result[0].salt, passwordFromDB: result[0].password};
+                return cb(null, user);
+            }
         }
     });
 }
