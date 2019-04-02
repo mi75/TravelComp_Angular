@@ -19,7 +19,7 @@ export class AdminLoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  private errorMessage:boolean = false;
+  errorMessage:boolean = false;
 
   onSubmit(loginForm: NgForm) {
     this.send.postData('api/login', loginForm)

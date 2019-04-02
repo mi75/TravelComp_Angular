@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="myModalLabel">Поделитесь впечатлениями с друзьями</h4>
             </div>
             <div class="modal-body">
-                <form [formGroup]="feedbackForm" (ngSubmit)="sendMyReview(feedbackForm.value)">
+                <form [formGroup]="feedbackForm">
                     <p class="note"><span class="req">*</span> Поля со звездочкой обязательны для заполнения</p>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
