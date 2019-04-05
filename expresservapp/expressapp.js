@@ -11,7 +11,7 @@ var LocalStrategy = require("passport-local").Strategy;
 var session = require('express-session');
 var bcrypt = require('bcrypt');
 
-var dbOperations = require('../dbOperations');
+var dbOperations = require('../mandryDbOperations');
 
 var instagramUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=';
 var instagramAccessToken = '10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a';

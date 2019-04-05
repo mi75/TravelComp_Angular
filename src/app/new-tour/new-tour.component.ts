@@ -97,7 +97,7 @@ export class NewTourComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  sendNewTour(): void {
+  sendNewTour(data: FormGroup): void {
 
     let newTourData = new FormData();
 
