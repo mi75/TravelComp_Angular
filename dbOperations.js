@@ -108,7 +108,7 @@ module.exports = {
     },
 
     readPopularTrips: function(callback) {
-        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onPopular` = "1") ORDER BY id DESC LIMIT 3', function(err, result) {
+        connection.query('SELECT id, title, fullTripName, picFile FROM trips_1 WHERE (`onPopular` = "1" and `dateOfDel` IS NULL) ORDER BY id DESC LIMIT 3', function(err, result) {
             if (err) {
                 callback(err, null);
             } else {
