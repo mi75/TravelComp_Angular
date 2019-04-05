@@ -44,7 +44,7 @@ export class NewToursFeatureComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
 
-  sendNewFeature(): void {
+  sendNewFeature(data: FormGroup): void {
 
     let newFeatureData = new FormData();
 

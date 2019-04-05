@@ -2,10 +2,10 @@ var mysql = require('mysql');
 
 // create a MySQL DB connection:
 var connection = mysql.createConnection({
-    host: '127.0.0.1',
-    database: 'db_1',
-    user: 'root',
-    password: 'casiopilot16!',
+    host: 'turcomp-db.c1qcxy6ljwg1.eu-central-1.rds.amazonaws.com',
+    database: 'mandry',
+    user: 'admin',
+    password: 'strikeagle15',
     port: 3306
 });
 
