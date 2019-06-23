@@ -1,5 +1,5 @@
 # TurCompApp
-Current staging version is available by this link: d32y8hei1lnlri.cloudfront.net
+[Current staging version is available by this link](https://d32y8hei1lnlri.cloudfront.net)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
 
