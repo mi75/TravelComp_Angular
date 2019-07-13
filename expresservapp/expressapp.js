@@ -55,14 +55,13 @@ serverApp.use(passport.session());
 var jsonParser = bodyParser.json();
 
 
-
-var nocache = function(req, res, next) {
-    console.log('No cache!');
-    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    res.header('Expires', '-1');
-    res.header('Pragma', 'no-cache');
-    next();
-}
+// var nocache = function(req, res, next) {
+//     console.log('No cache!');
+//     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//     res.header('Expires', '-1');
+//     res.header('Pragma', 'no-cache');
+//     next();
+// }
 
 var findUser = function(username, cb) {
     dbOperations.readAdminUser(username, function(err, result) {
@@ -449,7 +448,7 @@ apiRouter.route("/admin/delFeedback")
     });
 
 apiRouter.route("/picsFromInstagram")
-    .get(nocache, function(req, res) {
+    .get(function(req, res) {
         var instaPicsUrls = [];
         requestify.request(instagramUrl+instagramAccessToken, {
             method: 'GET',
