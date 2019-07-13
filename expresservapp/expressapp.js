@@ -4,8 +4,31 @@ var fs = require("fs");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 var multer = require('multer'); // for processing of files from forms
-var upload = multer({ dest: __dirname + '/../src/assets/images/upload/' });
-var picsForSlider = multer({ dest: __dirname + '/../src/assets/images/bodycmp/' });
+var aws = require('aws-sdk');
+var uuidv1 = require('uuid/v1');
+
+var s3 = new aws.S3();
+var multerS3 = require('multer-s3');
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'turcomp.angular.bucket',
+        key: function (req, file, cb) {
+
+            file.filename = uuidv1();
+
+            var fullPath;
+            if (req.path == '/feedback'){
+                fullPath = 'assets/images/upload/' + file.filename;
+            } else {
+                fullPath = 'assets/images/bodycmp/' + file.filename;
+            }
+            cb(null, fullPath);
+        }
+      }) 
+    });
+
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var session = require('express-session');
@@ -13,14 +36,17 @@ var bcrypt = require('bcrypt');
 
 var dbOperations = require('../mandryDbOperations');
 
+var siteBucketAddr = 'http://turcomp.angular.bucket.s3-website.eu-central-1.amazonaws.com';
+
 var instagramUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=';
-var instagramAccessToken = '10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a';
+var instagramAccessToken = '10020038878.4afaaab.906ecf00671c455994ee75571984a1f1';
 
 
+var apiRouter = express.Router();
 var serverApp = express();
 serverApp.use(cors({origin: 'http://127.0.0.1:4200', credentials: true}));
 
-serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"127.0.0.1"}, resave: true,
+serverApp.use(session({ secret: 'some secret', cookie: { maxAge: 2592000000, domain:"d32y8hei1lnlri.cloudfront.net"}, resave: true,
 saveUninitialized: true }));
 
 serverApp.use(passport.initialize());
@@ -28,8 +54,15 @@ serverApp.use(passport.session());
 
 var jsonParser = bodyParser.json();
 
-var apiRouter = express.Router();
 
+
+var nocache = function(req, res, next) {
+    console.log('No cache!');
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+}
 
 var findUser = function(username, cb) {
     dbOperations.readAdminUser(username, function(err, result) {
@@ -205,7 +238,7 @@ apiRouter.route("/admin/delTripsFeature")
     });
 
 apiRouter.route("/admin/createTrip")
-    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+    .post(upload.single('picture'), function(req, res) { // multer's method
 
         var trip = {
             title: req.body.title,
@@ -237,7 +270,7 @@ apiRouter.route("/admin/createTrip")
     });
 
 apiRouter.route("/admin/createTripsFeature")
-    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+    .post(upload.single('picture'), function(req, res) { // multer's method
 
         var feature = {
             description: req.body.featureName,
@@ -256,7 +289,7 @@ apiRouter.route("/admin/createTripsFeature")
     });
 
 apiRouter.route("/admin/editTripsFeature")
-    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+    .post(upload.single('picture'), function(req, res) { // multer's method
 
         var feature = {
             description: req.body.featureName
@@ -280,7 +313,7 @@ apiRouter.route("/admin/editTripsFeature")
     });
 
 apiRouter.route("/admin/editTrip")
-    .post(picsForSlider.single('picture'), function(req, res) { // multer's method
+    .post(upload.single('picture'), function(req, res) { // multer's method
 
         var trip = {
             title: req.body.title,
@@ -416,14 +449,24 @@ apiRouter.route("/admin/delFeedback")
     });
 
 apiRouter.route("/picsFromInstagram")
-    .get(function(req, res) {
+    .get(nocache, function(req, res) {
         var instaPicsUrls = [];
-        requestify.get(instagramUrl+instagramAccessToken)
+        requestify.request(instagramUrl+instagramAccessToken, {
+            method: 'GET',
+            headers: {
+                'cache-control': 'private, no-cache, no-store, must-revalidate',
+                'Expires': '-1',
+                'Pragma': 'no-cache'
+            }
+        })
         .then(function(response) {
             let instaDataArr = response.getBody().data;
             instaDataArr.forEach(function(item) {
                 instaPicsUrls.push(item.images.standard_resolution.url);
             });
+            res.header('cache-control', 'private, no-cache, no-store, must-revalidate');
+            res.header('Expires', '-1');
+            res.header('Pragma', 'no-cache');
             res.send(instaPicsUrls);
         })
         .fail(function(response) {
@@ -434,19 +477,11 @@ apiRouter.route("/picsFromInstagram")
 
 apiRouter.route("/images")
     .get(function(req, res) {
-        
-        var targetFileName = __dirname + ( req.query.useBodyPath ? "/../src/assets/images/bodycmp/" : "/../src/assets/images/upload/")  + req.query.id;
-
-        if (fs.existsSync(targetFileName)) {
-            var data = fs.readFileSync(targetFileName);
-            res.status(200, {});
-            res.send(data);
-        } else {
-            res.status(404);
-            res.send('Not found');
-        }
+        var targetFileName = siteBucketAddr + ( req.query.useBodyPath ? '/assets/images/bodycmp/' : '/assets/images/upload/') + req.query.id;
+        res.writeHead(302, {'Location': targetFileName});
+        res.end();
     });
 
 serverApp.use("/api", apiRouter);
 
-serverApp.listen(3000);
+serverApp.listen(3000, function() {console.log('Server running on port 3000'); });
