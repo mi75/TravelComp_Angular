@@ -14,7 +14,7 @@ var bcrypt = require('bcrypt');
 var dbOperations = require('../mandryDbOperations');
 
 var instagramUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=';
-var instagramAccessToken = '10020038878.91ffc57.4285141862d14b4880a447fbd04ecc1a';
+var instagramAccessToken = '10020038878.4afaaab.906ecf00671c455994ee75571984a1f1';
 
 
 var serverApp = express();
